@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the platform (Producer, Buyer, or Logistics).",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "name": { "type": "string", "description": "Full name or company name" },
+        "email": { "type": "string", "format": "email", "description": "Email address" },
+        "role": { "type": "string", "enum": ["producer", "buyer", "logistics"], "description": "User role" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["uid", "name", "email", "role", "createdAt"]
+    },
+    "Listing": {
+      "title": "Listing",
+      "description": "A surplus product listing created by a producer.",
+      "type": "object",
+      "properties": {
+        "producerId": { "type": "string", "description": "UID of the producer" },
+        "title": { "type": "string", "description": "Product title" },
+        "description": { "type": "string", "description": "Product description" },
+        "category": { "type": "string", "enum": ["food", "textiles", "bio", "non-food"], "description": "Product category" },
+        "quantity": { "type": "number", "description": "Quantity available" },
+        "unit": { "type": "string", "description": "Unit of measurement (e.g., kg, pieces)" },
+        "price": { "type": "number", "description": "Price per unit" },
+        "imageUrl": { "type": "string", "description": "URL of the product image" },
+        "location": { "type": "string", "description": "Location of the goods" },
+        "status": { "type": "string", "enum": ["active", "matched", "completed"], "description": "Listing status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["producerId", "title", "category", "quantity", "unit", "price", "status", "createdAt"]
+    },
+    "MarketingImage": {
+      "title": "MarketingImage",
+      "description": "Generated marketing image for a product.",
+      "type": "object",
+      "properties": {
+        "producerId": { "type": "string", "description": "UID of the producer" },
+        "imageUrl": { "type": "string", "description": "URL of the generated image" },
+        "prompt": { "type": "string", "description": "Prompt used to generate the image" },
+        "aspectRatio": { "type": "string", "description": "Aspect ratio of the image" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["producerId", "imageUrl", "prompt", "aspectRatio", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Stores user profiles."
+    },
+    "/listings/{listingId}": {
+      "schema": { "$ref": "#/entities/Listing" },
+      "description": "Stores surplus product listings."
+    },
+    "/marketing_images/{imageId}": {
+      "schema": { "$ref": "#/entities/MarketingImage" },
+      "description": "Stores generated marketing images."
+    }
+  }
+}

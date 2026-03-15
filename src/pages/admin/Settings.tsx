@@ -1,0 +1,339 @@
+import { useState, useRef } from 'react';
+import { Save, Building, RotateCcw, Upload, X } from 'lucide-react';
+import PageHeader from '../../components/layout/PageHeader';
+import { getPlatformSettings, updatePlatformSettings, resetAllData } from '../../lib/demoStore';
+import type { PlatformSettings } from '../../types';
+
+export default function Settings() {
+  const [form, setForm] = useState<PlatformSettings>(getPlatformSettings());
+  const [saved, setSaved] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const logoInputRef = useRef<HTMLInputElement>(null);
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 500_000) { alert('Logo darf max. 500 KB groß sein.'); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      // Compress via canvas
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const maxW = 200;
+        const scale = Math.min(maxW / img.width, 1);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL('image/png', 0.9);
+        update('logoUrl', dataUrl);
+      };
+      img.src = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const update = (field: keyof PlatformSettings, value: string | number) => {
+    setForm(prev => ({ ...prev, [field]: value }));
+    setSaved(false);
+  };
+
+  const handleSave = () => {
+    updatePlatformSettings(form);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2500);
+  };
+
+  const inputClass =
+    'w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#1a472a] focus:outline-none transition-all';
+  const labelClass =
+    'block text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-1';
+
+  return (
+    <div>
+      <PageHeader
+        title="Einstellungen"
+        subtitle="Firmendaten, Bankverbindung und Standardwerte"
+        actions={
+          <button
+            onClick={handleSave}
+            className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all"
+          >
+            <Save size={14} />
+            {saved ? 'Gespeichert!' : 'Speichern'}
+          </button>
+        }
+      />
+
+      {saved && (
+        <div className="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 text-sm font-bold">
+          Einstellungen erfolgreich gespeichert.
+        </div>
+      )}
+
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Firmendaten */}
+        <div className="bg-white border border-gray-200 p-6">
+          <div className="flex items-center gap-2 mb-5">
+            <Building size={16} className="text-[#1a472a]" />
+            <h3 className="text-sm font-black uppercase tracking-tight">Firmendaten</h3>
+          </div>
+          <div className="space-y-4">
+            {/* Logo Upload */}
+            <div>
+              <label className={labelClass}>Logo</label>
+              <div className="flex items-center gap-4">
+                {form.logoUrl ? (
+                  <div className="relative group">
+                    <img src={form.logoUrl} alt="Logo" className="h-14 object-contain border border-gray-200 p-1 bg-white" />
+                    <button
+                      onClick={() => update('logoUrl', '')}
+                      className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <X size={10} />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="h-14 w-24 border-2 border-dashed border-gray-200 flex items-center justify-center">
+                    <span className="text-[9px] text-gray-300 uppercase font-bold">Kein Logo</span>
+                  </div>
+                )}
+                <button
+                  onClick={() => logoInputRef.current?.click()}
+                  className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-3 py-2 text-[10px] font-bold uppercase tracking-wider hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+                >
+                  <Upload size={12} />
+                  Hochladen
+                </button>
+                <input ref={logoInputRef} type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
+              </div>
+            </div>
+            <div>
+              <label className={labelClass}>Firmenname</label>
+              <input
+                type="text"
+                value={form.firmenname}
+                onChange={e => update('firmenname', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Adresse</label>
+              <input
+                type="text"
+                value={form.adresse}
+                onChange={e => update('adresse', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <label className={labelClass}>PLZ</label>
+                <input
+                  type="text"
+                  value={form.plz}
+                  onChange={e => update('plz', e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>Ort</label>
+                <input
+                  type="text"
+                  value={form.ort}
+                  onChange={e => update('ort', e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>Land</label>
+                <input
+                  type="text"
+                  value={form.land}
+                  onChange={e => update('land', e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+            </div>
+            <div>
+              <label className={labelClass}>UID-Nummer</label>
+              <input
+                type="text"
+                value={form.uid}
+                onChange={e => update('uid', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Kontakt + Bank + Defaults */}
+        <div className="space-y-6">
+          {/* Kontakt */}
+          <div className="bg-white border border-gray-200 p-6">
+            <h3 className="text-sm font-black uppercase tracking-tight mb-5">Kontakt</h3>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className={labelClass}>E-Mail</label>
+                  <input
+                    type="email"
+                    value={form.email}
+                    onChange={e => update('email', e.target.value)}
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>Telefon</label>
+                  <input
+                    type="text"
+                    value={form.telefon}
+                    onChange={e => update('telefon', e.target.value)}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+              <div>
+                <label className={labelClass}>Website</label>
+                <input
+                  type="text"
+                  value={form.website}
+                  onChange={e => update('website', e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Bankverbindung */}
+          <div className="bg-white border border-gray-200 p-6">
+            <h3 className="text-sm font-black uppercase tracking-tight mb-5">Bankverbindung</h3>
+            <div className="space-y-4">
+              <div>
+                <label className={labelClass}>Bank</label>
+                <input
+                  type="text"
+                  value={form.bankName}
+                  onChange={e => update('bankName', e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>IBAN</label>
+                <input
+                  type="text"
+                  value={form.iban}
+                  onChange={e => update('iban', e.target.value)}
+                  className={`${inputClass} font-mono`}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>BIC</label>
+                <input
+                  type="text"
+                  value={form.bic}
+                  onChange={e => update('bic', e.target.value)}
+                  className={`${inputClass} font-mono`}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Standardwerte */}
+          <div className="bg-white border border-gray-200 p-6">
+            <h3 className="text-sm font-black uppercase tracking-tight mb-5">Standardwerte</h3>
+            <div className="space-y-4">
+              <div>
+                <label className={labelClass}>Standard-Provisionssatz (%)</label>
+                <input
+                  type="number"
+                  step="0.5"
+                  min="0"
+                  max="100"
+                  value={parseFloat((form.defaultProvisionRate * 100).toFixed(2))}
+                  onChange={e => update('defaultProvisionRate', (parseFloat(e.target.value) || 0) / 100)}
+                  className={`${inputClass} font-mono`}
+                />
+                <p className="text-[10px] text-gray-400 mt-1">
+                  z.B. 6 = 6% Provision. Aktuell: {(form.defaultProvisionRate * 100).toFixed(1)}%
+                </p>
+              </div>
+              <div>
+                <label className={labelClass}>Standard-Zahlungsbedingung</label>
+                <input
+                  type="text"
+                  value={form.defaultZahlungsbedingung}
+                  onChange={e => update('defaultZahlungsbedingung', e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>Standard-Lieferbedingung</label>
+                <input
+                  type="text"
+                  value={form.defaultLieferbedingung}
+                  onChange={e => update('defaultLieferbedingung', e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>Standard-MwSt-Satz (%)</label>
+                <input
+                  type="number"
+                  step="1"
+                  min="0"
+                  max="100"
+                  value={parseFloat((form.defaultMwstRate * 100).toFixed(2))}
+                  onChange={e => update('defaultMwstRate', (parseFloat(e.target.value) || 0) / 100)}
+                  className={`${inputClass} font-mono`}
+                />
+                <p className="text-[10px] text-gray-400 mt-1">
+                  z.B. 20 = 20% MwSt. Aktuell: {(form.defaultMwstRate * 100).toFixed(0)}%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Danger Zone */}
+      <div className="mt-8 bg-white border border-red-200 p-6">
+        <h3 className="text-sm font-black uppercase tracking-tight text-red-600 mb-2">Gefahrenzone</h3>
+        <p className="text-xs text-gray-500 mb-4">
+          Alle Daten (Partner, Deals, Artikel, Dokumente) auf die Seed-Daten zurücksetzen.
+          Alle manuell erstellten Einträge gehen verloren.
+        </p>
+        {!showResetConfirm ? (
+          <button
+            onClick={() => setShowResetConfirm(true)}
+            className="inline-flex items-center gap-2 border border-red-200 text-red-500 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-red-50 transition-all"
+          >
+            <RotateCcw size={14} />
+            Alle Daten zurücksetzen
+          </button>
+        ) : (
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-red-600 font-bold">Wirklich alle Daten zurücksetzen?</span>
+            <button
+              onClick={() => {
+                resetAllData();
+                setForm(getPlatformSettings());
+                setShowResetConfirm(false);
+                setSaved(false);
+              }}
+              className="inline-flex items-center gap-2 bg-red-600 text-white px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-red-700 transition-all"
+            >
+              Ja, zurücksetzen
+            </button>
+            <button
+              onClick={() => setShowResetConfirm(false)}
+              className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-gray-400 transition-all"
+            >
+              Abbrechen
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
