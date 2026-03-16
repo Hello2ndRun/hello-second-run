@@ -71,7 +71,11 @@ export default function Navbar() {
         {/* Desktop Navigation (Logged Out) */}
         {!user && (
           <div className="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
-            <Link to="/about" className="font-black text-[11px] uppercase tracking-[0.15em] text-black hover:text-[#8cc63f] transition-colors">Über Uns</Link>
+            <Link to="/" className={`font-black text-[11px] uppercase tracking-[0.15em] transition-colors flex items-center gap-1.5 ${isActive('/') ? 'text-[#8cc63f]' : 'text-black hover:text-[#8cc63f]'}`}>
+              <FileText size={12} />
+              Quick Angebot
+            </Link>
+            <Link to="/about" className={`font-black text-[11px] uppercase tracking-[0.15em] transition-colors ${location.pathname === '/about' ? 'text-[#8cc63f]' : 'text-black hover:text-[#8cc63f]'}`}>Über Uns</Link>
             <a href="/about#kontakt" className="font-black text-[11px] uppercase tracking-[0.15em] text-black hover:text-[#8cc63f] transition-colors">Kontakt</a>
           </div>
         )}
@@ -164,11 +168,15 @@ export default function Navbar() {
 
           {!user ? (
             <div className="space-y-6 flex-grow">
-              <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 font-black text-[13px] uppercase tracking-[0.15em] text-black py-2">
+              <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 font-black text-[13px] uppercase tracking-[0.15em] text-black py-2">
                 <FileText size={16} className="text-[#8cc63f]" />
+                Quick Angebot
+              </Link>
+              <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 font-black text-[13px] uppercase tracking-[0.15em] text-black py-2">
+                <Handshake size={16} className="text-[#8cc63f]" />
                 Über Uns
               </Link>
-              <a href="/about#kontakt" onClick={() => setIsMobileMenuOpen(false)} className="block font-black text-[13px] uppercase tracking-[0.15em] text-black py-2">Kontakt</a>
+              <a href="/about#kontakt" onClick={() => setIsMobileMenuOpen(false)} className="block font-black text-[13px] uppercase tracking-[0.15em] text-black py-2 pl-7">Kontakt</a>
               <div className="pt-6 border-t border-gray-100 space-y-3">
                 <button onClick={() => { handleDemoLogin(); setIsMobileMenuOpen(false); }} className="w-full flex items-center justify-center gap-2 bg-[#8cc63f] text-[#1a472a] px-8 py-4 font-black uppercase tracking-[0.1em] text-[11px] hover:bg-[#1a472a] hover:text-white transition-all">
                   <Play size={12} />

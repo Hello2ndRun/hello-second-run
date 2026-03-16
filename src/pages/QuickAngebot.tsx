@@ -227,7 +227,7 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
                 )}
               </div>
 
-              {/* Name + Brand */}
+              {/* Name + Brand + Gewicht */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">Produktname *</label>
@@ -239,15 +239,27 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
                     className={INPUT_CLASS}
                   />
                 </div>
-                <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">Marke</label>
-                  <input
-                    type="text"
-                    value={article.marke}
-                    onChange={e => onChange(article.id, { marke: e.target.value })}
-                    placeholder="z.B. Barilla"
-                    className={INPUT_CLASS}
-                  />
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">Marke</label>
+                    <input
+                      type="text"
+                      value={article.marke}
+                      onChange={e => onChange(article.id, { marke: e.target.value })}
+                      placeholder="z.B. Barilla"
+                      className={INPUT_CLASS}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">Gewicht</label>
+                    <input
+                      type="text"
+                      value={article.gewicht}
+                      onChange={e => onChange(article.id, { gewicht: e.target.value })}
+                      placeholder="z.B. 500g"
+                      className={INPUT_CLASS}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -709,7 +721,7 @@ export default function QuickAngebot() {
   return (
     <div className="bg-white">
       {/* ═══ Hero — Landing Page Style ═══ */}
-      <section className="py-16 md:py-24 px-5 md:px-8 relative" style={{
+      <section className="py-10 md:py-16 px-5 md:px-8 relative" style={{
         backgroundImage: 'linear-gradient(to right, #eef2ee 1px, transparent 1px), linear-gradient(to bottom, #eef2ee 1px, transparent 1px)',
         backgroundSize: '60px 60px'
       }}>
@@ -722,7 +734,7 @@ export default function QuickAngebot() {
             <span className="text-[11px] font-black uppercase tracking-[0.5em] text-[#1a472a]">Sonderposten-Vermittlung aus Salzburg</span>
             <div className="h-[2px] w-8 bg-[#1a472a]"></div>
           </div>
-          <h1 className="font-black text-[clamp(2rem,6vw,4.5rem)] leading-[1.05] uppercase tracking-[-0.03em] mb-6">
+          <h1 className="font-black text-[clamp(2rem,6vw,4rem)] leading-[1.05] uppercase tracking-[-0.03em] mb-4">
             <span className="block">Sonderposten-Angebot</span>
             <span className="block text-[#8cc63f]">in 30 Sekunden.</span>
           </h1>
@@ -982,16 +994,16 @@ export default function QuickAngebot() {
           <button
             onClick={handleGenerate}
             disabled={!canGenerate || generating}
-            className={`w-full py-4.5 font-black uppercase tracking-[0.1em] text-[12px] flex items-center justify-center gap-3 transition-all duration-300 ${
+            className={`w-full py-5 font-black uppercase tracking-[0.15em] text-[13px] flex items-center justify-center gap-3 transition-all duration-300 shadow-lg hover:shadow-xl ${
               canGenerate
-                ? 'bg-[#1a472a] hover:bg-[#8cc63f] text-white hover:text-[#1a472a] border-2 border-[#1a472a] hover:border-[#8cc63f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2'
-                : 'bg-gray-200 text-gray-400 border-2 border-gray-200 cursor-not-allowed focus-visible:outline-none'
+                ? 'bg-[#8cc63f] hover:bg-[#7ab635] text-[#1a472a] border-2 border-[#8cc63f] hover:border-[#7ab635] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a472a] focus-visible:ring-offset-2'
+                : 'bg-gray-200 text-gray-400 border-2 border-gray-200 cursor-not-allowed shadow-none focus-visible:outline-none'
             }`}
           >
             {generating ? (
-              <><Loader2 size={18} className="animate-spin" /> Generiere PDF...</>
+              <><Loader2 size={20} className="animate-spin" /> Generiere PDF...</>
             ) : (
-              <><FileText size={18} /> Angebot erstellen</>
+              <><FileText size={20} /> Angebot erstellen</>
             )}
           </button>
         ) : (
@@ -1130,6 +1142,57 @@ export default function QuickAngebot() {
         )}
 
       </main>
+
+      {/* ═══ Sticky Bottom Bar ═══ */}
+      {subtotal > 0 && !pdfDataUri && (
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+          <div className="max-w-5xl mx-auto px-5 md:px-8 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <span className="text-[10px] font-black uppercase tracking-wider text-gray-500 hidden sm:inline">{articles.length} Artikel · {totalStueck.toLocaleString('de-AT')} Stk</span>
+              <span className="text-lg font-black text-[#1a472a]">{formatCurrency(subtotal)}</span>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">netto</span>
+            </div>
+            <button
+              onClick={handleGenerate}
+              disabled={!canGenerate || generating}
+              className={`px-8 py-3 font-black uppercase tracking-[0.1em] text-[11px] flex items-center gap-2 transition-all ${
+                canGenerate
+                  ? 'bg-[#8cc63f] hover:bg-[#7ab635] text-[#1a472a] shadow-md'
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
+            >
+              {generating ? <Loader2 size={14} className="animate-spin" /> : <FileText size={14} />}
+              {generating ? 'Generiere...' : 'Angebot erstellen'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ═══ 3 Steps + Mehr erfahren ═══ */}
+      <section className="py-16 px-5 md:px-8 bg-[#f7f9f7] border-t border-gray-200">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-center text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 mb-10">So funktioniert's</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { step: '01', title: 'Hochladen', desc: 'Preisliste als PDF oder Excel hochladen — oder EAN manuell eintippen.' },
+              { step: '02', title: 'Angebot erstellen', desc: 'KI sucht UVP-Preise. Du gibst EK + Menge ein. VK wird automatisch berechnet.' },
+              { step: '03', title: 'Versenden', desc: 'PDF-Angebot per WhatsApp oder E-Mail verschicken. Fertig.' },
+            ].map(item => (
+              <div key={item.step} className="text-center">
+                <div className="w-12 h-12 bg-[#1a472a] text-white flex items-center justify-center mx-auto mb-4 text-[13px] font-black">{item.step}</div>
+                <h3 className="text-[12px] font-black uppercase tracking-[0.15em] text-[#1a472a] mb-2">{item.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <a href="/about" className="inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-[#1a472a] hover:text-[#8cc63f] transition-colors group">
+              Mehr über HELLO SECOND/RUN erfahren
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
