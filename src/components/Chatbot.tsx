@@ -12,6 +12,9 @@ export default function Chatbot() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const systemContext =
+    'Du bist der KI-Assistent von HELLO SECOND/RUN, einer Sonderposten-Vermittlungsplattform aus Salzburg, Österreich. Du hilfst Nutzern bei Fragen zu: Sonderposten-Handel, MHD-Ware, Preisfindung (EK/UVP/VK), Angebotserstellung, PDF-Dokumenten (Angebot, AB, BE, Lieferschein, Rechnung). Antworte immer auf Deutsch, kurz und hilfreich.';
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isOpen]);
@@ -37,16 +40,55 @@ export default function Chatbot() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage, history: messages }),
+        body: JSON.stringify({
+          message: userMessage,
+          history: messages,
+          systemContext,
+        }),
       });
 
-      if (!res.ok) throw new Error(`Server error: ${res.status}`);
+      if (res.status === 429) {
+        setMessages(prev => [
+          ...prev,
+          { role: 'model', text: 'Zu viele Anfragen. Bitte warte einen Moment.' },
+        ]);
+        return;
+      }
+
+      if (res.status === 500) {
+        setMessages(prev => [
+          ...prev,
+          { role: 'model', text: 'Serverfehler. Bitte versuche es erneut.' },
+        ]);
+        return;
+      }
+
+      if (!res.ok) {
+        throw new Error(`Server error: ${res.status}`);
+      }
 
       const data = await res.json();
-      setMessages(prev => [...prev, { role: 'model', text: data.text || 'Sorry, I could not generate a response.' }]);
-    } catch (error) {
-      console.error("Chatbot error:", error);
-      setMessages(prev => [...prev, { role: 'model', text: 'An error occurred. Please try again.' }]);
+      setMessages(prev => [
+        ...prev,
+        { role: 'model', text: data.text || 'Entschuldigung, ich konnte keine Antwort generieren.' },
+      ]);
+    } catch (error: unknown) {
+      console.error('Chatbot error:', error);
+
+      const isNetworkError =
+        error instanceof TypeError && error.message === 'Failed to fetch';
+
+      if (isNetworkError) {
+        setMessages(prev => [
+          ...prev,
+          { role: 'model', text: 'Server nicht erreichbar. Starte den Server mit: npm run server' },
+        ]);
+      } else {
+        setMessages(prev => [
+          ...prev,
+          { role: 'model', text: 'Verbindungsfehler. Bitte prüfe ob der Server läuft (/api/chat).' },
+        ]);
+      }
     } finally {
       setIsThinking(false);
     }
@@ -55,9 +97,9 @@ export default function Chatbot() {
   const clearChat = () => setMessages([]);
 
   const quickActions = [
-    'How do I create a listing?',
-    'What categories are available?',
-    'How does AI matching work?',
+    'Wie erstelle ich ein Angebot?',
+    'Welche Kategorien gibt es?',
+    'Wie funktioniert die KI-Preisfindung?',
   ];
 
   return (
@@ -84,12 +126,12 @@ export default function Chatbot() {
                 <Sparkles size={14} className="text-[#8cc63f]" />
               </div>
               <div>
-                <h3 className="font-black uppercase tracking-widest text-xs">AI Assistant</h3>
-                <p className="text-[9px] text-[#8cc63f] uppercase tracking-widest">Powered by Claude</p>
+                <h3 className="font-black uppercase tracking-widest text-xs">KI-Assistent</h3>
+                <p className="text-[10px] text-[#8cc63f] uppercase tracking-widest">Powered by Claude</p>
               </div>
             </div>
             {messages.length > 0 && (
-              <button onClick={clearChat} className="p-1.5 hover:bg-white/10 transition-colors" title="Clear chat">
+              <button onClick={clearChat} className="p-1.5 hover:bg-white/10 transition-colors" title="Chat löschen">
                 <Trash2 size={14} className="text-white/60" />
               </button>
             )}
@@ -102,8 +144,8 @@ export default function Chatbot() {
                 <div className="w-12 h-12 bg-[#8cc63f]/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Sparkles size={20} className="text-[#8cc63f]" />
                 </div>
-                <p className="text-sm font-bold text-gray-700 mb-1">How can I help?</p>
-                <p className="text-xs text-gray-400 mb-6">Ask about the platform, supply chains, or market trends.</p>
+                <p className="text-sm font-bold text-gray-700 mb-1">Wie kann ich helfen?</p>
+                <p className="text-xs text-gray-400 mb-6">Fragen zur Plattform, Sonderposten oder Marktpreise.</p>
                 <div className="space-y-2">
                   {quickActions.map((action, i) => (
                     <button
@@ -144,7 +186,7 @@ export default function Chatbot() {
                   <div className="w-1.5 h-1.5 bg-[#8cc63f] rounded-full animate-bounce" style={{ animationDelay: '0.15s' }}></div>
                   <div className="w-1.5 h-1.5 bg-[#8cc63f] rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></div>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Thinking...</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Denke nach...</span>
               </div>
             )}
             <div ref={messagesEndRef} />
@@ -157,7 +199,7 @@ export default function Chatbot() {
               type="text"
               value={input}
               onChange={e => setInput(e.target.value)}
-              placeholder="Ask anything..."
+              placeholder="Frag mich etwas..."
               className="flex-grow bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:border-[#1a472a] transition-colors"
               disabled={isThinking}
             />

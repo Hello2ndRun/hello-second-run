@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './AuthContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ServerStatus from './components/ServerStatus';
 import LoadingSpinner from './components/LoadingSpinner';
 import AdminLayout from './components/layout/AdminLayout';
 
@@ -92,6 +93,7 @@ function StandardPages() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
+      <ServerStatus />
       <main className="flex-grow pt-20">
         <Routes>
           <Route path="/" element={<QuickAngebot />} />

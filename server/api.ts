@@ -105,9 +105,10 @@ app.post('/api/lookup-uvp', async (req, res) => {
 // ─── Chat (AI Assistant) ───
 app.post('/api/chat', async (req, res) => {
   try {
-    const { message, history } = req.body as {
+    const { message, history, systemContext } = req.body as {
       message: string;
       history: Array<{ role: string; text: string }>;
+      systemContext?: string;
     };
 
     if (!message) {
@@ -128,10 +129,14 @@ app.post('/api/chat', async (req, res) => {
 
     messages.push({ role: 'user', content: message });
 
+    // Use client-provided system context or default
+    const systemPrompt = systemContext ||
+      "Du bist der KI-Assistent von HELLO SECOND/RUN, einer Sonderposten-Vermittlungsplattform aus Salzburg, Österreich. Du hilfst Nutzern bei Fragen zu: Sonderposten-Handel, MHD-Ware, Preisfindung (EK/UVP/VK), Angebotserstellung, PDF-Dokumenten. Antworte immer auf Deutsch, kurz und hilfreich.";
+
     const response = await client.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2048,
-      system: "You are an expert assistant for HELLO SECOND/RUN, a platform connecting surplus food producers with buyers in Austria/DACH. You help users optimize supply chains, understand MHD pricing, and navigate the platform. Be concise and helpful. Respond in the same language as the user's message.",
+      system: systemPrompt,
       messages,
     });
 
@@ -140,7 +145,7 @@ app.post('/api/chat', async (req, res) => {
       .map((block) => block.text)
       .join('');
 
-    res.json({ text: text || 'Sorry, I could not generate a response.' });
+    res.json({ text: text || 'Entschuldigung, ich konnte keine Antwort generieren.' });
   } catch (error: any) {
     console.error('Chat error:', error.message);
     res.status(500).json({ error: 'Chat request failed' });
