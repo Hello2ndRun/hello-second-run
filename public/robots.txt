@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /portal/
+
+Sitemap: https://hello2ndrun.com/sitemap.xml

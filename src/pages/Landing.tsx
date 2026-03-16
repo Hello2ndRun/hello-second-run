@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useAuth } from '../AuthContext';
-import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Zap, Shield, TrendingUp, Play, FileText, Handshake, Clock, Phone, Timer, SearchX, ShieldCheck, Sparkles, Eye, ChevronDown, Send, Loader2, CheckCircle, Heart, Package, Users } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { ArrowRight, Zap, Shield, TrendingUp, Play, FileText, Handshake, Clock, Phone, Timer, SearchX, ShieldCheck, Sparkles, Eye, ChevronDown, Send, Loader2, CheckCircle, Heart, Package, Users, PenTool } from 'lucide-react';
 import { sendKontaktEmail, isEmailConfigured } from '../lib/emailService';
 import { getImpactStats } from '../lib/donationService';
 import { DEMO_USERS, type DemoUser } from '../lib/demoStore';
@@ -236,6 +236,11 @@ export default function Landing() {
               </p>
               <div className="flex flex-col gap-6 items-start">
                 <div className="flex flex-col sm:flex-row gap-4">
+                  <Link to="/" className="group bg-[#8cc63f] text-[#1a472a] px-9 py-4 font-black uppercase tracking-[0.1em] text-[11px] border-2 border-[#8cc63f] hover:bg-[#1a472a] hover:border-[#1a472a] hover:text-white transition-all duration-300 inline-flex items-center gap-3">
+                    <FileText size={14} />
+                    Quick Angebot erstellen
+                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  </Link>
                   <a href="#kontakt" className="group bg-[#1a472a] text-white px-9 py-4 font-black uppercase tracking-[0.1em] text-[11px] border-2 border-[#1a472a] hover:bg-[#8cc63f] hover:border-[#8cc63f] hover:text-[#1a472a] transition-all duration-300 inline-flex items-center gap-3">
                     Jetzt Angebot einreichen
                     <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
@@ -455,7 +460,11 @@ export default function Landing() {
           <KontaktFormular />
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mt-12">
-            <a href="mailto:info@hello2ndrun.com" className="bg-[#8cc63f] text-[#1a472a] px-12 py-5 font-black uppercase tracking-[0.1em] text-[12px] hover:bg-white transition-all duration-300 flex items-center gap-3">
+            <Link to="/" className="bg-[#8cc63f] text-[#1a472a] px-12 py-5 font-black uppercase tracking-[0.1em] text-[12px] hover:bg-white transition-all duration-300 flex items-center gap-3">
+              <FileText size={14} />
+              Quick Angebot erstellen
+            </Link>
+            <a href="mailto:info@hello2ndrun.com" className="border-2 border-white/30 text-white px-12 py-5 font-black uppercase tracking-[0.1em] text-[12px] hover:bg-white/10 transition-all duration-300 flex items-center gap-3">
               <ArrowRight size={14} />
               Direkt per E-Mail
             </a>

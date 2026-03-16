@@ -167,8 +167,13 @@ function drawFooter(doc: jsPDF, footerEntity: { name: string; adresse: string; p
   }
 
   doc.setFont('helvetica', 'normal');
-  doc.setTextColor(180, 180, 180);
-  doc.text(`Erstellt via HELLO SECOND/RUN | Deal: ${deal.id}`, pw - 14, fy + 14, { align: 'right' });
+  doc.setTextColor(140, 198, 63); // brand green
+  doc.setFontSize(6.5);
+  doc.text(`Erstellt via HELLO SECOND/RUN`, pw - 14, fy + 14, { align: 'right' });
+  doc.setTextColor(160, 160, 160);
+  doc.setFontSize(6);
+  doc.text(`hello2ndrun.com | Deal: ${deal.id}`, pw - 14, fy + 18, { align: 'right' });
+  doc.link(pw - 80, fy + 12, 66, 8, { url: 'https://hello2ndrun.com/' });
 }
 
 // ═══════════════════════════════════════════════
@@ -315,7 +320,83 @@ export function generateRechnung(
 }
 
 // ═══════════════════════════════════════════════
-// 5. PROVISIONSRECHNUNG (from HELLO SECOND/RUN!)
+// 5. LIEFERSCHEIN (from Verkäufer — ohne Preise!)
+// ═══════════════════════════════════════════════
+
+export function generateLieferschein(
+  deal: Deal, articles: DealArticle[], verkaeufer: Partner, kaeufer: Partner
+): string {
+  const doc = new jsPDF();
+
+  drawHeader(doc,
+    { name: verkaeufer.firmenname, adresse: verkaeufer.adresse, plz: verkaeufer.plz, ort: verkaeufer.ort, land: verkaeufer.land, uid: verkaeufer.uidNummer, telefon: verkaeufer.telefon, email: verkaeufer.email },
+    { name: kaeufer.firmenname, kontakt: kaeufer.kontaktperson, adresse: kaeufer.adresse, plz: kaeufer.plz, ort: kaeufer.ort, land: kaeufer.land, uid: kaeufer.uidNummer }
+  );
+
+  const lsNr = deal.id.replace('HSR-', 'LS-');
+  drawDocTitle(doc, 'LIEFERSCHEIN', lsNr, new Date().toISOString(), `Bezug: Auftrag ${deal.auftragsbestaetigungNr || deal.angebotNr}`);
+
+  // Article table WITHOUT prices
+  const head = [['Pos', 'Artikel', 'Marke', 'EAN', 'MHD', 'Menge']];
+  const body = articles.map((art, i) => [
+    String(i + 1),
+    art.artikelname,
+    art.marke,
+    art.ean || '\u2014',
+    art.mhd ? formatDate(art.mhd) : '\u2014',
+    `${art.mengePaletten} Pal / ${art.mengeKartons} Kt`,
+  ]);
+
+  autoTable(doc, {
+    startY: 82,
+    head,
+    body,
+    theme: 'grid',
+    headStyles: {
+      fillColor: [26, 71, 42],
+      textColor: [255, 255, 255],
+      fontSize: 7,
+      fontStyle: 'bold',
+      cellPadding: 3,
+    },
+    bodyStyles: { fontSize: 8, cellPadding: 2.5 },
+    alternateRowStyles: { fillColor: [247, 249, 247] },
+    columnStyles: {
+      0: { cellWidth: 12, halign: 'center' },
+      5: { halign: 'center' },
+    },
+  });
+
+  // Delivery details
+  const detY = (doc as any).lastAutoTable.finalY + 12;
+  doc.setFontSize(9);
+  doc.setFont('helvetica', 'bold');
+  doc.text(`Lieferdatum: ${formatDate(new Date().toISOString())}`, 14, detY);
+  if (deal.abholtermin) {
+    doc.text(`Abholtermin: ${formatDate(deal.abholtermin)}`, 14, detY + 6);
+  }
+  if (deal.lieferbedingung) {
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Lieferbedingung: ${deal.lieferbedingung}`, 14, detY + 12);
+  }
+
+  // Signature field
+  const sigY = detY + 30;
+  doc.setFontSize(8);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Ware vollst\u00e4ndig und unbeschadet erhalten:', 14, sigY);
+  doc.setLineWidth(0.3);
+  doc.line(14, sigY + 14, 100, sigY + 14);
+  doc.setFontSize(7);
+  doc.text('Datum, Unterschrift Empf\u00e4nger', 14, sigY + 18);
+
+  drawFooter(doc, { name: verkaeufer.firmenname, adresse: verkaeufer.adresse, plz: verkaeufer.plz, ort: verkaeufer.ort, uid: verkaeufer.uidNummer }, deal);
+
+  return doc.output('datauristring');
+}
+
+// ═══════════════════════════════════════════════
+// 6. PROVISIONSRECHNUNG (from HELLO SECOND/RUN!)
 // ═══════════════════════════════════════════════
 
 export function generateProvision(
@@ -385,8 +466,13 @@ export function generateProvision(
   doc.text(`Bank: ${platform.bankName} | IBAN: ${platform.iban} | BIC: ${platform.bic}`, 14, fy + 4);
   doc.text(`${platform.email} | ${platform.website}`, pw - 14, fy, { align: 'right' });
 
-  doc.setTextColor(180, 180, 180);
-  doc.text(`Erstellt via HELLO SECOND/RUN | Deal: ${deal.id}`, pw - 14, fy + 10, { align: 'right' });
+  doc.setTextColor(140, 198, 63);
+  doc.setFontSize(6.5);
+  doc.text(`Erstellt via HELLO SECOND/RUN`, pw - 14, fy + 10, { align: 'right' });
+  doc.setTextColor(160, 160, 160);
+  doc.setFontSize(6);
+  doc.text(`hello2ndrun.com | Deal: ${deal.id}`, pw - 14, fy + 14, { align: 'right' });
+  doc.link(pw - 80, fy + 8, 66, 8, { url: 'https://hello2ndrun.com/' });
 
   return doc.output('datauristring');
 }
@@ -410,6 +496,8 @@ export function generateDocument(
       return generateBE(deal, articles, verkaeufer, kaeufer);
     case 'auftragsbestaetigung':
       return generateAB(deal, articles, verkaeufer, kaeufer);
+    case 'lieferschein':
+      return generateLieferschein(deal, articles, verkaeufer, kaeufer);
     case 'rechnung':
       return generateRechnung(deal, articles, verkaeufer, kaeufer);
     case 'provisionsrechnung':

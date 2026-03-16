@@ -25,6 +25,7 @@ const STATUS_BADGE_COLORS: Record<DealStatus, string> = {
   abgeholt: 'bg-emerald-50 text-emerald-700',
   abgeschlossen: 'bg-emerald-50 text-emerald-700',
   storniert: 'bg-red-50 text-red-700',
+  gespendet: 'bg-pink-50 text-pink-700',
 };
 
 export default function Deals() {

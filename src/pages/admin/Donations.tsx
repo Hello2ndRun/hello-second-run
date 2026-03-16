@@ -417,11 +417,9 @@ export default function Donations() {
                           <Truck size={11} className="inline mr-1" /> Abgeholt
                         </button>
                       )}
-                      {d.status !== 'bestaetigt' && (
-                        <button onClick={() => handleConfirm(d.id)} className="text-[10px] font-black uppercase tracking-wider px-3 py-1.5 bg-green-600 text-white hover:bg-green-700 transition-all">
-                          <CheckCircle size={11} className="inline mr-1" /> Bestätigen
-                        </button>
-                      )}
+                      <button onClick={() => handleConfirm(d.id)} className="text-[10px] font-black uppercase tracking-wider px-3 py-1.5 bg-green-600 text-white hover:bg-green-700 transition-all">
+                        <CheckCircle size={11} className="inline mr-1" /> Bestätigen
+                      </button>
                     </div>
                   )}
                 </div>

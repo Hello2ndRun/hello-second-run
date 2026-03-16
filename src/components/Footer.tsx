@@ -12,48 +12,48 @@ export default function Footer() {
             <div className="font-black text-3xl text-white mb-4 tracking-tighter leading-tight uppercase">
               HELLO<br />SECOND<br /><span className="text-[#8cc63f]">/</span>RUN.
             </div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-white/30 max-w-xs">
+            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-white/60 max-w-xs">
               Sonderposten-Vermittlung aus Salzburg
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-12 text-[10px] font-black uppercase tracking-widest">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-12 text-[11px] font-black uppercase tracking-widest">
             <div className="space-y-4">
-              <p className="text-white/25 mb-2">Plattform</p>
+              <p className="text-white/50 mb-2">Plattform</p>
               {user ? (
                 <>
-                  <Link to="/admin/dashboard" className="block text-white/60 hover:text-[#8cc63f] transition-colors">Dashboard</Link>
-                  <Link to="/admin/deals" className="block text-white/60 hover:text-[#8cc63f] transition-colors">Deals</Link>
-                  <Link to="/admin/partners" className="block text-white/60 hover:text-[#8cc63f] transition-colors">Partner</Link>
+                  <Link to="/admin/dashboard" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Dashboard</Link>
+                  <Link to="/admin/deals" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Deals</Link>
+                  <Link to="/admin/partners" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Partner</Link>
                 </>
               ) : (
                 <>
-                  <a href="/#vision" className="block text-white/60 hover:text-[#8cc63f] transition-colors">Vision</a>
-                  <a href="/#how" className="block text-white/60 hover:text-[#8cc63f] transition-colors">So funktioniert's</a>
-                  <a href="/#kontakt" className="block text-white/60 hover:text-[#8cc63f] transition-colors">Kontakt</a>
+                  <Link to="/" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Quick Angebot</Link>
+                  <Link to="/about" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Über Uns</Link>
+                  <a href="/about#kontakt" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Kontakt</a>
                 </>
               )}
             </div>
             <div className="space-y-4">
-              <p className="text-white/25 mb-2">Rechtliches</p>
-              <Link to="/impressum" className="block text-white/60 hover:text-[#8cc63f] transition-colors">Impressum</Link>
-              <Link to="/datenschutz" className="block text-white/60 hover:text-[#8cc63f] transition-colors">Datenschutz</Link>
-              <Link to="/agb" className="block text-white/60 hover:text-[#8cc63f] transition-colors">AGB</Link>
+              <p className="text-white/50 mb-2">Rechtliches</p>
+              <Link to="/impressum" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Impressum</Link>
+              <Link to="/datenschutz" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Datenschutz</Link>
+              <Link to="/agb" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">AGB</Link>
             </div>
             <div className="space-y-4">
-              <p className="text-white/25 mb-2">Kontakt</p>
-              <a href="#" className="block text-white/60 hover:text-[#8cc63f] transition-colors">LinkedIn</a>
-              <a href="#" className="block text-white/60 hover:text-[#8cc63f] transition-colors">Instagram</a>
-              <a href="mailto:info@hello2ndrun.com" className="block text-white/60 hover:text-[#8cc63f] transition-colors">E-Mail</a>
+              <p className="text-white/50 mb-2">Kontakt</p>
+              <a href="#" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">LinkedIn</a>
+              <a href="#" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Instagram</a>
+              <a href="mailto:info@hello2ndrun.com" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">E-Mail</a>
             </div>
           </div>
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/25">
+          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-white/50">
             Salzburg, Austria | {new Date().getFullYear()}
           </p>
-          <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/25">
+          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-white/50">
             Built with purpose
           </p>
         </div>

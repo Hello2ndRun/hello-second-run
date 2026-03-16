@@ -11,6 +11,7 @@ const DOC_TYPE_LABELS: Record<DocumentType, string> = {
   angebot: 'Angebot',
   bestellbestaetigung: 'Bestellbestätigung',
   auftragsbestaetigung: 'Auftragsbestätigung',
+  lieferschein: 'Lieferschein',
   rechnung: 'Rechnung',
   provisionsrechnung: 'Provisionsrechnung',
 };
@@ -19,6 +20,7 @@ const DOC_TYPE_COLORS: Record<DocumentType, string> = {
   angebot: 'bg-blue-50 text-blue-700',
   bestellbestaetigung: 'bg-amber-50 text-amber-700',
   auftragsbestaetigung: 'bg-indigo-50 text-indigo-700',
+  lieferschein: 'bg-teal-50 text-teal-700',
   rechnung: 'bg-purple-50 text-purple-700',
   provisionsrechnung: 'bg-emerald-50 text-emerald-700',
 };

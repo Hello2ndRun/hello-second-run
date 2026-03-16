@@ -1,6 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import { ai } from '../lib/gemini';
-import { ThinkingLevel } from '@google/genai';
 import ReactMarkdown from 'react-markdown';
 import { useAuth } from '../AuthContext';
 import { MessageCircle, X, Send, Sparkles, Trash2 } from 'lucide-react';
@@ -36,18 +34,16 @@ export default function Chatbot() {
     setIsThinking(true);
 
     try {
-      const chat = ai.chats.create({
-        model: 'gemini-3.1-pro-preview',
-        config: {
-          systemInstruction: "You are an expert assistant for HELLO SECOND/RUN, a platform connecting surplus producers with buyers in Salzburg. You help users optimize supply chains, understand market trends, and navigate the platform. Be concise and helpful. Respond in the same language as the user's message. You have access to Google Search to find current information.",
-          thinkingConfig: { thinkingLevel: ThinkingLevel.HIGH },
-          tools: [{ googleSearch: {} }]
-        }
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage, history: messages }),
       });
 
-      const response = await chat.sendMessage({ message: userMessage });
+      if (!res.ok) throw new Error(`Server error: ${res.status}`);
 
-      setMessages(prev => [...prev, { role: 'model', text: response.text || 'Sorry, I could not generate a response.' }]);
+      const data = await res.json();
+      setMessages(prev => [...prev, { role: 'model', text: data.text || 'Sorry, I could not generate a response.' }]);
     } catch (error) {
       console.error("Chatbot error:", error);
       setMessages(prev => [...prev, { role: 'model', text: 'An error occurred. Please try again.' }]);
@@ -89,7 +85,7 @@ export default function Chatbot() {
               </div>
               <div>
                 <h3 className="font-black uppercase tracking-widest text-xs">AI Assistant</h3>
-                <p className="text-[9px] text-[#8cc63f] uppercase tracking-widest">Powered by Gemini</p>
+                <p className="text-[9px] text-[#8cc63f] uppercase tracking-widest">Powered by Claude</p>
               </div>
             </div>
             {messages.length > 0 && (

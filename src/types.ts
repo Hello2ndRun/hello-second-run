@@ -141,7 +141,7 @@ export interface EanProduct {
 }
 
 // === GENERATED DOCUMENT ===
-export type DocumentType = 'angebot' | 'bestellbestaetigung' | 'auftragsbestaetigung' | 'rechnung' | 'provisionsrechnung';
+export type DocumentType = 'angebot' | 'bestellbestaetigung' | 'auftragsbestaetigung' | 'lieferschein' | 'rechnung' | 'provisionsrechnung';
 
 export interface GeneratedDocument {
   id: string;

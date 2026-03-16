@@ -17,6 +17,7 @@ const DOC_PREFIXES: Record<DocumentType, string> = {
   angebot: 'ANG',
   bestellbestaetigung: 'BE',
   auftragsbestaetigung: 'AB',
+  lieferschein: 'LS',
   rechnung: 'RE',
   provisionsrechnung: 'PROV',
 };

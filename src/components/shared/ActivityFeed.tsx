@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, Handshake, UserPlus, FileText, Copy, Edit, X } from 'lucide-react';
+import { Bell, Handshake, UserPlus, FileText, Copy, Edit, X, Heart, CheckCircle } from 'lucide-react';
 import { activitiesCollection, markAllActivitiesRead } from '../../lib/demoStore';
 import type { ActivityEvent, ActivityType } from '../../types';
 
@@ -11,6 +11,8 @@ const ICON_MAP: Record<ActivityType, typeof Handshake> = {
   partner_created: UserPlus,
   document_generated: FileText,
   partner_updated: UserPlus,
+  donation_created: Heart,
+  donation_completed: CheckCircle,
 };
 
 const COLOR_MAP: Record<ActivityType, string> = {
@@ -20,6 +22,8 @@ const COLOR_MAP: Record<ActivityType, string> = {
   partner_created: 'bg-emerald-50 text-emerald-600',
   document_generated: 'bg-indigo-50 text-indigo-600',
   partner_updated: 'bg-teal-50 text-teal-600',
+  donation_created: 'bg-pink-50 text-pink-600',
+  donation_completed: 'bg-red-50 text-red-600',
 };
 
 function timeAgo(dateStr: string): string {

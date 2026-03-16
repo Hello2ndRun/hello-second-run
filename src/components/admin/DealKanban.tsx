@@ -24,6 +24,7 @@ const COLUMN_COLORS: Record<DealStatus, string> = {
   abgeholt: 'border-t-teal-500',
   abgeschlossen: 'border-t-green-700',
   storniert: 'border-t-red-500',
+  gespendet: 'border-t-pink-500',
 };
 
 const CARD_HOVER: Record<DealStatus, string> = {
@@ -37,6 +38,7 @@ const CARD_HOVER: Record<DealStatus, string> = {
   abgeholt: 'hover:border-teal-300',
   abgeschlossen: 'hover:border-green-300',
   storniert: 'hover:border-red-300',
+  gespendet: 'hover:border-pink-300',
 };
 
 export default function DealKanban({ deals, partners }: Props) {
