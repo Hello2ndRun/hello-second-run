@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft, FileText, Download, User, Building, Percent,
   Calendar, Truck, CreditCard, Loader2, Eye, EyeOff,
-  Link2, Mail, Copy, Check,
+  Link2, Mail, Copy, Check, Heart,
 } from 'lucide-react';
 import PageHeader from '../../components/layout/PageHeader';
 import DealStatusFlow from '../../components/admin/DealStatusFlow';
@@ -18,6 +18,10 @@ import { DEAL_STATUS_LABELS } from '../../types';
 import type { Deal, DealArticle, DealStatus, Partner, GeneratedDocument, DocumentType } from '../../types';
 import { calculateDealTotals, calculateCommission, getArticleStueck } from '../../lib/priceCalculator';
 import { useToast } from '../../components/shared/Toast';
+import { sendAngebotEmail, sendStatusEmail, isEmailConfigured } from '../../lib/emailService';
+import { shouldSuggestDonation, findMatchingDonationPartners, createDonationFromDeal } from '../../lib/donationService';
+import { donationPartnersCollection } from '../../lib/demoStore';
+import type { DonationPartner } from '../../types';
 
 const STATUS_ACTION_MAP: Partial<Record<DealStatus, { label: string; next: DealStatus }>> = {
   draft: { label: 'Angebot erstellen', next: 'angebot_erstellt' },
@@ -30,7 +34,7 @@ const STATUS_ACTION_MAP: Partial<Record<DealStatus, { label: string; next: DealS
   abgeholt: { label: 'Deal abschließen', next: 'abgeschlossen' },
 };
 
-const FINAL_STATUSES: DealStatus[] = ['abgeschlossen', 'storniert'];
+const FINAL_STATUSES: DealStatus[] = ['abgeschlossen', 'storniert', 'gespendet'];
 
 export default function DealDetail() {
   const { id } = useParams<{ id: string }>();
@@ -44,7 +48,12 @@ export default function DealDetail() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
-  const [emailPrompt, setEmailPrompt] = useState<{ recipient: Partner; subject: string; body: string } | null>(null);
+  const [emailPrompt, setEmailPrompt] = useState<{ recipient: Partner; subject: string; body: string; newStatus?: string } | null>(null);
+  const [emailSending, setEmailSending] = useState(false);
+  const [showDonationModal, setShowDonationModal] = useState(false);
+  const [donationPartners, setDonationPartners] = useState<DonationPartner[]>([]);
+  const [selectedDonationPartner, setSelectedDonationPartner] = useState('');
+  const [donationNotizen, setDonationNotizen] = useState('');
 
   useEffect(() => {
     const unsub1 = dealsCollection.subscribe(null, (all) => {
@@ -210,7 +219,7 @@ export default function DealDetail() {
       // Show email prompt after status change
       const template = getEmailTemplate(newStatus);
       if (template) {
-        setEmailPrompt(template);
+        setEmailPrompt({ ...template, newStatus });
       }
     } finally {
       setIsGenerating(false);
@@ -221,6 +230,21 @@ export default function DealDetail() {
     dealsCollection.update(deal.id, { status: 'storniert' as DealStatus });
     logActivity('deal_status_changed', 'Deal storniert', `${deal.id}`, { dealId: deal.id });
     addToast('Deal wurde storniert', 'error');
+  };
+
+  const handleOpenDonation = () => {
+    const allPartners = donationPartnersCollection.getAll().filter(p => p.aktiv);
+    setDonationPartners(allPartners);
+    setSelectedDonationPartner(allPartners[0]?.id || '');
+    setDonationNotizen('');
+    setShowDonationModal(true);
+  };
+
+  const handleDonate = () => {
+    if (!deal || !selectedDonationPartner) return;
+    createDonationFromDeal(deal, selectedDonationPartner, donationNotizen);
+    setShowDonationModal(false);
+    addToast('Spende erstellt! ❤️ Ware wird nicht entsorgt.', 'success');
   };
 
   const handleSaveNotizen = () => {
@@ -253,8 +277,29 @@ export default function DealDetail() {
     }
   };
 
-  const handleEmailSend = () => {
-    if (!kaeufer) return;
+  const handleEmailSend = async () => {
+    if (!kaeufer || !verkaeufer) return;
+
+    // Try EmailJS first
+    if (isEmailConfigured()) {
+      setEmailSending(true);
+      const result = await sendAngebotEmail({
+        deal,
+        articles,
+        verkaeufer,
+        kaeufer,
+        angebotLink: `${window.location.origin}/angebot/${deal.id}`,
+      });
+      setEmailSending(false);
+      if (result.success) {
+        addToast(result.message, 'success');
+      } else {
+        addToast(result.message, 'error');
+      }
+      return;
+    }
+
+    // Fallback: mailto
     const shareUrl = `${window.location.origin}/angebot/${deal.id}`;
     const subject = encodeURIComponent(`Angebot ${deal.angebotNr || deal.id} — ${verkaeufer?.firmenname || ''}`);
     const body = encodeURIComponent(
@@ -433,10 +478,11 @@ export default function DealDetail() {
               {canShare && kaeufer && (
                 <button
                   onClick={handleEmailSend}
-                  className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+                  disabled={emailSending}
+                  className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all disabled:opacity-50 disabled:cursor-wait"
                 >
-                  <Mail size={14} />
-                  Per E-Mail senden
+                  {emailSending ? <Loader2 size={14} className="animate-spin" /> : <Mail size={14} />}
+                  {emailSending ? 'Sende...' : isEmailConfigured() ? 'Per E-Mail senden' : 'Per E-Mail (mailto)'}
                 </button>
               )}
 
@@ -449,16 +495,46 @@ export default function DealDetail() {
                 Duplizieren
               </button>
 
+              {/* Spenden statt Entsorgen */}
+              {canStornieren && (
+                <button
+                  onClick={handleOpenDonation}
+                  className="inline-flex items-center gap-2 border border-red-300 text-red-500 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-red-50 hover:border-red-400 transition-all"
+                >
+                  <Heart size={14} />
+                  Spenden
+                </button>
+              )}
+
               {canStornieren && (
                 <button
                   onClick={handleStornieren}
-                  className="inline-flex items-center gap-2 border border-red-300 text-red-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-red-50 transition-all"
+                  className="inline-flex items-center gap-2 border border-gray-300 text-gray-400 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-red-50 hover:border-red-300 hover:text-red-500 transition-all"
                 >
                   Stornieren
                 </button>
               )}
             </div>
           </div>
+
+          {/* Spenden-Vorschlag bei kritischem MHD */}
+          {deal && shouldSuggestDonation(deal) && deal.status !== 'gespendet' && (
+            <div className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Heart size={20} className="text-red-400 flex-shrink-0" />
+                <div>
+                  <h3 className="text-sm font-black text-red-700">Spenden statt Entsorgen?</h3>
+                  <p className="text-xs text-red-500 mt-0.5">Diese Ware hat kritisches MHD. Statt zu entsorgen, kann sie an eine Tafel oder Foodbank gespendet werden.</p>
+                </div>
+              </div>
+              <button
+                onClick={handleOpenDonation}
+                className="flex-shrink-0 ml-4 px-4 py-2 bg-red-500 text-white text-[10px] font-black uppercase tracking-wider hover:bg-red-600 transition-all"
+              >
+                Jetzt spenden ❤️
+              </button>
+            </div>
+          )}
 
           {/* Email Notification Prompt */}
           {emailPrompt && (
@@ -476,16 +552,36 @@ export default function DealDetail() {
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
                   <button
-                    onClick={() => {
-                      const mailto = `mailto:${emailPrompt.recipient.email}?subject=${encodeURIComponent(emailPrompt.subject)}&body=${encodeURIComponent(emailPrompt.body)}`;
-                      window.open(mailto, '_self');
+                    disabled={emailSending}
+                    onClick={async () => {
+                      if (isEmailConfigured() && emailPrompt.newStatus && verkaeufer && kaeufer) {
+                        // Use EmailJS
+                        setEmailSending(true);
+                        const result = await sendStatusEmail({
+                          deal,
+                          verkaeufer,
+                          kaeufer,
+                          newStatus: emailPrompt.newStatus,
+                          statusLabel: emailPrompt.subject,
+                        });
+                        setEmailSending(false);
+                        if (result.success) {
+                          addToast(result.message, 'success');
+                        } else {
+                          addToast(result.message, 'error');
+                        }
+                      } else {
+                        // Fallback: mailto
+                        const mailto = `mailto:${emailPrompt.recipient.email}?subject=${encodeURIComponent(emailPrompt.subject)}&body=${encodeURIComponent(emailPrompt.body)}`;
+                        window.open(mailto, '_self');
+                        addToast(`E-Mail an ${emailPrompt.recipient.firmenname} vorbereitet`, 'info');
+                      }
                       setEmailPrompt(null);
-                      addToast(`E-Mail an ${emailPrompt.recipient.firmenname} vorbereitet`, 'info');
                     }}
-                    className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 text-[10px] font-black uppercase tracking-wider hover:bg-blue-700 transition-all"
+                    className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 text-[10px] font-black uppercase tracking-wider hover:bg-blue-700 transition-all disabled:opacity-50"
                   >
-                    <Mail size={12} />
-                    Senden
+                    {emailSending ? <Loader2 size={12} className="animate-spin" /> : <Mail size={12} />}
+                    {emailSending ? 'Sende...' : isEmailConfigured() ? 'Jetzt senden' : 'E-Mail öffnen'}
                   </button>
                   <button
                     onClick={() => setEmailPrompt(null)}
@@ -665,6 +761,83 @@ export default function DealDetail() {
           </div>
         </div>
       </div>
+
+      {/* ═══ Spenden-Modal ═══ */}
+      {showDonationModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowDonationModal(false)}>
+          <div className="bg-white max-w-md w-full p-6" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center">
+                <Heart size={20} className="text-red-400" />
+              </div>
+              <div>
+                <h2 className="font-black text-lg text-[#0a1a0f]">Spenden statt Entsorgen</h2>
+                <p className="text-xs text-gray-400">Ware geht an eine gemeinnützige Organisation</p>
+              </div>
+            </div>
+
+            <div className="bg-red-50 border border-red-100 p-3 mb-4 text-xs text-red-600">
+              ❤️ Kein Sonderposten wird verschwendet. Diese Ware wird Familien in Not helfen.
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Spendenpartner *</label>
+                {donationPartners.length > 0 ? (
+                  <select
+                    value={selectedDonationPartner}
+                    onChange={e => setSelectedDonationPartner(e.target.value)}
+                    className="w-full border border-gray-200 p-2.5 text-sm mt-1 focus:border-[#1a472a] focus:outline-none bg-white"
+                  >
+                    {donationPartners.map(p => (
+                      <option key={p.id} value={p.id}>
+                        {p.name} — {p.ort}, {p.land} {p.kuehlung ? '❄️' : ''} {p.abholung ? '🚛' : ''}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <p className="text-sm text-red-500 mt-1">Noch keine Spendenpartner angelegt. Bitte zuerst unter Spenden → Partner anlegen.</p>
+                )}
+              </div>
+
+              <div>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Notizen zur Spende</label>
+                <textarea
+                  value={donationNotizen}
+                  onChange={e => setDonationNotizen(e.target.value)}
+                  rows={2}
+                  placeholder="z.B. Abholung Dienstag, Kühlware beachten..."
+                  className="w-full border border-gray-200 p-2.5 text-sm mt-1 focus:border-[#1a472a] focus:outline-none resize-none"
+                />
+              </div>
+
+              <div className="bg-gray-50 p-3 text-xs text-gray-500">
+                <p className="font-bold text-[#0a1a0f] mb-1">Was passiert:</p>
+                <ul className="space-y-1 list-disc list-inside">
+                  <li>Deal-Status wird auf "Gespendet ❤️" gesetzt</li>
+                  <li>Spende wird erfasst (Gewicht, Wert, Mahlzeiten)</li>
+                  <li>Impact-Dashboard wird aktualisiert</li>
+                  <li>Spendenbestätigung wird erstellt</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 mt-5 pt-4 border-t border-gray-100">
+              <button onClick={() => setShowDonationModal(false)} className="px-4 py-2 text-[10px] font-black uppercase tracking-wider text-gray-400 hover:text-gray-600">
+                Abbrechen
+              </button>
+              <button
+                onClick={handleDonate}
+                disabled={!selectedDonationPartner || donationPartners.length === 0}
+                className="px-5 py-2.5 bg-red-500 text-white text-[10px] font-black uppercase tracking-wider hover:bg-red-600 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                <Heart size={13} className="inline mr-2" />
+                Spende bestätigen ❤️
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

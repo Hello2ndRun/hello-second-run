@@ -3,13 +3,16 @@ import { useAuth } from '../../AuthContext';
 import {
   LayoutDashboard, Handshake, PlusCircle, Calculator,
   Users, UserCog, FileText, Settings,
-  ChevronLeft, ChevronRight, LogOut,
+  ChevronLeft, ChevronRight, LogOut, X,
+  Heart,
 } from 'lucide-react';
 import ActivityFeed from '../shared/ActivityFeed';
 
 interface Props {
   open: boolean;
   onToggle: () => void;
+  onMobileClose?: () => void;
+  isMobile?: boolean;
 }
 
 interface NavItem {
@@ -46,6 +49,12 @@ const NAV_GROUPS: NavGroup[] = [
     ],
   },
   {
+    label: 'Social Impact',
+    items: [
+      { to: '/admin/spenden', icon: Heart, label: 'Spenden' },
+    ],
+  },
+  {
     label: 'System',
     items: [
       { to: '/admin/team', icon: UserCog, label: 'Team', adminOnly: true },
@@ -55,7 +64,7 @@ const NAV_GROUPS: NavGroup[] = [
   },
 ];
 
-export default function AdminSidebar({ open, onToggle }: Props) {
+export default function AdminSidebar({ open, onToggle, onMobileClose, isMobile }: Props) {
   const { user, userRole, logout, isDemo } = useAuth();
   const navigate = useNavigate();
   const isAdmin = userRole === 'admin';
@@ -66,19 +75,26 @@ export default function AdminSidebar({ open, onToggle }: Props) {
   };
 
   return (
-    <aside className={`fixed top-0 left-0 h-screen bg-[#1a472a] text-white z-40 transition-all duration-300 flex flex-col ${open ? 'w-64' : 'w-16'}`}>
+    <aside className={`fixed top-0 left-0 h-screen bg-[#1a472a] text-white z-40 transition-all duration-300 flex flex-col ${isMobile ? 'w-72' : open ? 'w-64' : 'w-16'}`}>
       {/* Logo */}
       <div className="h-16 flex items-center px-4 border-b border-white/10">
         {open ? (
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-[#8cc63f] rounded-sm flex items-center justify-center">
-              <span className="text-[#1a472a] font-black text-xs">H</span>
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-[#8cc63f] rounded-sm flex items-center justify-center">
+                <span className="text-[#1a472a] font-black text-xs">H</span>
+              </div>
+              <div className="leading-none">
+                <span className="text-[11px] font-black uppercase tracking-[0.15em]">HELLO</span>
+                <br />
+                <span className="text-[11px] font-black uppercase tracking-[0.15em] text-[#8cc63f]">SECOND/RUN</span>
+              </div>
             </div>
-            <div className="leading-none">
-              <span className="text-[11px] font-black uppercase tracking-[0.15em]">HELLO</span>
-              <br />
-              <span className="text-[11px] font-black uppercase tracking-[0.15em] text-[#8cc63f]">SECOND/RUN</span>
-            </div>
+            {isMobile && onMobileClose && (
+              <button onClick={onMobileClose} className="p-1.5 text-white/50 hover:text-white transition-colors">
+                <X size={18} />
+              </button>
+            )}
           </div>
         ) : (
           <div className="w-8 h-8 bg-[#8cc63f] rounded-sm flex items-center justify-center mx-auto">

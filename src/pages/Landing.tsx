@@ -1,7 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Zap, Shield, TrendingUp, Play, FileText, Handshake, Clock, Phone, Timer, SearchX, ShieldCheck, Sparkles, Eye, ChevronDown } from 'lucide-react';
+import { ArrowRight, Zap, Shield, TrendingUp, Play, FileText, Handshake, Clock, Phone, Timer, SearchX, ShieldCheck, Sparkles, Eye, ChevronDown, Send, Loader2, CheckCircle, Heart, Package, Users } from 'lucide-react';
+import { sendKontaktEmail, isEmailConfigured } from '../lib/emailService';
+import { getImpactStats } from '../lib/donationService';
 import { DEMO_USERS, type DemoUser } from '../lib/demoStore';
 
 function useInView(threshold = 0.15) {
@@ -32,6 +34,142 @@ function CountUp({ target, suffix = '' }: { target: number; suffix?: string }) {
     return () => clearInterval(timer);
   }, [inView, target]);
   return <span ref={ref}>{val.toLocaleString()}{suffix}</span>;
+}
+
+function KontaktFormular() {
+  const [form, setForm] = useState({ name: '', email: '', firma: '', telefon: '', nachricht: '', typ: 'verkauf' as 'verkauf' | 'kauf' | 'allgemein' });
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (!form.name || !form.email || !form.nachricht) {
+      setError('Bitte Name, E-Mail und Nachricht ausfüllen.');
+      return;
+    }
+
+    if (isEmailConfigured()) {
+      setSending(true);
+      const result = await sendKontaktEmail(form);
+      setSending(false);
+      if (result.success) {
+        setSent(true);
+      } else {
+        setError(result.message);
+      }
+    } else {
+      // Fallback: mailto
+      const subject = encodeURIComponent(`Anfrage von ${form.name} — ${form.firma || 'Privat'}`);
+      const body = encodeURIComponent(
+        `Name: ${form.name}\nFirma: ${form.firma}\nE-Mail: ${form.email}\nTelefon: ${form.telefon}\n\nTyp: ${form.typ}\n\nNachricht:\n${form.nachricht}`
+      );
+      window.open(`mailto:info@hello2ndrun.com?subject=${subject}&body=${body}`, '_self');
+      setSent(true);
+    }
+  };
+
+  if (sent) {
+    return (
+      <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-12 text-center">
+        <CheckCircle size={48} className="text-[#8cc63f] mx-auto mb-4" />
+        <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-2">Nachricht gesendet!</h3>
+        <p className="text-white/60 text-sm">Wir melden uns innerhalb von 24 Stunden bei dir.</p>
+        <button
+          onClick={() => { setSent(false); setForm({ name: '', email: '', firma: '', telefon: '', nachricht: '', typ: 'verkauf' }); }}
+          className="mt-6 text-[10px] font-black uppercase tracking-widest text-[#8cc63f] hover:text-white transition-colors underline underline-offset-4"
+        >
+          Neue Anfrage senden
+        </button>
+      </div>
+    );
+  }
+
+  const inputClass = 'w-full bg-white/10 border border-white/20 text-white py-3 px-4 text-sm placeholder-white/30 focus:border-[#8cc63f] focus:outline-none transition-all';
+
+  return (
+    <form onSubmit={handleSubmit} className="bg-white/5 backdrop-blur-sm border border-white/10 p-8">
+      <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-[#8cc63f] mb-6">Kontaktformular</h3>
+
+      {/* Typ Selection */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        {[
+          { value: 'verkauf', label: 'Verkaufen' },
+          { value: 'kauf', label: 'Kaufen' },
+          { value: 'allgemein', label: 'Allgemein' },
+        ].map(opt => (
+          <button
+            key={opt.value}
+            type="button"
+            onClick={() => setForm(prev => ({ ...prev, typ: opt.value as any }))}
+            className={`px-4 py-2.5 text-[10px] font-black uppercase tracking-wider transition-all flex-1 min-w-[90px] sm:flex-none ${
+              form.typ === opt.value
+                ? 'bg-[#8cc63f] text-[#1a472a]'
+                : 'border border-white/20 text-white/50 hover:border-white/40 hover:text-white'
+            }`}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-4 mb-4">
+        <input
+          type="text"
+          value={form.name}
+          onChange={e => setForm(prev => ({ ...prev, name: e.target.value }))}
+          placeholder="Name *"
+          className={inputClass}
+          required
+        />
+        <input
+          type="email"
+          value={form.email}
+          onChange={e => setForm(prev => ({ ...prev, email: e.target.value }))}
+          placeholder="E-Mail *"
+          className={inputClass}
+          required
+        />
+        <input
+          type="text"
+          value={form.firma}
+          onChange={e => setForm(prev => ({ ...prev, firma: e.target.value }))}
+          placeholder="Firma"
+          className={inputClass}
+        />
+        <input
+          type="text"
+          value={form.telefon}
+          onChange={e => setForm(prev => ({ ...prev, telefon: e.target.value }))}
+          placeholder="Telefon"
+          className={inputClass}
+        />
+      </div>
+      <textarea
+        value={form.nachricht}
+        onChange={e => setForm(prev => ({ ...prev, nachricht: e.target.value }))}
+        placeholder="Deine Nachricht — z.B. Artikelliste, Paletten-Anzahl, MHD... *"
+        rows={4}
+        className={`${inputClass} resize-none mb-4`}
+        required
+      />
+
+      {error && (
+        <p className="text-red-400 text-xs font-bold mb-4">{error}</p>
+      )}
+
+      <button
+        type="submit"
+        disabled={sending}
+        className="w-full bg-[#8cc63f] text-[#1a472a] py-4 font-black uppercase tracking-[0.1em] text-[12px] hover:bg-white transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-wait"
+      >
+        {sending ? <Loader2 size={16} className="animate-spin" /> : <Send size={14} />}
+        {sending ? 'Wird gesendet...' : 'Anfrage senden'}
+      </button>
+    </form>
+  );
 }
 
 export default function Landing() {
@@ -73,7 +211,7 @@ export default function Landing() {
   return (
     <div className="bg-white text-[#0a0c0a] font-sans overflow-x-hidden">
       {/* HERO */}
-      <header ref={hero.ref} id="vision" className="min-h-screen pt-48 pb-20 px-8 flex items-center relative" style={{
+      <header ref={hero.ref} id="vision" className="min-h-screen pt-28 md:pt-48 pb-12 md:pb-20 px-5 md:px-8 flex items-center relative" style={{
         backgroundImage: 'linear-gradient(to right, #eef2ee 1px, transparent 1px), linear-gradient(to bottom, #eef2ee 1px, transparent 1px)',
         backgroundSize: '60px 60px'
       }}>
@@ -142,7 +280,7 @@ export default function Landing() {
       </header>
 
       {/* IMPACT NUMBERS */}
-      <section ref={impact.ref} className="py-16 px-8 bg-[#1a472a]">
+      <section ref={impact.ref} className="py-12 md:py-16 px-5 md:px-8 bg-[#1a472a]">
         <div className={`max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 transition-all duration-700 ${impact.inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
           <div className="text-center">
             <p className="text-4xl md:text-5xl font-black text-[#8cc63f]"><CountUp target={48} />h</p>
@@ -164,7 +302,7 @@ export default function Landing() {
       </section>
 
       {/* MISSION */}
-      <section ref={mission.ref} className="py-32 px-8 bg-[#0a1a0f] text-white relative overflow-hidden">
+      <section ref={mission.ref} className="py-20 md:py-32 px-5 md:px-8 bg-[#0a1a0f] text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{
           backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
           backgroundSize: '40px 40px'
@@ -196,7 +334,7 @@ export default function Landing() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section ref={how.ref} id="how" className="py-32 px-8 bg-[#f7f9f7]">
+      <section ref={how.ref} id="how" className="py-20 md:py-32 px-5 md:px-8 bg-[#f7f9f7]">
         <div className={`max-w-7xl mx-auto transition-all duration-700 ${how.inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
           <div className="mb-20">
             <h2 className="font-black text-[clamp(2.5rem,7vw,5rem)] leading-[1.05] uppercase tracking-[-0.03em] mb-6">SO EINFACH <span className="text-[#8cc63f]">GEHT'S.</span></h2>
@@ -224,7 +362,7 @@ export default function Landing() {
       </section>
 
       {/* WHY US */}
-      <section className="py-32 px-8 bg-white">
+      <section className="py-20 md:py-32 px-5 md:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="mb-20">
             <h2 className="font-black text-[clamp(2.5rem,7vw,5rem)] leading-[1.05] uppercase tracking-[-0.03em] mb-6">WARUM <span className="text-[#8cc63f]">&Uuml;BER UNS?</span></h2>
@@ -250,19 +388,76 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section ref={cta.ref} id="kontakt" className="py-32 px-8 bg-[#1a472a] relative overflow-hidden">
+      {/* SOCIAL IMPACT SECTION */}
+      <section className="py-20 md:py-32 px-5 md:px-8 bg-gradient-to-br from-red-50 via-pink-50 to-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-red-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="mb-16">
+            <div className="text-[9px] font-black uppercase tracking-[0.25em] text-red-400 mb-4">❤️ Social Impact</div>
+            <h2 className="font-black text-[clamp(2rem,6vw,4rem)] leading-[1.05] uppercase tracking-[-0.03em] mb-4">KEIN SONDERPOSTEN<br /><span className="text-red-500">WIRD VERSCHWENDET.</span></h2>
+            <p className="text-lg text-gray-500 font-light max-w-2xl">
+              Was nicht verkauft wird, wird nicht entsorgt — sondern gespendet. An Tafeln, Caritas, Foodbanks und andere Organisationen, die Menschen in Not helfen.
+            </p>
+          </div>
+
+          {(() => {
+            const impact = getImpactStats();
+            return (
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                <div className="bg-white/80 backdrop-blur border border-red-100 p-6 text-center">
+                  <Heart size={24} className="text-red-400 mx-auto mb-3" />
+                  <p className="text-3xl font-black text-[#0a1a0f]"><CountUp target={impact.totalMahlzeiten} /></p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 mt-1">Mahlzeiten gerettet</p>
+                </div>
+                <div className="bg-white/80 backdrop-blur border border-red-100 p-6 text-center">
+                  <Package size={24} className="text-red-400 mx-auto mb-3" />
+                  <p className="text-3xl font-black text-[#0a1a0f]"><CountUp target={impact.totalGewichtKg} suffix=" kg" /></p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 mt-1">Lebensmittel gerettet</p>
+                </div>
+                <div className="bg-white/80 backdrop-blur border border-red-100 p-6 text-center">
+                  <Users size={24} className="text-red-400 mx-auto mb-3" />
+                  <p className="text-3xl font-black text-[#0a1a0f]"><CountUp target={impact.partnerCount} /></p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 mt-1">Partner beliefert</p>
+                </div>
+                <div className="bg-white/80 backdrop-blur border border-red-100 p-6 text-center">
+                  <TrendingUp size={24} className="text-red-400 mx-auto mb-3" />
+                  <p className="text-3xl font-black text-[#0a1a0f]">€ <CountUp target={Math.round(impact.totalWert)} /></p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 mt-1">Warenwert gespendet</p>
+                </div>
+              </div>
+            );
+          })()}
+
+          <div className="max-w-3xl">
+            <div className="flex items-start gap-4 mb-6">
+              <div className="w-1 h-full bg-red-300 flex-shrink-0 min-h-[60px]" />
+              <blockquote className="text-lg md:text-xl text-gray-700 font-light italic leading-relaxed">
+                "Erst vermitteln, dann spenden — nie entsorgen. Wenn die Ware nicht verkauft wird, muss sie nicht in den Müll. Sie kann Familien helfen."
+              </blockquote>
+            </div>
+            <p className="text-sm text-gray-400 ml-5">— HELLO SECOND/RUN. Gründervision</p>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA + KONTAKTFORMULAR */}
+      <section ref={cta.ref} id="kontakt" className="py-20 md:py-32 px-5 md:px-8 bg-[#1a472a] relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#8cc63f]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#8cc63f]/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
         </div>
-        <div className={`max-w-4xl mx-auto text-center relative z-10 transition-all duration-700 ${cta.inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-          <h2 className="font-black text-[clamp(2.5rem,7vw,5rem)] leading-[1.05] uppercase tracking-[-0.03em] mb-6 text-white">SONDERPOSTEN?<br /><span className="text-[#8cc63f]">WIR &Uuml;BERNEHMEN.</span></h2>
-          <p className="text-lg text-white/60 font-light max-w-xl mx-auto mb-12">Schick uns deine Artikelliste. Wir melden uns innerhalb von 24 Stunden mit einem konkreten Angebot.</p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <a href="mailto:hello@secondrun.at" className="bg-[#8cc63f] text-[#1a472a] px-12 py-5 font-black uppercase tracking-[0.1em] text-[12px] hover:bg-white transition-all duration-300 flex items-center gap-3">
+        <div className={`max-w-5xl mx-auto relative z-10 transition-all duration-700 ${cta.inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+          <div className="text-center mb-16">
+            <h2 className="font-black text-[clamp(2.5rem,7vw,5rem)] leading-[1.05] uppercase tracking-[-0.03em] mb-6 text-white">SONDERPOSTEN?<br /><span className="text-[#8cc63f]">WIR &Uuml;BERNEHMEN.</span></h2>
+            <p className="text-lg text-white/60 font-light max-w-xl mx-auto">Schick uns deine Artikelliste oder stell eine Anfrage. Wir melden uns innerhalb von 24 Stunden.</p>
+          </div>
+
+          <KontaktFormular />
+
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mt-12">
+            <a href="mailto:info@hello2ndrun.com" className="bg-[#8cc63f] text-[#1a472a] px-12 py-5 font-black uppercase tracking-[0.1em] text-[12px] hover:bg-white transition-all duration-300 flex items-center gap-3">
               <ArrowRight size={14} />
-              Angebot einreichen
+              Direkt per E-Mail
             </a>
             <button onClick={() => handleDemoLogin()} className="border-2 border-white/30 text-white px-12 py-5 font-black uppercase tracking-[0.1em] text-[12px] hover:bg-white/10 transition-all duration-300 flex items-center gap-3">
               <Play size={14} />

@@ -5,7 +5,8 @@
 
 import type {
   Partner, Deal, DealArticle, EanProduct,
-  PlatformSettings, GeneratedDocument, BrokerUser, ActivityEvent
+  PlatformSettings, GeneratedDocument, BrokerUser, ActivityEvent,
+  DonationPartner, DonationRecord
 } from '../types';
 
 // ──────────────────────────────────────────────
@@ -538,6 +539,12 @@ const DEFAULT_PLATFORM_SETTINGS: PlatformSettings = {
   defaultZahlungsbedingung: 'Vorauskasse',
   defaultLieferbedingung: 'Ab Werk',
   defaultMwstRate: 0.20,
+  // EmailJS — User fills in from emailjs.com dashboard
+  emailjsPublicKey: '',
+  emailjsServiceId: '',
+  emailjsTemplateAngebot: '',
+  emailjsTemplateKontakt: '',
+  emailjsTemplateStatus: '',
 };
 
 // ──────────────────────────────────────────────
@@ -628,6 +635,137 @@ export function updatePlatformSettings(updates: Partial<PlatformSettings>): void
 }
 
 // ──────────────────────────────────────────────
+// SEED DATA — Donation Partners (Tafeln, Caritas etc.)
+// ──────────────────────────────────────────────
+
+const SEED_DONATION_PARTNERS: DonationPartner[] = [
+  {
+    id: 'dp-001',
+    name: 'Tafel Salzburg',
+    organisation: 'Tafel Österreich',
+    kontaktperson: 'Maria Huber',
+    email: 'salzburg@tafel.at',
+    telefon: '+43 662 876543',
+    adresse: 'Schallmooser Hauptstraße 12',
+    plz: '5020',
+    ort: 'Salzburg',
+    land: 'AT',
+    kategorien: ['food', 'beverages', 'dairy'],
+    maxKapazitaet: '10 Paletten/Woche',
+    kuehlung: true,
+    abholung: true,
+    notizen: 'Versorgt 2.500 Menschen wöchentlich. Abholdienst Mo–Fr 8–16 Uhr.',
+    aktiv: true,
+    createdAt: '2025-01-15T10:00:00Z',
+  },
+  {
+    id: 'dp-002',
+    name: 'Caritas Sozialmarkt Wien',
+    organisation: 'Caritas Österreich',
+    kontaktperson: 'Thomas Lehner',
+    email: 'sozialmarkt@caritas-wien.at',
+    telefon: '+43 1 8787878',
+    adresse: 'Albrechtskreithgasse 19-21',
+    plz: '1160',
+    ort: 'Wien',
+    land: 'AT',
+    kategorien: ['food', 'beverages', 'dairy', 'non-food', 'household'],
+    maxKapazitaet: '20 Paletten/Woche',
+    kuehlung: true,
+    abholung: true,
+    notizen: '3 Sozialmarkt-Filialen in Wien. Nimmt auch Non-Food und Haushaltswaren.',
+    aktiv: true,
+    createdAt: '2025-02-10T10:00:00Z',
+  },
+  {
+    id: 'dp-003',
+    name: 'Münchner Tafel e.V.',
+    organisation: 'Tafel Deutschland',
+    kontaktperson: 'Klaus Maier',
+    email: 'info@muenchner-tafel.de',
+    telefon: '+49 89 5432100',
+    adresse: 'Großmarktstraße 1',
+    plz: '81107',
+    ort: 'München',
+    land: 'DE',
+    kategorien: ['food', 'beverages', 'dairy', 'frozen'],
+    maxKapazitaet: '30 Paletten/Woche',
+    kuehlung: true,
+    abholung: true,
+    notizen: 'Versorgt 22.000 Bedürftige pro Woche. Eigene LKW-Flotte für Abholung.',
+    aktiv: true,
+    createdAt: '2025-03-01T10:00:00Z',
+  },
+  {
+    id: 'dp-004',
+    name: 'Pomozi.ba Sarajevo',
+    organisation: 'Pomozi.ba Foundation',
+    kontaktperson: 'Amra Delić',
+    email: 'info@pomozi.ba',
+    telefon: '+387 33 987654',
+    adresse: 'Safeta Hadžića 10',
+    plz: '71000',
+    ort: 'Sarajevo',
+    land: 'BA',
+    kategorien: ['food', 'beverages', 'non-food'],
+    maxKapazitaet: '5 Paletten/Woche',
+    kuehlung: false,
+    abholung: false,
+    notizen: 'Größte Hilfsorganisation in Bosnien. Lieferung nötig — keine eigenen LKW.',
+    aktiv: true,
+    createdAt: '2025-03-15T10:00:00Z',
+  },
+];
+
+// ──────────────────────────────────────────────
+// SEED DATA — Donation Records (Beispiel-Spenden)
+// ──────────────────────────────────────────────
+
+const SEED_DONATION_RECORDS: DonationRecord[] = [
+  {
+    id: 'don-001',
+    dealId: '',
+    donationPartnerId: 'dp-001',
+    artikelBeschreibung: 'Verschiedene Molkereiprodukte — kurzes MHD, 3 Paletten Joghurt & Käse',
+    kategorie: 'dairy',
+    mengeKartons: 120,
+    mengePaletten: 3,
+    gewichtKg: 1440,
+    geschaetzterWert: 2160,
+    status: 'bestaetigt',
+    spendenbestaetigungNr: 'SPD-2026-00001',
+    abholDatum: '2026-02-20T10:00:00Z',
+    bestaetigtDatum: '2026-02-20T14:00:00Z',
+    notizen: 'MHD in 5 Tagen. Tafel hat am selben Tag verteilt.',
+    createdAt: '2026-02-18T09:00:00Z',
+  },
+  {
+    id: 'don-002',
+    dealId: '',
+    donationPartnerId: 'dp-002',
+    artikelBeschreibung: 'Konserven-Mix — 5 Paletten Tomatensuppen, Bohnen, Mais. Verpackungsänderung.',
+    kategorie: 'food',
+    mengeKartons: 200,
+    mengePaletten: 5,
+    gewichtKg: 2400,
+    geschaetzterWert: 3200,
+    status: 'bestaetigt',
+    spendenbestaetigungNr: 'SPD-2026-00002',
+    abholDatum: '2026-03-05T08:00:00Z',
+    bestaetigtDatum: '2026-03-05T12:00:00Z',
+    notizen: 'Altes Verpackungsdesign, Ware einwandfrei. Auf 3 Sozialmärkte verteilt.',
+    createdAt: '2026-03-03T11:00:00Z',
+  },
+];
+
+// ──────────────────────────────────────────────
+// COLLECTION INSTANCES — Donations
+// ──────────────────────────────────────────────
+
+export const donationPartnersCollection = createDemoCollection<DonationPartner>(SEED_DONATION_PARTNERS, 'donationPartners');
+export const donationRecordsCollection = createDemoCollection<DonationRecord>(SEED_DONATION_RECORDS, 'donationRecords');
+
+// ──────────────────────────────────────────────
 // DEMO MODE MANAGEMENT
 // ──────────────────────────────────────────────
 
@@ -674,6 +812,8 @@ export function exitDemoMode(): void {
   documentsCollection.reset();
   usersCollection.reset();
   activitiesCollection.reset();
+  donationPartnersCollection.reset();
+  donationRecordsCollection.reset();
   _platformSettings = { ...DEFAULT_PLATFORM_SETTINGS };
   try {
     localStorage.setItem(STORAGE_PREFIX + 'platformSettings', JSON.stringify(_platformSettings));
@@ -692,6 +832,8 @@ export function resetAllData(): void {
   documentsCollection.reset();
   usersCollection.reset();
   activitiesCollection.reset();
+  donationPartnersCollection.reset();
+  donationRecordsCollection.reset();
   _platformSettings = { ...DEFAULT_PLATFORM_SETTINGS };
   try {
     localStorage.setItem(STORAGE_PREFIX + 'platformSettings', JSON.stringify(_platformSettings));

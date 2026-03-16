@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react';
-import { Save, Building, RotateCcw, Upload, X } from 'lucide-react';
+import { Save, Building, RotateCcw, Upload, X, Mail, CheckCircle, XCircle, ExternalLink } from 'lucide-react';
 import PageHeader from '../../components/layout/PageHeader';
 import { getPlatformSettings, updatePlatformSettings, resetAllData } from '../../lib/demoStore';
 import type { PlatformSettings } from '../../types';
+import { getEmailConfigStatus } from '../../lib/emailService';
 
 export default function Settings() {
   const [form, setForm] = useState<PlatformSettings>(getPlatformSettings());
@@ -294,6 +295,139 @@ export default function Settings() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* EmailJS Konfiguration */}
+      <div className="mt-8 bg-white border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center gap-2">
+            <Mail size={16} className="text-[#1a472a]" />
+            <h3 className="text-sm font-black uppercase tracking-tight">E-Mail-Versand (EmailJS)</h3>
+          </div>
+          <a
+            href="https://www.emailjs.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-[10px] font-bold text-[#1a472a] hover:text-[#8cc63f] transition-colors uppercase tracking-wider"
+          >
+            <ExternalLink size={11} />
+            EmailJS Dashboard
+          </a>
+        </div>
+
+        {/* Status Badges */}
+        {(() => {
+          const status = getEmailConfigStatus();
+          return (
+            <div className="flex flex-wrap gap-2 mb-5">
+              {[
+                { ok: status.hasPublicKey, label: 'Public Key' },
+                { ok: status.hasServiceId, label: 'Service ID' },
+                { ok: status.hasAngebotTemplate, label: 'Angebot' },
+                { ok: status.hasKontaktTemplate, label: 'Kontakt' },
+                { ok: status.hasStatusTemplate, label: 'Status' },
+              ].map(item => (
+                <span
+                  key={item.label}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 text-[9px] font-black uppercase tracking-wider ${
+                    item.ok ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-gray-50 text-gray-400 border border-gray-200'
+                  }`}
+                >
+                  {item.ok ? <CheckCircle size={10} /> : <XCircle size={10} />}
+                  {item.label}
+                </span>
+              ))}
+            </div>
+          );
+        })()}
+
+        <p className="text-xs text-gray-500 mb-5 leading-relaxed">
+          EmailJS ermöglicht den E-Mail-Versand direkt aus dem Browser — ohne Backend.
+          Erstelle ein kostenloses Konto auf <a href="https://www.emailjs.com" target="_blank" rel="noopener noreferrer" className="text-[#1a472a] font-bold underline">emailjs.com</a>,
+          verbinde deinen E-Mail-Service (Gmail, Outlook, SMTP) und erstelle E-Mail-Templates.
+          Trage die IDs hier ein.
+        </p>
+
+        <div className="grid lg:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <div>
+              <label className={labelClass}>Public Key</label>
+              <input
+                type="text"
+                value={form.emailjsPublicKey}
+                onChange={e => update('emailjsPublicKey', e.target.value)}
+                className={`${inputClass} font-mono`}
+                placeholder="z.B. AbCdEfGh12345678"
+              />
+              <p className="text-[10px] text-gray-400 mt-1">Account → API Keys → Public Key</p>
+            </div>
+            <div>
+              <label className={labelClass}>Service ID</label>
+              <input
+                type="text"
+                value={form.emailjsServiceId}
+                onChange={e => update('emailjsServiceId', e.target.value)}
+                className={`${inputClass} font-mono`}
+                placeholder="z.B. service_abc123"
+              />
+              <p className="text-[10px] text-gray-400 mt-1">Email Services → dein Service → Service ID</p>
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <label className={labelClass}>Template ID — Angebot</label>
+              <input
+                type="text"
+                value={form.emailjsTemplateAngebot}
+                onChange={e => update('emailjsTemplateAngebot', e.target.value)}
+                className={`${inputClass} font-mono`}
+                placeholder="z.B. template_angebot"
+              />
+              <p className="text-[10px] text-gray-400 mt-1">Für Angebots-E-Mails an Käufer</p>
+            </div>
+            <div>
+              <label className={labelClass}>Template ID — Kontaktformular</label>
+              <input
+                type="text"
+                value={form.emailjsTemplateKontakt}
+                onChange={e => update('emailjsTemplateKontakt', e.target.value)}
+                className={`${inputClass} font-mono`}
+                placeholder="z.B. template_kontakt"
+              />
+              <p className="text-[10px] text-gray-400 mt-1">Für Anfragen von der Landing Page</p>
+            </div>
+            <div>
+              <label className={labelClass}>Template ID — Status-Update</label>
+              <input
+                type="text"
+                value={form.emailjsTemplateStatus}
+                onChange={e => update('emailjsTemplateStatus', e.target.value)}
+                className={`${inputClass} font-mono`}
+                placeholder="z.B. template_status"
+              />
+              <p className="text-[10px] text-gray-400 mt-1">Für Deal-Status-Benachrichtigungen</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Setup Anleitung */}
+        <details className="mt-6">
+          <summary className="text-[10px] font-black uppercase tracking-widest text-[#1a472a] cursor-pointer hover:text-[#8cc63f] transition-colors">
+            Setup-Anleitung anzeigen
+          </summary>
+          <div className="mt-4 bg-[#f7f9f7] p-4 text-xs text-gray-600 space-y-3 leading-relaxed">
+            <p><strong>1.</strong> Gehe zu <a href="https://www.emailjs.com" target="_blank" rel="noopener noreferrer" className="text-[#1a472a] font-bold underline">emailjs.com</a> und erstelle ein kostenloses Konto.</p>
+            <p><strong>2.</strong> Unter "Email Services" → "Add New Service" → wähle deinen E-Mail-Provider (z.B. Outlook/Microsoft 365 für info@hello2ndrun.com).</p>
+            <p><strong>3.</strong> Unter "Email Templates" erstelle 3 Templates:</p>
+            <div className="ml-4 space-y-2">
+              <p><strong>Angebot-Template:</strong> Variablen: {'{{to_name}}, {{deal_nr}}, {{verkaeufer_firma}}, {{kaeufer_firma}}, {{artikel_liste}}, {{netto_betrag}}, {{brutto_betrag}}, {{angebot_link}}'}</p>
+              <p><strong>Kontakt-Template:</strong> Variablen: {'{{from_name}}, {{from_email}}, {{firma}}, {{telefon}}, {{nachricht}}, {{anfrage_typ}}'}</p>
+              <p><strong>Status-Template:</strong> Variablen: {'{{to_name}}, {{deal_nr}}, {{status_label}}, {{verkaeufer_firma}}, {{kaeufer_firma}}, {{netto_betrag}}'}</p>
+            </div>
+            <p><strong>4.</strong> Kopiere Public Key, Service ID und Template IDs hierher und klicke "Speichern".</p>
+            <p className="text-[#8cc63f] font-bold">Fertig! Alle E-Mails werden jetzt automatisch versendet.</p>
+          </div>
+        </details>
       </div>
 
       {/* Danger Zone */}

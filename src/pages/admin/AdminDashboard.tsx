@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import {
   Handshake, Users, FileText, TrendingUp,
-  AlertTriangle, CheckCircle, ArrowRight,
+  AlertTriangle, CheckCircle, ArrowRight, Heart,
 } from 'lucide-react';
 import PageHeader from '../../components/layout/PageHeader';
 import DashboardCharts from '../../components/admin/DashboardCharts';
 import { dealsCollection, partnersCollection, dealArticlesCollection } from '../../lib/demoStore';
+import { getImpactStats } from '../../lib/donationService';
 import { useBrokerFilter } from '../../hooks/useBrokerFilter';
 import type { Deal, Partner } from '../../types';
 import { DEAL_STATUS_LABELS } from '../../types';
@@ -73,6 +74,7 @@ export default function AdminDashboard() {
       case 'abgeholt': return 'bg-teal-50 text-teal-700 border-teal-200';
       case 'abgeschlossen': return 'bg-green-50 text-green-700 border-green-200';
       case 'storniert': return 'bg-red-50 text-red-600 border-red-200';
+      case 'gespendet': return 'bg-pink-50 text-pink-600 border-pink-200';
       default: return 'bg-gray-50 text-gray-500 border-gray-200';
     }
   };
@@ -179,6 +181,35 @@ export default function AdminDashboard() {
 
       {/* Charts */}
       <DashboardCharts deals={deals} />
+
+      {/* Social Impact Banner */}
+      {(() => {
+        const impact = getImpactStats();
+        if (impact.totalDonations === 0) return null;
+        return (
+          <Link
+            to="/admin/spenden"
+            className="block mb-6 bg-gradient-to-r from-red-50 via-pink-50 to-white border border-red-100 p-5 hover:border-red-200 transition-all group"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-red-200 transition-colors">
+                  <Heart size={22} className="text-red-400" />
+                </div>
+                <div>
+                  <h3 className="font-black text-sm text-[#0a1a0f] uppercase tracking-tight">Social Impact</h3>
+                  <p className="text-xs text-gray-500 mt-0.5">
+                    <span className="font-bold text-red-500">{impact.totalMahlzeiten.toLocaleString('de-AT')} Mahlzeiten</span> gerettet
+                    · {impact.totalGewichtKg.toLocaleString('de-AT')} kg gespendet
+                    · {impact.totalDonations} Spenden an {impact.partnerCount} Partner
+                  </p>
+                </div>
+              </div>
+              <ArrowRight size={16} className="text-gray-300 group-hover:text-red-400 transition-colors" />
+            </div>
+          </Link>
+        );
+      })()}
 
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Letzte Deals */}

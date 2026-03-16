@@ -86,6 +86,9 @@ export interface Deal {
   auftragsbestaetigungNr: string;
   rechnungNr: string;
   provisionsrechnungNr: string;
+  // Spende
+  donationId?: string;                   // Verknüpfte Spende (wenn gespendet)
+  endAction?: DealEndAction;             // Was ist mit der Ware passiert
   // Meta
   notizen: string;
   createdAt: string;
@@ -101,7 +104,8 @@ export type DealStatus =
   | 'rechnung_erstellt'
   | 'abgeholt'
   | 'abgeschlossen'
-  | 'storniert';
+  | 'storniert'
+  | 'gespendet';
 
 export const DEAL_STATUS_LABELS: Record<DealStatus, string> = {
   draft: 'Entwurf',
@@ -114,6 +118,7 @@ export const DEAL_STATUS_LABELS: Record<DealStatus, string> = {
   abgeholt: 'Abgeholt',
   abgeschlossen: 'Abgeschlossen',
   storniert: 'Storniert',
+  gespendet: 'Gespendet ❤️',
 };
 
 export const DEAL_STATUS_ORDER: DealStatus[] = [
@@ -169,6 +174,12 @@ export interface PlatformSettings {
   defaultZahlungsbedingung: string;
   defaultLieferbedingung: string;
   defaultMwstRate: number;
+  // EmailJS Integration
+  emailjsPublicKey: string;
+  emailjsServiceId: string;
+  emailjsTemplateAngebot: string;
+  emailjsTemplateKontakt: string;
+  emailjsTemplateStatus: string;
 }
 
 // === BROKER USER ===
@@ -183,14 +194,64 @@ export interface BrokerUser {
   createdAt: string;
 }
 
-// === ACTIVITY EVENT ===
+// === ACTIVITY EVENT === (defined below with donation types)
+
+// === DONATION PARTNER (Tafel, Caritas, Foodbank etc.) ===
+export interface DonationPartner {
+  id: string;
+  name: string;                          // z.B. "Tafel Salzburg", "Caritas Wien"
+  organisation: string;                   // z.B. "Tafel Österreich", "Caritas"
+  kontaktperson: string;
+  email: string;
+  telefon: string;
+  adresse: string;
+  plz: string;
+  ort: string;
+  land: string;
+  kategorien: ArticleCategory[];          // Welche Warengruppen nehmen sie an
+  maxKapazitaet: string;                  // z.B. "5 Paletten/Woche"
+  kuehlung: boolean;                      // Können sie Kühlware annehmen?
+  abholung: boolean;                      // Holen sie selbst ab?
+  notizen: string;
+  aktiv: boolean;
+  createdAt: string;
+}
+
+// === DONATION RECORD (Eine durchgeführte Spende) ===
+export type DonationStatus = 'vorgeschlagen' | 'geplant' | 'abgeholt' | 'bestaetigt';
+
+export interface DonationRecord {
+  id: string;
+  dealId?: string;                        // Optional: verknüpfter Deal
+  donationPartnerId: string;              // An wen gespendet
+  artikelBeschreibung: string;            // Was wurde gespendet
+  kategorie: ArticleCategory;
+  mengeKartons: number;
+  mengePaletten: number;
+  gewichtKg: number;                      // Geschätztes Gesamtgewicht in kg
+  geschaetzterWert: number;               // Warenwert für Spendenbescheinigung
+  status: DonationStatus;
+  spendenbestaetigungNr: string;          // z.B. SPD-2026-00001
+  abholDatum?: string;
+  bestaetigtDatum?: string;
+  notizen: string;
+  createdAt: string;
+}
+
+// === DEAL EXTENSION — Spenden-Felder ===
+// Deal bekommt neue optionale Felder (über Partial bei Update)
+export type DealEndAction = 'verkauft' | 'gespendet' | 'teilgespendet';
+
+// === ACTIVITY EXTENSION ===
 export type ActivityType =
   | 'deal_created'
   | 'deal_status_changed'
   | 'deal_cloned'
   | 'partner_created'
   | 'document_generated'
-  | 'partner_updated';
+  | 'partner_updated'
+  | 'donation_created'
+  | 'donation_completed';
 
 export interface ActivityEvent {
   id: string;

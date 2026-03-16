@@ -11,6 +11,9 @@ import AdminLayout from './components/layout/AdminLayout';
 import Landing from './pages/Landing';
 import NotFound from './pages/NotFound';
 import PublicAngebot from './pages/PublicAngebot';
+import Impressum from './pages/Impressum';
+import Datenschutz from './pages/Datenschutz';
+import AGB from './pages/AGB';
 
 // ─── Admin Pages ───
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -24,6 +27,7 @@ import MhdKalkulator from './pages/admin/MhdKalkulator';
 import Documents from './pages/admin/Documents';
 import Settings from './pages/admin/Settings';
 import Team from './pages/admin/Team';
+import Donations from './pages/admin/Donations';
 
 import Chatbot from './components/Chatbot';
 import { ToastProvider } from './components/shared/Toast';
@@ -65,6 +69,7 @@ function AppContent() {
       <Route path="/admin/deals/:id" element={<AdminRoute><DealDetail /></AdminRoute>} />
       <Route path="/admin/kalkulator" element={<AdminRoute><MhdKalkulator /></AdminRoute>} />
       <Route path="/admin/team" element={<AdminOnlyRoute><Team /></AdminOnlyRoute>} />
+      <Route path="/admin/spenden" element={<AdminRoute><Donations /></AdminRoute>} />
       <Route path="/admin/documents" element={<AdminRoute><Documents /></AdminRoute>} />
       <Route path="/admin/settings" element={<AdminOnlyRoute><Settings /></AdminOnlyRoute>} />
 
@@ -84,6 +89,9 @@ function StandardPages() {
           <Route path="/" element={<Landing />} />
           <Route path="/angebot/:id" element={<PublicAngebot />} />
           <Route path="/portal/:partnerId" element={<PartnerPortal />} />
+          <Route path="/impressum" element={<Impressum />} />
+          <Route path="/datenschutz" element={<Datenschutz />} />
+          <Route path="/agb" element={<AGB />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
