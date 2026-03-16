@@ -236,7 +236,7 @@ export default function Landing() {
               </p>
               <div className="flex flex-col gap-6 items-start">
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Link to="/" className="group bg-[#8cc63f] text-[#1a472a] px-9 py-4 font-black uppercase tracking-[0.1em] text-[11px] border-2 border-[#8cc63f] hover:bg-[#1a472a] hover:border-[#1a472a] hover:text-white transition-all duration-300 inline-flex items-center gap-3">
+                  <Link to="/angebot" className="group bg-[#8cc63f] text-[#1a472a] px-9 py-4 font-black uppercase tracking-[0.1em] text-[11px] border-2 border-[#8cc63f] hover:bg-[#1a472a] hover:border-[#1a472a] hover:text-white transition-all duration-300 inline-flex items-center gap-3">
                     <FileText size={14} />
                     Quick Angebot erstellen
                     <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
@@ -460,7 +460,7 @@ export default function Landing() {
           <KontaktFormular />
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mt-12">
-            <Link to="/" className="bg-[#8cc63f] text-[#1a472a] px-12 py-5 font-black uppercase tracking-[0.1em] text-[12px] hover:bg-white transition-all duration-300 flex items-center gap-3">
+            <Link to="/angebot" className="bg-[#8cc63f] text-[#1a472a] px-12 py-5 font-black uppercase tracking-[0.1em] text-[12px] hover:bg-white transition-all duration-300 flex items-center gap-3">
               <FileText size={14} />
               Quick Angebot erstellen
             </Link>

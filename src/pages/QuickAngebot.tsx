@@ -4,6 +4,7 @@
 // ════════════════════════════════════════════════════════════
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Search, Plus, Trash2, ChevronDown, ChevronUp, Download,
   Mail, MessageCircle, FileText, Loader2, Package, AlertTriangle,
@@ -1186,10 +1187,10 @@ export default function QuickAngebot() {
             ))}
           </div>
           <div className="text-center mt-10">
-            <a href="/about" className="inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-[#1a472a] hover:text-[#8cc63f] transition-colors group">
+            <Link to="/about" className="inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-[#1a472a] hover:text-[#8cc63f] transition-colors group">
               Mehr über HELLO SECOND/RUN erfahren
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
           </div>
         </div>
       </section>

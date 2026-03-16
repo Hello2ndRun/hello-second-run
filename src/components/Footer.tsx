@@ -28,9 +28,9 @@ export default function Footer() {
                 </>
               ) : (
                 <>
-                  <Link to="/" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Quick Angebot</Link>
+                  <Link to="/angebot" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Quick Angebot</Link>
                   <Link to="/about" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Über Uns</Link>
-                  <a href="/about#kontakt" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Kontakt</a>
+                  <a href="/#kontakt-section" className="block text-white/70 hover:text-[#8cc63f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1a0f]">Kontakt</a>
                 </>
               )}
             </div>

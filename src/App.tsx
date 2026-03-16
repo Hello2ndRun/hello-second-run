@@ -9,11 +9,12 @@ import LoadingSpinner from './components/LoadingSpinner';
 import AdminLayout from './components/layout/AdminLayout';
 
 // ─── Public Pages (eager — critical path) ───
-import QuickAngebot from './pages/QuickAngebot';
+import Homepage from './pages/Homepage';
 import NotFound from './pages/NotFound';
 
 // ─── Lazy-loaded Pages (non-critical) ───
 const Landing = React.lazy(() => import('./pages/Landing'));
+const QuickAngebot = React.lazy(() => import('./pages/QuickAngebot'));
 const PublicAngebot = React.lazy(() => import('./pages/PublicAngebot'));
 const Impressum = React.lazy(() => import('./pages/Impressum'));
 const Datenschutz = React.lazy(() => import('./pages/Datenschutz'));
@@ -79,7 +80,7 @@ function AppContent() {
         <Route path="/admin/settings" element={<AdminOnlyRoute><Settings /></AdminOnlyRoute>} />
 
         {/* ═══ Redirect old route ═══ */}
-        <Route path="/angebot-erstellen" element={<Navigate to="/" replace />} />
+        <Route path="/angebot-erstellen" element={<Navigate to="/angebot" replace />} />
 
         {/* ═══ Standard Pages (with Navbar/Footer) ═══ */}
         <Route path="/*" element={<StandardPages />} />
@@ -96,7 +97,8 @@ function StandardPages() {
       <ServerStatus />
       <main className="flex-grow pt-20">
         <Routes>
-          <Route path="/" element={<QuickAngebot />} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/angebot" element={<QuickAngebot />} />
           <Route path="/about" element={<Landing />} />
           <Route path="/angebot/:id" element={<PublicAngebot />} />
           <Route path="/portal/:partnerId" element={<PartnerPortal />} />
