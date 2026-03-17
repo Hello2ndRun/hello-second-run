@@ -62,7 +62,7 @@ export default function Team() {
   const admins = users.filter(u => u.role === 'admin');
   const brokers = users.filter(u => u.role === 'broker');
 
-  const inputClass = 'w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm focus:border-[#1a472a] focus:outline-none';
+  const inputClass = 'w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm focus:border-[#111113] focus:outline-none';
   const labelClass = 'block text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-1';
 
   return (
@@ -77,7 +77,7 @@ export default function Team() {
         actions={
           <button
             onClick={() => setShowNew(!showNew)}
-            className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all"
+            className="inline-flex items-center gap-2 bg-[#111113] text-[#ffffff] px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#111113] transition-all"
           >
             <Plus size={14} />
             Neuer Benutzer
@@ -87,8 +87,8 @@ export default function Team() {
 
       {/* New User Form */}
       {showNew && (
-        <div className="bg-white border border-[#8cc63f] p-5 mb-6">
-          <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-4">Neuer Benutzer</h3>
+        <div className="bg-[#ffffff] border border-[#8cc63f] p-5 mb-6">
+          <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-4">Neuer Benutzer</h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
               <label className={labelClass}>Name *</label>
@@ -109,7 +109,7 @@ export default function Team() {
               <button
                 onClick={handleAddUser}
                 disabled={!newName.trim() || !newEmail.trim()}
-                className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-5 py-2 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all disabled:opacity-30"
+                className="inline-flex items-center gap-2 bg-[#111113] text-[#ffffff] px-5 py-2 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#111113] transition-all disabled:opacity-30"
               >
                 <Save size={14} />
                 Anlegen
@@ -122,14 +122,14 @@ export default function Team() {
       {/* Admins */}
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-3">
-          <Shield size={14} className="text-[#1a472a]" />
-          <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1a472a]">Administratoren ({admins.length})</h2>
+          <Shield size={14} className="text-[#111113]" />
+          <h2 className="text-[10px] font-black uppercase tracking-[0.08em] text-[#111113]">Administratoren ({admins.length})</h2>
         </div>
         <div className="space-y-2">
           {admins.map(user => (
-            <div key={user.id} className="bg-white border border-gray-200 px-5 py-3 flex items-center justify-between">
+            <div key={user.id} className="bg-[#ffffff] border border-gray-200 px-5 py-3 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-[#1a472a] rounded-full flex items-center justify-center">
+                <div className="w-9 h-9 bg-[#111113] rounded-lg flex items-center justify-center">
                   <span className="text-white font-black text-xs">{user.name.charAt(0)}</span>
                 </div>
                 <div>
@@ -138,7 +138,7 @@ export default function Team() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-[9px] font-black uppercase tracking-widest text-[#1a472a] bg-[#f7f9f7] px-2 py-1">Admin</span>
+                <span className="text-[9px] font-semibold uppercase tracking-[0.08em] text-[#111113] bg-[#ffffff] px-2 py-1">Admin</span>
                 <span className="text-[10px] text-gray-400">{formatDate(user.createdAt)}</span>
               </div>
             </div>
@@ -149,11 +149,11 @@ export default function Team() {
       {/* Brokers */}
       <div>
         <div className="flex items-center gap-2 mb-3">
-          <Briefcase size={14} className="text-[#1a472a]" />
-          <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1a472a]">Broker ({brokers.length})</h2>
+          <Briefcase size={14} className="text-[#111113]" />
+          <h2 className="text-[10px] font-black uppercase tracking-[0.08em] text-[#111113]">Broker ({brokers.length})</h2>
         </div>
         {brokers.length === 0 ? (
-          <div className="bg-white border border-gray-200 p-8 text-center">
+          <div className="bg-[#ffffff] border border-gray-200 p-8 text-center">
             <UserCog size={32} className="mx-auto text-gray-200 mb-3" />
             <p className="text-sm text-gray-400">Noch keine Broker angelegt.</p>
           </div>
@@ -162,11 +162,11 @@ export default function Team() {
             {brokers.map(user => {
               const isEditing = editingId === user.id;
               return (
-                <div key={user.id} className="bg-white border border-gray-200">
+                <div key={user.id} className="bg-[#ffffff] border border-gray-200">
                   <div className="px-5 py-3 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 bg-[#8cc63f]/20 rounded-full flex items-center justify-center">
-                        <span className="text-[#1a472a] font-black text-xs">{user.name.charAt(0)}</span>
+                      <div className="w-9 h-9 bg-[#8cc63f]/20 rounded-lg flex items-center justify-center">
+                        <span className="text-[#111113] font-black text-xs">{user.name.charAt(0)}</span>
                       </div>
                       <div>
                         <p className="text-sm font-bold">{user.name}</p>
@@ -179,7 +179,7 @@ export default function Team() {
                       </span>
                       <button
                         onClick={() => setEditingId(isEditing ? null : user.id)}
-                        className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider border border-gray-200 text-gray-500 hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+                        className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider border border-gray-200 text-gray-500 hover:border-[#111113] hover:text-[#111113] transition-all"
                       >
                         {isEditing ? 'Schließen' : 'Zuweisen'}
                       </button>
@@ -205,8 +205,8 @@ export default function Team() {
                               key={p.id}
                               className={`flex items-center gap-2 px-3 py-2 border text-xs cursor-pointer transition-all ${
                                 assigned
-                                  ? 'bg-[#1a472a] text-white border-[#1a472a]'
-                                  : 'bg-white text-gray-600 border-gray-200 hover:border-[#1a472a]'
+                                  ? 'bg-[#111113] text-[#ffffff] border-[#111113]'
+                                  : 'bg-[#ffffff] text-gray-600 border-gray-200 hover:border-[#111113]'
                               }`}
                             >
                               <input

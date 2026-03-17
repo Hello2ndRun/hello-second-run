@@ -12,12 +12,12 @@ interface Props {
 
 export default function VisualAngebotPreview({ deal, articles, verkaeufer, kaeufer }: Props) {
   return (
-    <div className="bg-white text-gray-900 max-w-4xl mx-auto shadow-lg" style={{ fontFamily: 'Arial, sans-serif' }}>
+    <div className="bg-[#ffffff] text-gray-900 max-w-4xl mx-auto shadow-lg" style={{ fontFamily: 'Arial, sans-serif' }}>
       {/* Header */}
-      <div className="px-10 pt-10 pb-6 border-b-2 border-[#1a472a]">
+      <div className="px-10 pt-10 pb-6 border-b-2 border-[#111113]">
         <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-2xl font-black text-[#1a472a] tracking-tight">{verkaeufer.firmenname}</h1>
+            <h1 className="text-2xl font-black text-[#111113] tracking-tight">{verkaeufer.firmenname}</h1>
             <p className="text-sm text-gray-500 mt-1">{verkaeufer.adresse}</p>
             <p className="text-sm text-gray-500">{verkaeufer.plz} {verkaeufer.ort}, {verkaeufer.land}</p>
             {verkaeufer.uidNummer && (
@@ -26,7 +26,7 @@ export default function VisualAngebotPreview({ deal, articles, verkaeufer, kaeuf
           </div>
           <div className="text-right">
             <p className="text-xs text-gray-400 uppercase tracking-widest font-bold">Angebot</p>
-            <p className="text-lg font-black font-mono text-[#1a472a] mt-1">{deal.angebotNr}</p>
+            <p className="text-lg font-black font-mono text-[#111113] mt-1">{deal.angebotNr}</p>
             <p className="text-sm text-gray-500 mt-2">{formatDate(deal.createdAt)}</p>
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function VisualAngebotPreview({ deal, articles, verkaeufer, kaeuf
                     {art.uvp > 0 && (
                       <p className="text-sm text-gray-400 line-through">{formatCurrency(art.uvp)}</p>
                     )}
-                    <p className="text-xl font-black text-[#1a472a]">{formatCurrency(art.vkPreis)}</p>
+                    <p className="text-xl font-black text-[#111113]">{formatCurrency(art.vkPreis)}</p>
                     {rabattPct > 0 && (
                       <p className="text-xs font-bold text-red-500 mt-0.5">
                         -{formatPercent(rabattPct)} vs. UVP
@@ -122,7 +122,7 @@ export default function VisualAngebotPreview({ deal, articles, verkaeufer, kaeuf
             </div>
             <div className="flex justify-between text-base font-bold pt-2 border-t border-gray-300">
               <span>Brutto</span>
-              <span className="font-mono text-[#1a472a]">{formatCurrency(deal.totalBrutto)}</span>
+              <span className="font-mono text-[#111113]">{formatCurrency(deal.totalBrutto)}</span>
             </div>
           </div>
         </div>

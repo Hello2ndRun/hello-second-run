@@ -85,9 +85,9 @@ export default function PartnerNew() {
   };
 
   const inputClasses =
-    'w-full bg-gray-50 border border-gray-300 py-2 px-3 text-sm focus:border-[#1a472a] focus:outline-none transition-all';
+    'w-full bg-gray-50 border border-gray-300 py-2 px-3 text-sm focus:border-[#111113] focus:outline-none transition-all';
   const labelClasses =
-    'block text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-1';
+    'block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-1';
 
   return (
     <div>
@@ -103,7 +103,7 @@ export default function PartnerNew() {
       />
 
       {/* Firmendaten */}
-      <div className="bg-white border border-gray-200 p-6 mb-6">
+      <div className="bg-[#ffffff] border border-gray-200 p-6 mb-6">
         <h3 className="text-sm font-black uppercase tracking-tight mb-4">Firmendaten</h3>
         <div className="grid md:grid-cols-2 gap-4">
           <div>
@@ -122,7 +122,7 @@ export default function PartnerNew() {
       </div>
 
       {/* Kontakt */}
-      <div className="bg-white border border-gray-200 p-6 mb-6">
+      <div className="bg-[#ffffff] border border-gray-200 p-6 mb-6">
         <h3 className="text-sm font-black uppercase tracking-tight mb-4">Kontakt</h3>
         <div className="grid md:grid-cols-3 gap-4">
           <div>
@@ -141,7 +141,7 @@ export default function PartnerNew() {
       </div>
 
       {/* Adresse */}
-      <div className="bg-white border border-gray-200 p-6 mb-6">
+      <div className="bg-[#ffffff] border border-gray-200 p-6 mb-6">
         <h3 className="text-sm font-black uppercase tracking-tight mb-4">Adresse</h3>
         <div className="grid md:grid-cols-4 gap-4">
           <div className="md:col-span-2">
@@ -168,7 +168,7 @@ export default function PartnerNew() {
       </div>
 
       {/* Rolle & Kategorien */}
-      <div className="bg-white border border-gray-200 p-6 mb-6">
+      <div className="bg-[#ffffff] border border-gray-200 p-6 mb-6">
         <h3 className="text-sm font-black uppercase tracking-tight mb-4">Rolle & Kategorien</h3>
         <div className="grid md:grid-cols-2 gap-4 mb-4">
           <div>
@@ -196,8 +196,8 @@ export default function PartnerNew() {
                 key={cat.value}
                 className={`inline-flex items-center gap-2 px-3 py-1.5 border text-xs cursor-pointer transition-all ${
                   form.kategorien.includes(cat.value)
-                    ? 'bg-[#1a472a] text-white border-[#1a472a]'
-                    : 'bg-white text-gray-600 border-gray-200 hover:border-[#1a472a]'
+                    ? 'bg-[#111113] text-[#ffffff] border-[#111113]'
+                    : 'bg-[#ffffff] text-gray-600 border-gray-200 hover:border-[#111113]'
                 }`}
               >
                 <input
@@ -219,7 +219,7 @@ export default function PartnerNew() {
 
       {/* Bankdaten (nur bei Verkäufer/Beides) */}
       {showBank && (
-        <div className="bg-white border border-gray-200 p-6 mb-6">
+        <div className="bg-[#ffffff] border border-gray-200 p-6 mb-6">
           <h3 className="text-sm font-black uppercase tracking-tight mb-4">Bankdaten</h3>
           <div className="grid md:grid-cols-3 gap-4">
             <div>
@@ -243,14 +243,14 @@ export default function PartnerNew() {
         <button
           onClick={handleSave}
           disabled={!form.firmenname || !form.kontaktperson || !form.email}
-          className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-6 py-3 font-black uppercase tracking-[0.1em] text-[11px] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all disabled:opacity-30"
+          className="inline-flex items-center gap-2 bg-[#111113] text-[#ffffff] px-6 py-3 font-black uppercase tracking-[0.1em] text-[11px] hover:bg-[#8cc63f] hover:text-[#111113] transition-all disabled:opacity-30"
         >
           <Save size={14} />
           Partner speichern
         </button>
         <button
           onClick={() => navigate('/admin/partners')}
-          className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-6 py-3 text-[11px] font-black uppercase tracking-widest hover:border-gray-400 transition-all"
+          className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.08em] hover:border-gray-400 transition-all"
         >
           <ArrowLeft size={14} />
           Abbrechen

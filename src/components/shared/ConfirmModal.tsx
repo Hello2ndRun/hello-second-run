@@ -45,38 +45,38 @@ export default function ConfirmModal({
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onCancel} />
 
       {/* Modal */}
-      <div className="relative bg-white w-full max-w-md mx-4 shadow-2xl animate-in fade-in zoom-in duration-200">
+      <div className="relative bg-[#ffffff] w-full max-w-md mx-4 shadow-2xl rounded-2xl animate-in fade-in zoom-in duration-200">
         {/* Header */}
-        <div className={`flex items-center gap-3 px-6 py-4 border-b ${isDanger ? 'border-red-100' : 'border-gray-100'}`}>
-          <div className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 ${isDanger ? 'bg-red-50' : 'bg-[#f7f9f7]'}`}>
-            <AlertTriangle size={18} className={isDanger ? 'text-red-500' : 'text-[#1a472a]'} />
+        <div className={`flex items-center gap-3 px-6 py-4 border-b ${isDanger ? 'border-red-100' : 'border-[#e4e4e7]'}`}>
+          <div className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 ${isDanger ? 'bg-red-50' : 'bg-[#f7f7f8]'}`}>
+            <AlertTriangle size={18} className={isDanger ? 'text-red-500' : 'text-[#111113]'} />
           </div>
-          <h3 className="text-sm font-black uppercase tracking-tight flex-1">{title}</h3>
-          <button onClick={onCancel} className="p-1 text-gray-300 hover:text-gray-600 transition-colors">
+          <h3 className="text-sm font-semibold flex-1">{title}</h3>
+          <button onClick={onCancel} className="p-1 text-[#111113]/30 hover:text-[#111113]/60 transition-colors">
             <X size={16} />
           </button>
         </div>
 
         {/* Body */}
         <div className="px-6 py-5">
-          <p className="text-sm text-gray-600 leading-relaxed">{message}</p>
+          <p className="text-sm text-[#111113]/60 leading-relaxed">{message}</p>
         </div>
 
         {/* Actions */}
-        <div className="flex items-center justify-end gap-3 px-6 py-4 bg-gray-50 border-t border-gray-100">
+        <div className="flex items-center justify-end gap-3 px-6 py-4 bg-transparent border-t border-[#e4e4e7] rounded-b-2xl">
           <button
             ref={cancelRef}
             onClick={onCancel}
-            className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-gray-400 transition-all"
+            className="inline-flex items-center gap-2 border border-[#e4e4e7] text-[#111113]/60 px-5 py-2.5 rounded-lg font-semibold text-sm hover:border-[#111113]/30 transition-all"
           >
             {cancelLabel}
           </button>
           <button
             onClick={onConfirm}
-            className={`inline-flex items-center gap-2 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] transition-all ${
+            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all ${
               isDanger
                 ? 'bg-red-600 text-white hover:bg-red-700'
-                : 'bg-[#1a472a] text-white hover:bg-[#8cc63f] hover:text-[#1a472a]'
+                : 'bg-[#111113] text-[#ffffff] hover:bg-[#8cc63f] hover:text-[#111113]'
             }`}
           >
             {confirmLabel}

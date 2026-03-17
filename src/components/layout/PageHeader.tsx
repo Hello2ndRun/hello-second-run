@@ -26,12 +26,12 @@ export default function PageHeader({ title, subtitle, breadcrumbs, backTo, actio
               {crumb.to ? (
                 <Link
                   to={crumb.to}
-                  className="text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-[#1a472a] transition-colors"
+                  className="text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-[#111113] transition-colors"
                 >
                   {crumb.label}
                 </Link>
               ) : (
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a472a]">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#111113]">
                   {crumb.label}
                 </span>
               )}
@@ -44,7 +44,7 @@ export default function PageHeader({ title, subtitle, breadcrumbs, backTo, actio
       {backTo && (
         <Link
           to={backTo}
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-[#1a472a] transition-colors mb-4 text-[10px] font-black uppercase tracking-widest"
+          className="inline-flex items-center gap-2 text-gray-400 hover:text-[#111113] transition-colors mb-4 text-[10px] font-semibold uppercase tracking-[0.08em]"
         >
           <ArrowLeft size={12} />
           Zurück

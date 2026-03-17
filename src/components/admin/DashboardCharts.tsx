@@ -25,7 +25,7 @@ const STATUS_COLORS: Record<string, string> = {
   bezahlt: '#10b981',
   rechnung_erstellt: '#8b5cf6',
   abgeholt: '#14b8a6',
-  abgeschlossen: '#1a472a',
+  abgeschlossen: '#111113',
   storniert: '#ef4444',
 };
 
@@ -33,7 +33,7 @@ const STATUS_COLORS: Record<string, string> = {
 function EuroTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-white border border-gray-200 shadow-lg px-3 py-2">
+    <div className="bg-[#ffffff] border border-gray-200 shadow-lg px-3 py-2">
       <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">{label}</p>
       {payload.map((entry: any, i: number) => (
         <p key={i} className="text-xs font-mono font-bold" style={{ color: entry.color }}>
@@ -87,8 +87,8 @@ export default function DashboardCharts({ deals }: Props) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
       {/* Pipeline Status Donut */}
-      <div className="bg-white border border-gray-200 p-4">
-        <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-4">
+      <div className="bg-[#ffffff] border border-gray-200 p-4">
+        <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-4">
           Pipeline-Verteilung
         </h3>
         <div className="h-[200px]">
@@ -127,8 +127,8 @@ export default function DashboardCharts({ deals }: Props) {
       </div>
 
       {/* Deal-Wert nach Status */}
-      <div className="bg-white border border-gray-200 p-4">
-        <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-4">
+      <div className="bg-[#ffffff] border border-gray-200 p-4">
+        <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-4">
           Dealwert nach Status
         </h3>
         <div className="h-[240px]">
@@ -138,15 +138,15 @@ export default function DashboardCharts({ deals }: Props) {
               <XAxis type="number" tickFormatter={(v) => `€${(v / 1000).toFixed(0)}k`} tick={{ fontSize: 9, fill: '#9ca3af' }} />
               <YAxis type="category" dataKey="name" width={90} tick={{ fontSize: 9, fill: '#6b7280', fontWeight: 700 }} />
               <Tooltip content={<EuroTooltip />} />
-              <Bar dataKey="dealwert" name="Dealwert" fill="#1a472a" radius={[0, 4, 4, 0]} barSize={18} />
+              <Bar dataKey="dealwert" name="Dealwert" fill="#111113" radius={[0, 4, 4, 0]} barSize={18} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* Top Deals nach Provision */}
-      <div className="bg-white border border-gray-200 p-4">
-        <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-4">
+      <div className="bg-[#ffffff] border border-gray-200 p-4">
+        <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-4">
           Top Deals — Provision
         </h3>
         {provisionByDeal.length === 0 ? (
@@ -160,7 +160,7 @@ export default function DashboardCharts({ deals }: Props) {
                 <YAxis tickFormatter={(v) => `€${v}`} tick={{ fontSize: 9, fill: '#9ca3af' }} />
                 <Tooltip content={<EuroTooltip />} />
                 <Legend wrapperStyle={{ fontSize: '10px', fontWeight: 700 }} />
-                <Bar dataKey="dealwert" name="Dealwert" fill="#1a472a" radius={[4, 4, 0, 0]} barSize={16} />
+                <Bar dataKey="dealwert" name="Dealwert" fill="#111113" radius={[4, 4, 0, 0]} barSize={16} />
                 <Bar dataKey="provision" name="Provision" fill="#8cc63f" radius={[4, 4, 0, 0]} barSize={16} />
               </BarChart>
             </ResponsiveContainer>

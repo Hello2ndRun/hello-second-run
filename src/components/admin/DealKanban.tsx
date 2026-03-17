@@ -87,7 +87,7 @@ export default function DealKanban({ deals, partners }: Props) {
                   <h4 className="text-[9px] font-black uppercase tracking-[0.15em] text-gray-600">
                     {DEAL_STATUS_LABELS[status]}
                   </h4>
-                  <span className="text-[9px] font-bold text-gray-400 bg-white px-1.5 py-0.5 rounded-sm">
+                  <span className="text-[9px] font-bold text-gray-400 bg-[#ffffff] px-1.5 py-0.5 rounded-sm">
                     {columnDeals.length}
                   </span>
                 </div>
@@ -109,7 +109,7 @@ export default function DealKanban({ deals, partners }: Props) {
                     <button
                       key={deal.id}
                       onClick={() => navigate(`/admin/deals/${deal.id}`)}
-                      className={`w-full text-left bg-white border border-gray-100 p-3 transition-all cursor-pointer shadow-sm hover:shadow-md ${CARD_HOVER[status]}`}
+                      className={`w-full text-left bg-[#ffffff] border border-gray-100 p-3 transition-all cursor-pointer shadow-sm hover:shadow-md ${CARD_HOVER[status]}`}
                     >
                       <p className="text-[10px] font-mono font-bold text-gray-500">{deal.id}</p>
                       <p className="text-xs font-bold text-gray-900 mt-1 truncate">
@@ -119,7 +119,7 @@ export default function DealKanban({ deals, partners }: Props) {
                         → {getPartnerName(deal.kaeuferId)}
                       </p>
                       <div className="flex items-center justify-between mt-2">
-                        <span className="text-xs font-mono font-bold text-[#1a472a]">
+                        <span className="text-xs font-mono font-bold text-[#111113]">
                           {formatCurrency(deal.subtotalNetto)}
                         </span>
                         <span className="text-[9px] font-bold text-gray-300">

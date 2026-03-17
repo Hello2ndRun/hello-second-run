@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════
-// Document Generator — 5 PDF Templates for Vermittler-Plattform
+// Document Generator — 6 PDF Templates for HELLO SECOND/RUN
 // ════════════════════════════════════════════════════════════
 //
 // CRITICAL: Documents run on PARTNER names, NOT platform name!
@@ -48,7 +48,7 @@ function drawHeader(
   }
 
   // Divider
-  doc.setDrawColor(26, 71, 42);
+  doc.setDrawColor(17, 17, 19);
   doc.setLineWidth(0.5);
   doc.line(14, 45, pw - 14, 45);
 }
@@ -56,7 +56,7 @@ function drawHeader(
 function drawDocTitle(doc: jsPDF, title: string, nr: string, datum: string, extra?: string) {
   doc.setFontSize(20);
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(26, 71, 42);
+  doc.setTextColor(17, 17, 19);
   doc.text(title, 14, 58);
 
   doc.setFontSize(9);
@@ -98,14 +98,14 @@ function drawArticleTable(doc: jsPDF, articles: DealArticle[], startY: number, s
     body,
     theme: 'grid',
     headStyles: {
-      fillColor: [26, 71, 42],
+      fillColor: [17, 17, 19],
       textColor: [255, 255, 255],
       fontSize: 7,
       fontStyle: 'bold',
       cellPadding: 3,
     },
     bodyStyles: { fontSize: 8, cellPadding: 2.5 },
-    alternateRowStyles: { fillColor: [247, 249, 247] },
+    alternateRowStyles: { fillColor: [247, 247, 248] },
     columnStyles: {
       0: { cellWidth: 12, halign: 'center' },
       [showMhd ? 5 : 4]: { halign: 'center' },
@@ -133,7 +133,7 @@ function drawTotals(doc: jsPDF, deal: Deal) {
 
   doc.setFontSize(12);
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(26, 71, 42);
+  doc.setTextColor(17, 17, 19);
   doc.text('Gesamtbetrag:', tx, finalY + 16);
   doc.text(formatCurrency(deal.totalBrutto), pw - 14, finalY + 16, { align: 'right' });
   doc.setTextColor(0, 0, 0);
@@ -291,7 +291,7 @@ export function generateRechnung(
   // Large amount at top
   doc.setFontSize(24);
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(26, 71, 42);
+  doc.setTextColor(17, 17, 19);
   doc.text(`Rechnungsbetrag: ${formatCurrency(deal.totalBrutto)}`, pw - 14, 62, { align: 'right' });
   doc.setTextColor(0, 0, 0);
 
@@ -353,14 +353,14 @@ export function generateLieferschein(
     body,
     theme: 'grid',
     headStyles: {
-      fillColor: [26, 71, 42],
+      fillColor: [17, 17, 19],
       textColor: [255, 255, 255],
       fontSize: 7,
       fontStyle: 'bold',
       cellPadding: 3,
     },
     bodyStyles: { fontSize: 8, cellPadding: 2.5 },
-    alternateRowStyles: { fillColor: [247, 249, 247] },
+    alternateRowStyles: { fillColor: [247, 247, 248] },
     columnStyles: {
       0: { cellWidth: 12, halign: 'center' },
       5: { halign: 'center' },
@@ -441,7 +441,7 @@ export function generateProvision(
 
   doc.setFontSize(12);
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(26, 71, 42);
+  doc.setTextColor(17, 17, 19);
   doc.text('Rechnungsbetrag:', tx, y + 16);
   doc.text(formatCurrency(provBrutto), pw - 14, y + 16, { align: 'right' });
   doc.setTextColor(0, 0, 0);

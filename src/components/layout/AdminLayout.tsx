@@ -29,20 +29,20 @@ export default function AdminLayout({ children }: Props) {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-[#f7f9f7]">
+    <div className="flex min-h-screen bg-[#f7f7f8]">
       {/* Mobile Header Bar */}
-      <div className="fixed top-0 left-0 right-0 h-14 bg-[#1a472a] flex items-center px-4 gap-3 z-30 lg:hidden">
+      <div className="fixed top-0 left-0 right-0 h-14 bg-[#111113] flex items-center px-4 gap-3 z-30 lg:hidden">
         <button
           onClick={() => setMobileOpen(true)}
-          className="p-2 text-white/70 hover:text-white transition-colors"
+          className="p-2 text-[#ffffff]/70 hover:text-[#ffffff] transition-colors"
         >
           <Menu size={22} />
         </button>
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 bg-[#8cc63f] rounded-sm flex items-center justify-center">
-            <span className="text-[#1a472a] font-black text-[10px]">H</span>
+            <span className="text-[#111113] font-bold text-[10px]">H</span>
           </div>
-          <span className="text-[10px] font-black uppercase tracking-[0.15em] text-white">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white">
             HELLO <span className="text-[#8cc63f]">SECOND/RUN</span>
           </span>
         </div>

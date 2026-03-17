@@ -103,7 +103,7 @@ export default function ActivityFeed({ collapsed }: Props) {
         <Bell size={18} className="flex-shrink-0" />
         {!collapsed && <span className="text-[12px] font-bold">Aktivitäten</span>}
         {unreadCount > 0 && (
-          <span className="absolute top-1 left-5 min-w-[16px] h-4 bg-[#8cc63f] text-[#1a472a] text-[9px] font-black rounded-full flex items-center justify-center px-1">
+          <span className="absolute top-1 left-5 min-w-[16px] h-4 bg-[#8cc63f] text-[#111113] text-[9px] font-black rounded-lg flex items-center justify-center px-1">
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
@@ -111,15 +111,15 @@ export default function ActivityFeed({ collapsed }: Props) {
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute bottom-full left-0 mb-2 w-[340px] bg-white border border-gray-200 shadow-xl z-50 max-h-[480px] flex flex-col">
+        <div className="absolute bottom-full left-0 mb-2 w-[340px] bg-[#ffffff] border border-gray-200 shadow-xl z-50 max-h-[480px] flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a]">Aktivitäten</h3>
+            <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113]">Aktivitäten</h3>
             <div className="flex items-center gap-2">
               {unreadCount > 0 && (
                 <button
                   onClick={handleMarkRead}
-                  className="text-[9px] font-bold text-[#8cc63f] hover:text-[#1a472a] uppercase tracking-wider transition-colors"
+                  className="text-[9px] font-bold text-[#8cc63f] hover:text-[#111113] uppercase tracking-wider transition-colors"
                 >
                   Alle gelesen
                 </button>

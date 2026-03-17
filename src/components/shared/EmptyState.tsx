@@ -24,15 +24,15 @@ export default function EmptyState({
 }: Props) {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
-      <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-5">
-        <Icon size={28} className="text-gray-300" />
+      <div className="w-16 h-16 bg-[#f7f7f8] rounded-lg flex items-center justify-center mb-5">
+        <Icon size={28} className="text-[#9394a1]" />
       </div>
-      <h3 className="text-lg font-black uppercase tracking-tight mb-2">{title}</h3>
-      {description && <p className="text-gray-400 text-sm max-w-md mb-6">{description}</p>}
+      <h3 className="text-lg font-semibold mb-2">{title}</h3>
+      {description && <p className="text-[#9394a1] text-sm max-w-md mb-6">{description}</p>}
       {actionLabel && actionTo && (
         <Link
           to={actionTo}
-          className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-6 py-3 font-black uppercase tracking-[0.1em] text-[11px] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all"
+          className="inline-flex items-center gap-2 bg-[#111113] text-[#ffffff] px-6 py-2.5 rounded-lg font-semibold text-sm hover:bg-[#8cc63f] hover:text-[#111113] transition-all"
         >
           {actionLabel}
         </Link>
@@ -40,7 +40,7 @@ export default function EmptyState({
       {actionLabel && onAction && !actionTo && (
         <button
           onClick={onAction}
-          className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-6 py-3 font-black uppercase tracking-[0.1em] text-[11px] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all"
+          className="inline-flex items-center gap-2 bg-[#111113] text-[#ffffff] px-6 py-2.5 rounded-lg font-semibold text-sm hover:bg-[#8cc63f] hover:text-[#111113] transition-all"
         >
           {actionLabel}
         </button>

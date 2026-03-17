@@ -380,16 +380,16 @@ export default function DealNew() {
             <div
               className={`flex items-center gap-2 px-3 py-2 w-full transition-all ${
                 step === s.nr
-                  ? 'bg-[#1a472a] text-white'
+                  ? 'bg-[#111113] text-[#ffffff]'
                   : step > s.nr
-                    ? 'bg-[#8cc63f] text-[#1a472a]'
+                    ? 'bg-[#8cc63f] text-[#111113]'
                     : 'bg-gray-100 text-gray-400'
               } ${i === 0 ? 'rounded-l' : ''} ${i === STEPS.length - 1 ? 'rounded-r' : ''}`}
             >
               <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs font-black">
                 {step > s.nr ? <CheckCircle size={14} /> : s.nr}
               </span>
-              <span className="text-[10px] font-black uppercase tracking-wider hidden md:block">{s.label}</span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.08em] hidden md:block">{s.label}</span>
             </div>
           </div>
         ))}
@@ -398,14 +398,14 @@ export default function DealNew() {
       {/* STEP 1: Verkäufer + Upload */}
       {step === 1 && (
         <div className="space-y-6">
-          <div className="bg-white border border-gray-200 p-6">
-            <label className="block text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-2">
+          <div className="bg-[#ffffff] border border-gray-200 p-6">
+            <label className="block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-2">
               Verkäufer auswählen
             </label>
             <select
               value={verkaeuferId}
               onChange={e => setVerkaeuferId(e.target.value)}
-              className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#1a472a] focus:outline-none"
+              className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#111113] focus:outline-none"
             >
               <option value="">— Verkäufer wählen —</option>
               {verkaeuferList.map(p => (
@@ -414,8 +414,8 @@ export default function DealNew() {
             </select>
           </div>
 
-          <div className="bg-white border border-gray-200 p-6">
-            <label className="block text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-2">
+          <div className="bg-[#ffffff] border border-gray-200 p-6">
+            <label className="block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-2">
               Artikelliste hochladen
             </label>
             <p className="text-xs text-gray-400 mb-3 flex items-center gap-1">
@@ -432,7 +432,7 @@ export default function DealNew() {
 
             {/* Extraction Loading */}
             {isExtracting && (
-              <div className="mt-3 flex items-center gap-2 text-[#1a472a] bg-[#f7f9f7] px-4 py-3 border border-[#8cc63f]/20">
+              <div className="mt-3 flex items-center gap-2 text-[#111113] bg-[#ffffff] px-4 py-3 border border-[#8cc63f]/20">
                 <Loader2 size={14} className="animate-spin" />
                 <span className="text-[11px] font-bold uppercase tracking-wider">Extrahiere Artikel...</span>
               </div>
@@ -461,7 +461,7 @@ export default function DealNew() {
             <button
               onClick={() => { addArticle(); setStep(2); }}
               disabled={isExtracting}
-              className="mt-3 w-full inline-flex items-center justify-center gap-2 border border-gray-200 text-gray-600 px-5 py-3 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all disabled:opacity-30"
+              className="mt-3 w-full inline-flex items-center justify-center gap-2 border border-gray-200 text-gray-600 px-5 py-3 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#111113] hover:text-[#111113] transition-all disabled:opacity-30"
             >
               <Plus size={14} />
               Manuell eingeben
@@ -474,9 +474,9 @@ export default function DealNew() {
       {step === 2 && (
         <div className="space-y-4">
           {articles.map((art, index) => (
-            <div key={index} className="bg-white border border-gray-200 p-4">
+            <div key={index} className="bg-[#ffffff] border border-gray-200 p-4">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-gray-400">
                   Position {index + 1}
                 </span>
                 <button
@@ -495,7 +495,7 @@ export default function DealNew() {
                     type="text"
                     value={art.artikelname}
                     onChange={e => updateArticle(index, { artikelname: e.target.value })}
-                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm focus:border-[#1a472a] focus:outline-none"
+                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm focus:border-[#111113] focus:outline-none"
                     placeholder="z.B. Barilla Spaghetti"
                   />
                 </div>
@@ -505,7 +505,7 @@ export default function DealNew() {
                     type="text"
                     value={art.marke}
                     onChange={e => updateArticle(index, { marke: e.target.value })}
-                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm focus:border-[#1a472a] focus:outline-none"
+                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm focus:border-[#111113] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -515,7 +515,7 @@ export default function DealNew() {
                       type="text"
                       value={art.ean}
                       onChange={e => updateArticle(index, { ean: e.target.value })}
-                      className="flex-1 bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#1a472a] focus:outline-none"
+                      className="flex-1 bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#111113] focus:outline-none"
                       placeholder="EAN-13"
                     />
                   </div>
@@ -529,7 +529,7 @@ export default function DealNew() {
                     type="date"
                     value={art.mhd}
                     onChange={e => updateArticle(index, { mhd: e.target.value })}
-                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm focus:border-[#1a472a] focus:outline-none"
+                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm focus:border-[#111113] focus:outline-none"
                   />
                   {art.mhd && <div className="mt-1"><MhdBadge mhd={art.mhd} /></div>}
                 </div>
@@ -545,7 +545,7 @@ export default function DealNew() {
                     min="0"
                     value={art.ekPreis}
                     onChange={e => updateArticle(index, { ekPreis: parseFloat(e.target.value) || 0 })}
-                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#1a472a] focus:outline-none"
+                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#111113] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -556,7 +556,7 @@ export default function DealNew() {
                     min="0"
                     value={art.uvp}
                     onChange={e => updateArticle(index, { uvp: parseFloat(e.target.value) || 0 })}
-                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#1a472a] focus:outline-none"
+                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#111113] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -567,7 +567,7 @@ export default function DealNew() {
                     min="0"
                     value={art.vkPreis}
                     onChange={e => updateArticle(index, { vkPreis: parseFloat(e.target.value) || 0 })}
-                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono font-bold text-[#1a472a] focus:border-[#1a472a] focus:outline-none"
+                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono font-bold text-[#111113] focus:border-[#111113] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -583,7 +583,7 @@ export default function DealNew() {
                     min="1"
                     value={art.stueckProKarton}
                     onChange={e => updateArticle(index, { stueckProKarton: parseInt(e.target.value) || 1 })}
-                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#1a472a] focus:outline-none"
+                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#111113] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -593,7 +593,7 @@ export default function DealNew() {
                     min="1"
                     value={art.kartonsProPalette}
                     onChange={e => updateArticle(index, { kartonsProPalette: parseInt(e.target.value) || 1 })}
-                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#1a472a] focus:outline-none"
+                    className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#111113] focus:outline-none"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-2">
@@ -604,7 +604,7 @@ export default function DealNew() {
                       min="0"
                       value={art.mengeKartons}
                       onChange={e => updateArticle(index, { mengeKartons: parseInt(e.target.value) || 0 })}
-                      className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#1a472a] focus:outline-none"
+                      className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#111113] focus:outline-none"
                     />
                   </div>
                   <div>
@@ -614,7 +614,7 @@ export default function DealNew() {
                       min="0"
                       value={art.mengePaletten}
                       onChange={e => updateArticle(index, { mengePaletten: parseInt(e.target.value) || 0 })}
-                      className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#1a472a] focus:outline-none"
+                      className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm font-mono focus:border-[#111113] focus:outline-none"
                     />
                   </div>
                 </div>
@@ -626,20 +626,20 @@ export default function DealNew() {
                 <div className="flex items-center gap-3">
                   {art.imageData ? (
                     <div className="relative w-16 h-16 flex-shrink-0">
-                      <img src={art.imageData} alt={art.artikelname} className="w-16 h-16 object-contain border border-gray-200 rounded bg-white" />
+                      <img src={art.imageData} alt={art.artikelname} className="w-16 h-16 object-contain border border-gray-200 rounded bg-[#ffffff]" />
                       <button
                         onClick={() => updateArticle(index, { imageData: '' })}
-                        className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
+                        className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors"
                       >
                         <X size={10} />
                       </button>
                     </div>
                   ) : art.imageUrl ? (
                     <div className="relative w-16 h-16 flex-shrink-0">
-                      <img src={art.imageUrl} alt={art.artikelname} className="w-16 h-16 object-contain border border-gray-200 rounded bg-white" />
+                      <img src={art.imageUrl} alt={art.artikelname} className="w-16 h-16 object-contain border border-gray-200 rounded bg-[#ffffff]" />
                     </div>
                   ) : null}
-                  <label className="inline-flex items-center gap-2 border border-dashed border-gray-300 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-gray-400 hover:border-[#1a472a] hover:text-[#1a472a] transition-all cursor-pointer">
+                  <label className="inline-flex items-center gap-2 border border-dashed border-gray-300 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-gray-400 hover:border-[#111113] hover:text-[#111113] transition-all cursor-pointer">
                     <Camera size={14} />
                     {art.imageData ? 'Foto ändern' : 'Foto hochladen'}
                     <input
@@ -661,7 +661,7 @@ export default function DealNew() {
 
           <button
             onClick={addArticle}
-            className="w-full inline-flex items-center justify-center gap-2 border-2 border-dashed border-gray-200 text-gray-400 px-5 py-4 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+            className="w-full inline-flex items-center justify-center gap-2 border-2 border-dashed border-gray-200 text-gray-400 px-5 py-4 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#111113] hover:text-[#111113] transition-all"
           >
             <Plus size={14} />
             Artikel hinzufügen
@@ -672,14 +672,14 @@ export default function DealNew() {
       {/* STEP 3: Käufer + Konditionen */}
       {step === 3 && (
         <div className="space-y-6">
-          <div className="bg-white border border-gray-200 p-6">
-            <label className="block text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-2">
+          <div className="bg-[#ffffff] border border-gray-200 p-6">
+            <label className="block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-2">
               Käufer auswählen
             </label>
             <select
               value={kaeuferId}
               onChange={e => setKaeuferId(e.target.value)}
-              className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#1a472a] focus:outline-none"
+              className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#111113] focus:outline-none"
             >
               <option value="">— Käufer wählen —</option>
               {kaeuferList.map(p => (
@@ -688,8 +688,8 @@ export default function DealNew() {
             </select>
           </div>
 
-          <div className="bg-white border border-gray-200 p-6">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-4">Konditionen</h3>
+          <div className="bg-[#ffffff] border border-gray-200 p-6">
+            <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-4">Konditionen</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-1">
@@ -702,7 +702,7 @@ export default function DealNew() {
                   max="100"
                   value={provisionRate}
                   onChange={e => setProvisionRate(parseFloat(e.target.value) || 0)}
-                  className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm font-mono focus:border-[#1a472a] focus:outline-none"
+                  className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm font-mono focus:border-[#111113] focus:outline-none"
                 />
                 <p className="text-[10px] text-gray-400 mt-1">Standard: {formatPercent(settings.defaultProvisionRate * 100)}</p>
               </div>
@@ -714,7 +714,7 @@ export default function DealNew() {
                   type="text"
                   value={zahlungsbedingung}
                   onChange={e => setZahlungsbedingung(e.target.value)}
-                  className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#1a472a] focus:outline-none"
+                  className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#111113] focus:outline-none"
                 />
               </div>
               <div>
@@ -725,7 +725,7 @@ export default function DealNew() {
                   type="text"
                   value={lieferbedingung}
                   onChange={e => setLieferbedingung(e.target.value)}
-                  className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#1a472a] focus:outline-none"
+                  className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#111113] focus:outline-none"
                 />
               </div>
               <div>
@@ -736,15 +736,15 @@ export default function DealNew() {
                   type="date"
                   value={abholtermin}
                   onChange={e => setAbholtermin(e.target.value)}
-                  className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#1a472a] focus:outline-none"
+                  className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#111113] focus:outline-none"
                 />
               </div>
             </div>
           </div>
 
           {/* Summary Card */}
-          <div className="bg-[#f7f9f7] border border-[#8cc63f]/30 p-6">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-4">Zusammenfassung</h3>
+          <div className="bg-[#ffffff] border border-[#8cc63f]/30 p-6">
+            <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-4">Zusammenfassung</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-1">Netto</p>
@@ -756,7 +756,7 @@ export default function DealNew() {
               </div>
               <div>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-1">Brutto</p>
-                <p className="text-lg font-black font-mono text-[#1a472a]">{formatCurrency(vat.total)}</p>
+                <p className="text-lg font-black font-mono text-[#111113]">{formatCurrency(vat.total)}</p>
               </div>
               <div>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-1">Provision ({formatPercent(provisionRate)})</p>
@@ -771,8 +771,8 @@ export default function DealNew() {
       {step === 4 && (
         <div className="space-y-6">
           {/* Deal Summary */}
-          <div className="bg-white border border-gray-200 p-6">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-4">Deal-Zusammenfassung</h3>
+          <div className="bg-[#ffffff] border border-gray-200 p-6">
+            <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-4">Deal-Zusammenfassung</h3>
 
             <div className="grid grid-cols-2 gap-6 mb-6">
               <div>
@@ -792,12 +792,12 @@ export default function DealNew() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-100">
-                    <th className="px-3 py-2 text-left text-[9px] font-black uppercase tracking-widest text-gray-400">Pos</th>
-                    <th className="px-3 py-2 text-left text-[9px] font-black uppercase tracking-widest text-gray-400">Artikel</th>
-                    <th className="px-3 py-2 text-left text-[9px] font-black uppercase tracking-widest text-gray-400">MHD</th>
-                    <th className="px-3 py-2 text-left text-[9px] font-black uppercase tracking-widest text-gray-400">Menge</th>
-                    <th className="px-3 py-2 text-left text-[9px] font-black uppercase tracking-widest text-gray-400">EK</th>
-                    <th className="px-3 py-2 text-left text-[9px] font-black uppercase tracking-widest text-gray-400">VK</th>
+                    <th className="px-3 py-2 text-left text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">Pos</th>
+                    <th className="px-3 py-2 text-left text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">Artikel</th>
+                    <th className="px-3 py-2 text-left text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">MHD</th>
+                    <th className="px-3 py-2 text-left text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">Menge</th>
+                    <th className="px-3 py-2 text-left text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">EK</th>
+                    <th className="px-3 py-2 text-left text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">VK</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -834,7 +834,7 @@ export default function DealNew() {
               </div>
               <div>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-1">Brutto</p>
-                <p className="text-lg font-black font-mono text-[#1a472a]">{formatCurrency(vat.total)}</p>
+                <p className="text-lg font-black font-mono text-[#111113]">{formatCurrency(vat.total)}</p>
               </div>
               <div>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-1">Provision</p>
@@ -864,7 +864,7 @@ export default function DealNew() {
           {/* Save Button */}
           <button
             onClick={handleSave}
-            className="w-full inline-flex items-center justify-center gap-2 bg-[#1a472a] text-white px-6 py-4 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all"
+            className="w-full inline-flex items-center justify-center gap-2 bg-[#111113] text-[#ffffff] px-6 py-4 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#111113] transition-all"
           >
             <Save size={16} />
             Deal erstellen
@@ -877,7 +877,7 @@ export default function DealNew() {
         {step > 1 ? (
           <button
             onClick={() => setStep(s => s - 1)}
-            className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+            className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#111113] hover:text-[#111113] transition-all"
           >
             <ArrowLeft size={14} />
             Zurück
@@ -890,7 +890,7 @@ export default function DealNew() {
           <button
             onClick={() => setStep(s => s + 1)}
             disabled={!canProceed(step)}
-            className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+            className="inline-flex items-center gap-2 bg-[#111113] text-[#ffffff] px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#111113] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
           >
             Weiter
             <ArrowRight size={14} />

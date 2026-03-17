@@ -126,7 +126,7 @@ export default function Deals() {
       label: 'Provision',
       sortable: true,
       render: (deal: Deal) => (
-        <span className="font-mono text-sm text-[#1a472a]">{formatCurrency(deal.provisionAmount)}</span>
+        <span className="font-mono text-sm text-[#111113]">{formatCurrency(deal.provisionAmount)}</span>
       ),
     },
     {
@@ -146,7 +146,7 @@ export default function Deals() {
             e.stopPropagation();
             navigate('/admin/deals/new', { state: { cloneFrom: deal.id } });
           }}
-          className="p-1.5 text-gray-300 hover:text-[#1a472a] hover:bg-[#f7f9f7] transition-all"
+          className="p-1.5 text-gray-300 hover:text-[#111113] hover:bg-[#ffffff] transition-all"
           title="Deal duplizieren"
         >
           <Copy size={14} />
@@ -168,7 +168,7 @@ export default function Deals() {
           <div className="flex items-center gap-2">
             <div className="relative group">
               <button
-                className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-4 py-2.5 text-[10px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+                className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-4 py-2.5 text-[10px] font-black uppercase tracking-[0.1em] hover:border-[#111113] hover:text-[#111113] transition-all"
                 onClick={() => exportDealsAsCsv(filteredDeals, getPartnerName)}
               >
                 <Download size={13} />
@@ -176,7 +176,7 @@ export default function Deals() {
               </button>
               <button
                 onClick={() => exportDealsDetailAsCsv(filteredDeals, allArticles, getPartnerName)}
-                className="hidden group-hover:inline-flex absolute right-0 top-full mt-1 items-center gap-2 bg-white border border-gray-200 text-gray-500 px-4 py-2 text-[9px] font-bold whitespace-nowrap hover:border-[#1a472a] hover:text-[#1a472a] transition-all z-10 shadow-sm"
+                className="hidden group-hover:inline-flex absolute right-0 top-full mt-1 items-center gap-2 bg-[#ffffff] border border-gray-200 text-gray-500 px-4 py-2 text-[9px] font-bold whitespace-nowrap hover:border-[#111113] hover:text-[#111113] transition-all z-10 shadow-sm"
               >
                 <Download size={11} />
                 Mit Artikeldetails
@@ -184,7 +184,7 @@ export default function Deals() {
             </div>
             <Link
               to="/admin/deals/new"
-              className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all"
+              className="inline-flex items-center gap-2 bg-[#111113] text-[#ffffff] px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#111113] transition-all"
             >
               <Plus size={14} />
               Neuer Deal
@@ -195,31 +195,31 @@ export default function Deals() {
 
       {/* Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white border border-gray-200 p-4 flex items-center gap-4">
-          <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
+        <div className="bg-[#ffffff] border border-gray-200 p-4 flex items-center gap-4">
+          <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
             <Handshake size={18} className="text-blue-600" />
           </div>
           <div>
-            <p className="text-[9px] font-black uppercase tracking-widest text-gray-400">Offene Deals</p>
+            <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">Offene Deals</p>
             <p className="text-xl font-black font-mono">{offeneCount}</p>
           </div>
         </div>
-        <div className="bg-white border border-gray-200 p-4 flex items-center gap-4">
-          <div className="w-10 h-10 bg-emerald-50 rounded-full flex items-center justify-center flex-shrink-0">
+        <div className="bg-[#ffffff] border border-gray-200 p-4 flex items-center gap-4">
+          <div className="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
             <CheckCircle size={18} className="text-emerald-600" />
           </div>
           <div>
-            <p className="text-[9px] font-black uppercase tracking-widest text-gray-400">Abgeschlossen</p>
+            <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">Abgeschlossen</p>
             <p className="text-xl font-black font-mono">{abgeschlossenCount}</p>
           </div>
         </div>
-        <div className="bg-white border border-gray-200 p-4 flex items-center gap-4">
-          <div className="w-10 h-10 bg-[#f7f9f7] rounded-full flex items-center justify-center flex-shrink-0">
-            <TrendingUp size={18} className="text-[#1a472a]" />
+        <div className="bg-[#ffffff] border border-gray-200 p-4 flex items-center gap-4">
+          <div className="w-10 h-10 bg-[#ffffff] rounded-lg flex items-center justify-center flex-shrink-0">
+            <TrendingUp size={18} className="text-[#111113]" />
           </div>
           <div>
-            <p className="text-[9px] font-black uppercase tracking-widest text-gray-400">Provision gesamt</p>
-            <p className="text-xl font-black font-mono text-[#1a472a]">{formatCurrency(provisionGesamt)}</p>
+            <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">Provision gesamt</p>
+            <p className="text-xl font-black font-mono text-[#111113]">{formatCurrency(provisionGesamt)}</p>
           </div>
         </div>
       </div>
@@ -233,25 +233,25 @@ export default function Deals() {
               onClick={() => setStatusFilter(s)}
               className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all ${
                 statusFilter === s
-                  ? 'bg-[#1a472a] text-white'
-                  : 'bg-white border border-gray-200 text-gray-500 hover:border-[#1a472a] hover:text-[#1a472a]'
+                  ? 'bg-[#111113] text-[#ffffff]'
+                  : 'bg-[#ffffff] border border-gray-200 text-gray-500 hover:border-[#111113] hover:text-[#111113]'
               }`}
             >
               {s === 'all' ? 'Alle' : DEAL_STATUS_LABELS[s]}
             </button>
           ))}
         </div>
-        <div className="flex items-center border border-gray-200 bg-white flex-shrink-0 ml-4">
+        <div className="flex items-center border border-gray-200 bg-[#ffffff] flex-shrink-0 ml-4">
           <button
             onClick={() => setViewMode('table')}
-            className={`p-2 transition-all ${viewMode === 'table' ? 'bg-[#1a472a] text-white' : 'text-gray-400 hover:text-[#1a472a]'}`}
+            className={`p-2 transition-all ${viewMode === 'table' ? 'bg-[#111113] text-[#ffffff]' : 'text-gray-400 hover:text-[#111113]'}`}
             title="Tabellenansicht"
           >
             <List size={14} />
           </button>
           <button
             onClick={() => setViewMode('kanban')}
-            className={`p-2 transition-all ${viewMode === 'kanban' ? 'bg-[#1a472a] text-white' : 'text-gray-400 hover:text-[#1a472a]'}`}
+            className={`p-2 transition-all ${viewMode === 'kanban' ? 'bg-[#111113] text-[#ffffff]' : 'text-gray-400 hover:text-[#111113]'}`}
             title="Kanban-Ansicht"
           >
             <LayoutGrid size={14} />

@@ -8,13 +8,13 @@ export default function NotFound() {
         <div className="mb-8">
           <span className="text-[120px] font-black text-gray-100 leading-none block">404</span>
         </div>
-        <h1 className="text-3xl font-black uppercase tracking-tight mb-4">Page not found</h1>
-        <p className="text-gray-500 mb-8">
-          The page you're looking for doesn't exist or has been moved.
+        <h1 className="heading-display text-3xl mb-4">Seite nicht gefunden</h1>
+        <p className="text-[#5f5f6b] mb-8">
+          Die Seite die du suchst existiert nicht oder wurde verschoben.
         </p>
         <Link
           to="/"
-          className="inline-flex items-center gap-3 bg-[#1a472a] text-white px-8 py-4 font-black uppercase tracking-[0.1em] text-[11px] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all"
+          className="inline-flex items-center gap-3 bg-[#111113] text-[#ffffff] px-8 py-3.5 rounded-lg font-semibold text-sm hover:bg-[#8cc63f] hover:text-[#111113] transition-all"
         >
           <ArrowLeft size={14} />
           Back to Home

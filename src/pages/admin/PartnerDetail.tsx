@@ -122,9 +122,9 @@ export default function PartnerDetail() {
   };
 
   const inputClasses =
-    'w-full bg-gray-50 border border-gray-300 py-2 px-3 text-sm focus:border-[#1a472a] focus:outline-none transition-all';
+    'w-full bg-gray-50 border border-gray-300 py-2 px-3 text-sm focus:border-[#111113] focus:outline-none transition-all';
   const labelClasses =
-    'block text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-1';
+    'block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-1';
 
   return (
     <div>
@@ -140,11 +140,11 @@ export default function PartnerDetail() {
       />
 
       {/* Portal-Link */}
-      <div className="bg-[#f7f9f7] border border-[#1a472a]/10 px-5 py-3 mb-6 flex items-center justify-between">
+      <div className="bg-[#ffffff] border border-[#e4e4e7] px-5 py-3 mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <ExternalLink size={14} className="text-[#1a472a]" />
+          <ExternalLink size={14} className="text-[#111113]" />
           <span className="text-xs text-gray-600">
-            Partner-Portal: <span className="font-mono font-bold text-[#1a472a]">/portal/{id}</span>
+            Partner-Portal: <span className="font-mono font-bold text-[#111113]">/portal/{id}</span>
           </span>
         </div>
         <button
@@ -164,7 +164,7 @@ export default function PartnerDetail() {
               setTimeout(() => setPortalLinkCopied(false), 2000);
             });
           }}
-          className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-[#1a472a] hover:bg-[#1a472a] hover:text-white px-3 py-1.5 transition-all"
+          className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-[#111113] hover:bg-[#111113] hover:text-white px-3 py-1.5 transition-all"
         >
           {portalLinkCopied ? <><Check size={12} /> Kopiert!</> : 'Link kopieren'}
         </button>
@@ -172,46 +172,46 @@ export default function PartnerDetail() {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white border border-gray-200 p-4 flex items-center gap-3">
+        <div className="bg-[#ffffff] border border-gray-200 p-4 flex items-center gap-3">
           <div className="w-9 h-9 bg-blue-50 flex items-center justify-center flex-shrink-0">
             <Handshake size={16} className="text-blue-600" />
           </div>
           <div>
             <p className="text-lg font-black font-mono">{deals.length}</p>
-            <p className="text-[9px] font-black uppercase tracking-widest text-gray-400">Deals</p>
+            <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">Deals</p>
           </div>
         </div>
-        <div className="bg-white border border-gray-200 p-4 flex items-center gap-3">
+        <div className="bg-[#ffffff] border border-gray-200 p-4 flex items-center gap-3">
           <div className="w-9 h-9 bg-emerald-50 flex items-center justify-center flex-shrink-0">
             <TrendingUp size={16} className="text-emerald-600" />
           </div>
           <div>
             <p className="text-lg font-black font-mono">{formatCurrency(totalUmsatz)}</p>
-            <p className="text-[9px] font-black uppercase tracking-widest text-gray-400">Umsatz</p>
+            <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">Umsatz</p>
           </div>
         </div>
-        <div className="bg-white border border-gray-200 p-4 flex items-center gap-3">
-          <div className="w-9 h-9 bg-[#1a472a]/10 flex items-center justify-center flex-shrink-0">
-            <Handshake size={16} className="text-[#1a472a]" />
+        <div className="bg-[#ffffff] border border-gray-200 p-4 flex items-center gap-3">
+          <div className="w-9 h-9 bg-[#111113]/10 flex items-center justify-center flex-shrink-0">
+            <Handshake size={16} className="text-[#111113]" />
           </div>
           <div>
             <p className="text-lg font-black font-mono">{activeDeals}</p>
-            <p className="text-[9px] font-black uppercase tracking-widest text-gray-400">Aktiv</p>
+            <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">Aktiv</p>
           </div>
         </div>
-        <div className="bg-white border border-gray-200 p-4 flex items-center gap-3">
+        <div className="bg-[#ffffff] border border-gray-200 p-4 flex items-center gap-3">
           <div className="w-9 h-9 bg-amber-50 flex items-center justify-center flex-shrink-0">
             <FileText size={16} className="text-amber-600" />
           </div>
           <div>
             <p className="text-lg font-black font-mono">{documents.length}</p>
-            <p className="text-[9px] font-black uppercase tracking-widest text-gray-400">Dokumente</p>
+            <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">Dokumente</p>
           </div>
         </div>
       </div>
 
       {/* Firmendaten */}
-      <div className="bg-white border border-gray-200 p-6 mb-6">
+      <div className="bg-[#ffffff] border border-gray-200 p-6 mb-6">
         <h3 className="text-sm font-black uppercase tracking-tight mb-4">Firmendaten</h3>
         <div className="grid md:grid-cols-2 gap-4">
           <div>
@@ -230,7 +230,7 @@ export default function PartnerDetail() {
       </div>
 
       {/* Kontakt */}
-      <div className="bg-white border border-gray-200 p-6 mb-6">
+      <div className="bg-[#ffffff] border border-gray-200 p-6 mb-6">
         <h3 className="text-sm font-black uppercase tracking-tight mb-4">Kontakt</h3>
         <div className="grid md:grid-cols-3 gap-4">
           <div>
@@ -249,7 +249,7 @@ export default function PartnerDetail() {
       </div>
 
       {/* Adresse */}
-      <div className="bg-white border border-gray-200 p-6 mb-6">
+      <div className="bg-[#ffffff] border border-gray-200 p-6 mb-6">
         <h3 className="text-sm font-black uppercase tracking-tight mb-4">Adresse</h3>
         <div className="grid md:grid-cols-4 gap-4">
           <div className="md:col-span-2">
@@ -276,7 +276,7 @@ export default function PartnerDetail() {
       </div>
 
       {/* Rolle & Kategorien */}
-      <div className="bg-white border border-gray-200 p-6 mb-6">
+      <div className="bg-[#ffffff] border border-gray-200 p-6 mb-6">
         <h3 className="text-sm font-black uppercase tracking-tight mb-4">Rolle & Kategorien</h3>
         <div className="grid md:grid-cols-2 gap-4 mb-4">
           <div>
@@ -304,8 +304,8 @@ export default function PartnerDetail() {
                 key={cat.value}
                 className={`inline-flex items-center gap-2 px-3 py-1.5 border text-xs cursor-pointer transition-all ${
                   form.kategorien.includes(cat.value)
-                    ? 'bg-[#1a472a] text-white border-[#1a472a]'
-                    : 'bg-white text-gray-600 border-gray-200 hover:border-[#1a472a]'
+                    ? 'bg-[#111113] text-[#ffffff] border-[#111113]'
+                    : 'bg-[#ffffff] text-gray-600 border-gray-200 hover:border-[#111113]'
                 }`}
               >
                 <input
@@ -327,7 +327,7 @@ export default function PartnerDetail() {
 
       {/* Bankdaten */}
       {showBank && (
-        <div className="bg-white border border-gray-200 p-6 mb-6">
+        <div className="bg-[#ffffff] border border-gray-200 p-6 mb-6">
           <h3 className="text-sm font-black uppercase tracking-tight mb-4">Bankdaten</h3>
           <div className="grid md:grid-cols-3 gap-4">
             <div>
@@ -347,12 +347,12 @@ export default function PartnerDetail() {
       )}
 
       {/* Kontakt-Aktionen */}
-      <div className="bg-white border border-gray-200 p-6 mb-6">
+      <div className="bg-[#ffffff] border border-gray-200 p-6 mb-6">
         <h3 className="text-sm font-black uppercase tracking-tight mb-4">Schnellaktionen</h3>
         <div className="flex flex-wrap gap-3">
           <a
             href={`mailto:${form.email}`}
-            className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+            className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#111113] hover:text-[#111113] transition-all"
           >
             <Mail size={14} />
             E-Mail senden
@@ -360,14 +360,14 @@ export default function PartnerDetail() {
           {form.telefon && (
             <a
               href={`tel:${form.telefon}`}
-              className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+              className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#111113] hover:text-[#111113] transition-all"
             >
               Anrufen
             </a>
           )}
           <button
             onClick={() => navigate('/admin/deals/new')}
-            className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all"
+            className="inline-flex items-center gap-2 bg-[#111113] text-[#ffffff] px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#111113] transition-all"
           >
             <Handshake size={14} />
             Neuen Deal erstellen
@@ -377,7 +377,7 @@ export default function PartnerDetail() {
 
       {/* Deal-Historie */}
       {deals.length > 0 && (
-        <div className="bg-white border border-gray-200 p-6 mb-6">
+        <div className="bg-[#ffffff] border border-gray-200 p-6 mb-6">
           <h3 className="text-sm font-black uppercase tracking-tight mb-4">
             Deal-Historie ({deals.length})
           </h3>
@@ -399,11 +399,11 @@ export default function PartnerDetail() {
                     <tr
                       key={deal.id}
                       onClick={() => navigate(`/admin/deals/${deal.id}`)}
-                      className="border-b border-gray-50 last:border-0 hover:bg-[#f7f9f7] cursor-pointer transition-colors"
+                      className="border-b border-gray-50 last:border-0 hover:bg-[#ffffff] cursor-pointer transition-colors"
                     >
-                      <td className="px-4 py-2.5 text-sm font-mono font-bold text-[#1a472a]">{deal.id}</td>
+                      <td className="px-4 py-2.5 text-sm font-mono font-bold text-[#111113]">{deal.id}</td>
                       <td className="px-4 py-2.5">
-                        <span className={`inline-flex items-center px-2 py-0.5 text-[9px] font-black uppercase tracking-widest rounded ${getStatusBadgeStyle(deal.status)}`}>
+                        <span className={`inline-flex items-center px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.08em] rounded ${getStatusBadgeStyle(deal.status)}`}>
                           {DEAL_STATUS_LABELS[deal.status]}
                         </span>
                       </td>
@@ -432,14 +432,14 @@ export default function PartnerDetail() {
         <button
           onClick={handleSave}
           disabled={!form.firmenname || !form.kontaktperson || !form.email}
-          className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-6 py-3 font-black uppercase tracking-[0.1em] text-[11px] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all disabled:opacity-30"
+          className="inline-flex items-center gap-2 bg-[#111113] text-[#ffffff] px-6 py-3 font-black uppercase tracking-[0.1em] text-[11px] hover:bg-[#8cc63f] hover:text-[#111113] transition-all disabled:opacity-30"
         >
           <Save size={14} />
           Speichern
         </button>
         <button
           onClick={() => navigate('/admin/partners')}
-          className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-6 py-3 text-[11px] font-black uppercase tracking-widest hover:border-gray-400 transition-all"
+          className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.08em] hover:border-gray-400 transition-all"
         >
           <ArrowLeft size={14} />
           Zurück
@@ -448,7 +448,7 @@ export default function PartnerDetail() {
         {!showDeleteConfirm ? (
           <button
             onClick={() => setShowDeleteConfirm(true)}
-            className="inline-flex items-center gap-2 border border-red-200 text-red-500 px-5 py-3 text-[11px] font-black uppercase tracking-widest hover:bg-red-50 transition-all"
+            className="inline-flex items-center gap-2 border border-red-200 text-red-500 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.08em] hover:bg-red-50 transition-all"
           >
             <Trash2 size={14} />
             Löschen
@@ -458,13 +458,13 @@ export default function PartnerDetail() {
             <span className="text-sm text-red-600 font-semibold">Wirklich löschen?</span>
             <button
               onClick={handleDelete}
-              className="inline-flex items-center gap-2 bg-red-600 text-white px-5 py-3 text-[11px] font-black uppercase tracking-widest hover:bg-red-700 transition-all"
+              className="inline-flex items-center gap-2 bg-red-600 text-white px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.08em] hover:bg-red-700 transition-all"
             >
               Ja, löschen
             </button>
             <button
               onClick={() => setShowDeleteConfirm(false)}
-              className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-5 py-3 text-[11px] font-black uppercase tracking-widest hover:border-gray-400 transition-all"
+              className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.08em] hover:border-gray-400 transition-all"
             >
               Abbrechen
             </button>

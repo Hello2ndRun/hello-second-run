@@ -110,7 +110,7 @@ export default function Documents() {
         <span className="inline-flex items-center gap-1.5">
           <FileText size={12} className="text-gray-400 flex-shrink-0" />
           <span
-            className={`inline-block px-2 py-0.5 text-[9px] font-black uppercase tracking-widest ${
+            className={`inline-block px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.08em] ${
               DOC_TYPE_COLORS[item.type] || 'bg-gray-100 text-gray-600'
             }`}
           >
@@ -169,7 +169,7 @@ export default function Documents() {
               e.stopPropagation();
               openDocument(item);
             }}
-            className="p-1.5 text-gray-400 hover:text-[#1a472a] transition-colors"
+            className="p-1.5 text-gray-400 hover:text-[#111113] transition-colors"
             title="Vorschau"
           >
             <Eye size={14} />
@@ -179,7 +179,7 @@ export default function Documents() {
               e.stopPropagation();
               downloadDocument(item);
             }}
-            className="p-1.5 text-gray-400 hover:text-[#1a472a] transition-colors"
+            className="p-1.5 text-gray-400 hover:text-[#111113] transition-colors"
             title="Download"
           >
             <Download size={14} />
@@ -202,10 +202,10 @@ export default function Documents() {
           <button
             key={option.key}
             onClick={() => setTypeFilter(option.key)}
-            className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all ${
+            className={`px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] transition-all ${
               typeFilter === option.key
-                ? 'bg-[#1a472a] text-white'
-                : 'bg-white border border-gray-200 text-gray-500 hover:border-[#1a472a]/30'
+                ? 'bg-[#111113] text-[#ffffff]'
+                : 'bg-[#ffffff] border border-gray-200 text-gray-500 hover:border-[#111113]/30'
             }`}
           >
             {option.label}
@@ -220,7 +220,7 @@ export default function Documents() {
           description="Noch keine Dokumente erstellt. Dokumente werden automatisch bei Deal-Aktionen generiert."
         />
       ) : filtered.length === 0 ? (
-        <div className="bg-white border border-gray-200 p-8 text-center">
+        <div className="bg-[#ffffff] border border-gray-200 p-8 text-center">
           <p className="text-gray-400 text-sm">Keine Dokumente dieses Typs vorhanden.</p>
         </div>
       ) : (

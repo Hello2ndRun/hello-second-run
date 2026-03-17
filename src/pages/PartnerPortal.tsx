@@ -65,7 +65,7 @@ function StatusFlow({ currentStatus }: { currentStatus: DealStatus }) {
   if (currentStatus === 'storniert') {
     return (
       <div className="flex items-center gap-1">
-        <span className="text-[9px] font-black uppercase tracking-widest text-red-500">Storniert</span>
+        <span className="text-[9px] font-semibold uppercase tracking-[0.08em] text-red-500">Storniert</span>
       </div>
     );
   }
@@ -84,7 +84,7 @@ function StatusFlow({ currentStatus }: { currentStatus: DealStatus }) {
             <div
               className={`h-1.5 rounded-full transition-all ${
                 isCompleted ? 'w-6 bg-[#8cc63f]' :
-                isCurrent ? 'w-8 bg-[#1a472a]' :
+                isCurrent ? 'w-8 bg-[#111113]' :
                 'w-4 bg-gray-200'
               }`}
               title={DEAL_STATUS_LABELS[status]}
@@ -161,8 +161,8 @@ export default function PartnerPortal() {
   // ── Loading ──
   if (!loaded) {
     return (
-      <div className="min-h-screen bg-[#f7f9f7] flex items-center justify-center">
-        <div className="animate-spin w-8 h-8 border-2 border-[#1a472a] border-t-transparent rounded-full" />
+      <div className="min-h-screen bg-[#ffffff] flex items-center justify-center">
+        <div className="animate-spin w-8 h-8 border-2 border-[#111113] border-t-transparent rounded-full" />
       </div>
     );
   }
@@ -170,14 +170,14 @@ export default function PartnerPortal() {
   // ── Not found ──
   if (!partner) {
     return (
-      <div className="min-h-screen bg-[#f7f9f7] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-[#ffffff] flex items-center justify-center px-4">
         <div className="text-center max-w-md">
-          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4">
             <Building size={28} className="text-gray-300" />
           </div>
           <h1 className="text-xl font-black text-gray-900 mb-2">Partner nicht gefunden</h1>
           <p className="text-sm text-gray-500">Dieses Partner-Portal existiert nicht oder der Link ist ungültig.</p>
-          <Link to="/" className="inline-block mt-6 text-[10px] font-black uppercase tracking-widest text-[#1a472a] hover:text-[#8cc63f] transition-colors">
+          <Link to="/" className="inline-block mt-6 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] hover:text-[#8cc63f] transition-colors">
             ← Zur Startseite
           </Link>
         </div>
@@ -186,9 +186,9 @@ export default function PartnerPortal() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f9f7]">
+    <div className="min-h-screen bg-[#ffffff]">
       {/* ── Branded Header ── */}
-      <header className="bg-[#1a472a] text-white">
+      <header className="bg-[#111113] text-white">
         <div className="max-w-5xl mx-auto px-4 py-6 flex items-center justify-between">
           <div>
             <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8cc63f] mb-1">
@@ -209,30 +209,30 @@ export default function PartnerPortal() {
       <div className="max-w-5xl mx-auto px-4 py-8">
         {/* ── Stat Cards ── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-white border border-gray-200 p-5">
+          <div className="bg-[#ffffff] border border-gray-200 p-5">
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-8 h-8 bg-[#1a472a]/10 flex items-center justify-center">
-                <Handshake size={16} className="text-[#1a472a]" />
+              <div className="w-8 h-8 bg-[#111113]/10 flex items-center justify-center">
+                <Handshake size={16} className="text-[#111113]" />
               </div>
-              <p className="text-[9px] font-black uppercase tracking-widest text-gray-400">Aktive Deals</p>
+              <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">Aktive Deals</p>
             </div>
-            <p className="text-3xl font-black font-mono text-[#1a472a]">{activeDeals}</p>
+            <p className="text-3xl font-black font-mono text-[#111113]">{activeDeals}</p>
           </div>
-          <div className="bg-white border border-gray-200 p-5">
+          <div className="bg-[#ffffff] border border-gray-200 p-5">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-8 h-8 bg-emerald-50 flex items-center justify-center">
                 <CheckCircle size={16} className="text-emerald-600" />
               </div>
-              <p className="text-[9px] font-black uppercase tracking-widest text-gray-400">Abgeschlossen</p>
+              <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">Abgeschlossen</p>
             </div>
             <p className="text-3xl font-black font-mono text-emerald-600">{completedDeals}</p>
           </div>
-          <div className="bg-white border border-gray-200 p-5">
+          <div className="bg-[#ffffff] border border-gray-200 p-5">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-8 h-8 bg-blue-50 flex items-center justify-center">
                 <Package size={16} className="text-blue-600" />
               </div>
-              <p className="text-[9px] font-black uppercase tracking-widest text-gray-400">Gesamtvolumen</p>
+              <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400">Gesamtvolumen</p>
             </div>
             <p className="text-3xl font-black font-mono">{formatCurrency(totalVolume)}</p>
           </div>
@@ -240,12 +240,12 @@ export default function PartnerPortal() {
 
         {/* ── Deal List ── */}
         <div className="space-y-3">
-          <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1a472a] mb-3">
+          <h2 className="text-[10px] font-black uppercase tracking-[0.08em] text-[#111113] mb-3">
             Meine Deals ({myDeals.length})
           </h2>
 
           {myDeals.length === 0 ? (
-            <div className="bg-white border border-gray-200 p-12 text-center">
+            <div className="bg-[#ffffff] border border-gray-200 p-12 text-center">
               <Handshake size={40} className="mx-auto text-gray-200 mb-4" />
               <p className="text-sm text-gray-400 mb-1">Noch keine Deals vorhanden.</p>
               <p className="text-xs text-gray-300">Sobald ein Deal angelegt wird, erscheint er hier.</p>
@@ -258,15 +258,15 @@ export default function PartnerPortal() {
               const role = getRoleInDeal(deal);
 
               return (
-                <div key={deal.id} className="bg-white border border-gray-200 overflow-hidden">
+                <div key={deal.id} className="bg-[#ffffff] border border-gray-200 overflow-hidden">
                   {/* Deal Header Row */}
                   <button
                     onClick={() => setExpandedDeal(isExpanded ? null : deal.id)}
                     className="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50/50 transition-all text-left"
                   >
                     <div className="flex items-center gap-3 flex-wrap flex-1 min-w-0">
-                      <span className="font-mono text-xs font-bold text-[#1a472a]">{deal.angebotNr || deal.id}</span>
-                      <span className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-wider ${STATUS_BADGE_COLORS[deal.status]}`}>
+                      <span className="font-mono text-xs font-bold text-[#111113]">{deal.angebotNr || deal.id}</span>
+                      <span className={`px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.08em] ${STATUS_BADGE_COLORS[deal.status]}`}>
                         {DEAL_STATUS_LABELS[deal.status]}
                       </span>
                       <span className="text-xs text-gray-400 hidden md:inline">
@@ -277,7 +277,7 @@ export default function PartnerPortal() {
                       <span className="font-mono text-sm font-bold">{formatCurrency(deal.subtotalNetto)}</span>
                       <span className="text-xs text-gray-400 hidden sm:inline">{formatDate(deal.createdAt)}</span>
                       {isExpanded ? (
-                        <ChevronUp size={14} className="text-[#1a472a]" />
+                        <ChevronUp size={14} className="text-[#111113]" />
                       ) : (
                         <ChevronDown size={14} className="text-gray-300" />
                       )}
@@ -341,7 +341,7 @@ export default function PartnerPortal() {
                             </p>
                             <div className="space-y-1">
                               {dealArts.map(art => (
-                                <div key={art.id} className="flex items-center justify-between text-sm bg-white px-3 py-2.5 border border-gray-100">
+                                <div key={art.id} className="flex items-center justify-between text-sm bg-[#ffffff] px-3 py-2.5 border border-gray-100">
                                   <div className="flex items-center gap-3 min-w-0 flex-1">
                                     {(art.imageData || art.imageUrl) && (
                                       <img src={art.imageData || art.imageUrl} alt="" className="w-8 h-8 object-cover rounded flex-shrink-0" />
@@ -377,7 +377,7 @@ export default function PartnerPortal() {
                                 <button
                                   key={doc.id}
                                   onClick={() => downloadDocBlob(doc.fileData, doc.fileName)}
-                                  className="inline-flex items-center gap-2 bg-white border border-gray-200 px-3 py-2 text-xs font-bold hover:border-[#1a472a] hover:text-[#1a472a] transition-all cursor-pointer"
+                                  className="inline-flex items-center gap-2 bg-[#ffffff] border border-gray-200 px-3 py-2 text-xs font-bold hover:border-[#111113] hover:text-[#111113] transition-all cursor-pointer"
                                 >
                                   <FileText size={12} />
                                   {doc.nr}
@@ -393,7 +393,7 @@ export default function PartnerPortal() {
                           <div className="pt-3 border-t border-gray-100">
                             <Link
                               to={`/angebot/${deal.id}`}
-                              className="inline-flex items-center gap-2 text-[#1a472a] text-xs font-bold hover:text-[#8cc63f] transition-colors"
+                              className="inline-flex items-center gap-2 text-[#111113] text-xs font-bold hover:text-[#8cc63f] transition-colors"
                             >
                               <Eye size={12} />
                               Angebot online ansehen →
@@ -411,10 +411,10 @@ export default function PartnerPortal() {
       </div>
 
       {/* ── Branded Footer ── */}
-      <footer className="bg-[#0a1a0f] text-white/30 py-8 mt-12">
+      <footer className="bg-[#111113] text-white/30 py-8 mt-12">
         <div className="max-w-5xl mx-auto px-4 flex items-center justify-between">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#8cc63f]/60">
+            <p className="text-[10px] font-black uppercase tracking-[0.1em] text-[#8cc63f]/60">
               {settings.firmenname}
             </p>
             <p className="text-[9px] mt-1">Partner-Portal</p>

@@ -47,17 +47,17 @@ export default function MhdKalkulator() {
           { label: 'MHD-Kalkulator' },
         ]}
         actions={
-          <div className="flex items-center gap-2 text-[#1a472a]">
+          <div className="flex items-center gap-2 text-[#111113]">
             <Calculator size={20} />
           </div>
         }
       />
 
       {/* Input Fields */}
-      <div className="bg-white border border-gray-200 p-6 mb-6">
+      <div className="bg-[#ffffff] border border-gray-200 p-6 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <label className="block text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-2">
+            <label className="block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-2">
               Einkaufspreis (EK)
             </label>
             <input
@@ -66,11 +66,11 @@ export default function MhdKalkulator() {
               min="0"
               value={ek}
               onChange={e => setEk(parseFloat(e.target.value) || 0)}
-              className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-lg font-mono font-bold focus:border-[#1a472a] focus:outline-none"
+              className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-lg font-mono font-bold focus:border-[#111113] focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-2">
+            <label className="block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-2">
               UVP (Unverb. Preisempfehlung)
             </label>
             <input
@@ -79,18 +79,18 @@ export default function MhdKalkulator() {
               min="0"
               value={uvp}
               onChange={e => setUvp(parseFloat(e.target.value) || 0)}
-              className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-lg font-mono font-bold focus:border-[#1a472a] focus:outline-none"
+              className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-lg font-mono font-bold focus:border-[#111113] focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-2">
+            <label className="block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-2">
               MHD (Mindesthaltbarkeit)
             </label>
             <input
               type="date"
               value={mhd}
               onChange={e => { setMhd(e.target.value); setCustomVk(null); }}
-              className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-lg font-mono font-bold focus:border-[#1a472a] focus:outline-none"
+              className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-lg font-mono font-bold focus:border-[#111113] focus:outline-none"
             />
             {mhd && (
               <div className="mt-2">
@@ -115,13 +115,13 @@ export default function MhdKalkulator() {
               className={`border-2 p-5 transition-all ${
                 isActive
                   ? `${colors.bg} border-current ${colors.text} ring-2 ring-offset-1`
-                  : 'bg-white border-gray-200'
+                  : 'bg-[#ffffff] border-gray-200'
               }`}
               style={isActive ? { borderColor: tier.key === 'green' ? '#2E8B57' : tier.key === 'yellow' ? '#E8A317' : '#DC3545' } : undefined}
             >
               <div className="flex items-center gap-2 mb-3">
                 <span className={`w-3 h-3 rounded-full ${colors.dot}`} />
-                <span className="text-[10px] font-black uppercase tracking-widest">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.08em]">
                   {tier.label} — {tier.range}
                 </span>
                 {isActive && (
@@ -141,39 +141,39 @@ export default function MhdKalkulator() {
 
       {/* Result Section */}
       {result && mhd && (
-        <div className="bg-white border border-gray-200 p-6">
+        <div className="bg-[#ffffff] border border-gray-200 p-6">
           <div className="flex items-center gap-2 mb-4">
-            <TrendingUp size={18} className="text-[#1a472a]" />
-            <h2 className="text-sm font-black uppercase tracking-widest text-[#1a472a]">Kalkulation</h2>
+            <TrendingUp size={18} className="text-[#111113]" />
+            <h2 className="text-sm font-semibold uppercase tracking-[0.08em] text-[#111113]">Kalkulation</h2>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div>
-              <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 mb-1">VK-Empfehlung</p>
+              <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400 mb-1">VK-Empfehlung</p>
               <p className="text-lg font-black font-mono">
                 {formatCurrency(result.suggestedVkMin)} – {formatCurrency(result.suggestedVkMax)}
               </p>
             </div>
             <div>
-              <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 mb-1">VK (editierbar)</p>
+              <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400 mb-1">VK (editierbar)</p>
               <input
                 type="number"
                 step="0.01"
                 min="0"
                 value={customVk ?? result.suggestedVkMid}
                 onChange={e => setCustomVk(parseFloat(e.target.value) || 0)}
-                className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-lg font-mono font-bold focus:border-[#1a472a] focus:outline-none"
+                className="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-lg font-mono font-bold focus:border-[#111113] focus:outline-none"
               />
             </div>
             <div>
-              <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 mb-1">Marge</p>
+              <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400 mb-1">Marge</p>
               <p className={`text-lg font-black font-mono ${customMarginEur >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
                 {formatCurrency(customMarginEur)} ({formatPercent(customMarginPct)})
               </p>
             </div>
             <div>
-              <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 mb-1">Rabatt vs. UVP</p>
-              <p className="text-lg font-black font-mono text-[#1a472a]">
+              <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400 mb-1">Rabatt vs. UVP</p>
+              <p className="text-lg font-black font-mono text-[#111113]">
                 {formatPercent(rabattVsUvp)}
               </p>
             </div>

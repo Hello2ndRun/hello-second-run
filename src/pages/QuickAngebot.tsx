@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════
-// QUICK ANGEBOT — Sonderposten-Angebot in 30 Sekunden
+// QUICK ANGEBOT — Das Angebots-Tool für Sonderposten
 // Kein Login. Kein Account. Sofort loslegen.
 // ════════════════════════════════════════════════════════════
 
@@ -35,7 +35,7 @@ const LS_PRODUCTS = 'hsr_products';
 const LS_DOC_COUNT = 'hsr_doc_count';
 
 // ─── Shared input class (brand style) ───
-const INPUT_CLASS = 'w-full px-3 py-2.5 border border-gray-200 text-sm focus:ring-2 focus:ring-[#8cc63f] focus:border-transparent outline-none bg-white';
+const INPUT_CLASS = 'w-full px-3.5 py-2.5 border border-[#e4e4e7] rounded-lg text-sm focus:ring-2 focus:ring-[#111113]/10 focus:border-[#111113] outline-none bg-white transition-colors';
 
 // ─── Helpers ───
 function generateId(): string {
@@ -155,27 +155,27 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
     : null;
 
   return (
-    <div className="bg-white border border-gray-200 overflow-hidden">
+    <div className="bg-[#ffffff] border border-[#e4e4e7] overflow-hidden">
       {/* Header */}
       <div
-        className="flex items-center justify-between px-5 py-3.5 bg-gray-50/80 cursor-pointer hover:bg-gray-100/80 transition-colors"
+        className="flex items-center justify-between px-5 py-3.5 bg-transparent cursor-pointer hover:bg-[#111113]/[0.06] transition-colors"
         onClick={() => setExpanded(!expanded)}
       >
         <div className="flex items-center gap-3">
-          <span className="w-7 h-7 bg-[#1a472a] text-white flex items-center justify-center text-[10px] font-black">
+          <span className="w-7 h-7 rounded-lg bg-[#111113] text-white flex items-center justify-center text-[10px] font-semibold">
             {index + 1}
           </span>
-          <span className="font-black text-[13px] uppercase tracking-[0.05em] text-gray-900">
+          <span className="font-semibold text-sm uppercase tracking-[0.05em] text-gray-900">
             {article.artikelname || 'Neuer Artikel'}
           </span>
-          {article.marke && <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">{article.marke}</span>}
+          {article.marke && <span className="text-xs font-medium uppercase tracking-[0.05em] text-[#9394a1]">{article.marke}</span>}
           {mhdStatus && mhdColors && (
             <span className={`text-[10px] px-2 py-0.5 font-bold ${mhdColors.bg} ${mhdColors.text}`}>
               {daysRemaining !== null && daysRemaining > 0 ? formatRestlaufzeit(article.mhd) : 'ABGELAUFEN'}
             </span>
           )}
           {lineTotal > 0 && (
-            <span className="text-[11px] font-black text-[#1a472a] ml-2">{formatCurrency(lineTotal)}</span>
+            <span className="text-[11px] font-black text-[#111113] ml-2">{formatCurrency(lineTotal)}</span>
           )}
         </div>
         <div className="flex items-center gap-2">
@@ -196,7 +196,7 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
           {/* EAN Row */}
           <div className="flex gap-4 items-start">
             {/* Product Image */}
-            <div className="w-16 h-16 bg-gray-100 border border-gray-200 flex items-center justify-center overflow-hidden shrink-0">
+            <div className="w-16 h-16 bg-gray-100 border border-[#e4e4e7] flex items-center justify-center overflow-hidden shrink-0">
               {article.imageUrl ? (
                 <img src={article.imageUrl} alt={article.artikelname} loading="lazy" className="w-full h-full object-contain" />
               ) : (
@@ -207,7 +207,7 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
             <div className="flex-1 space-y-3">
               {/* EAN */}
               <div>
-                <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">EAN / Barcode</label>
+                <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] mb-1">EAN / Barcode</label>
                 <div className="relative">
                   <input
                     type="text"
@@ -224,14 +224,14 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
                   )}
                 </div>
                 {eanNotFound && (
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-amber-600 mt-1">Nicht gefunden — bitte manuell eingeben</p>
+                  <p className="text-xs font-medium uppercase tracking-[0.05em] text-amber-600 mt-1">Nicht gefunden — bitte manuell eingeben</p>
                 )}
               </div>
 
               {/* Name + Brand + Gewicht */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">Produktname *</label>
+                  <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] mb-1">Produktname *</label>
                   <input
                     type="text"
                     value={article.artikelname}
@@ -242,7 +242,7 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">Marke</label>
+                    <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] mb-1">Marke</label>
                     <input
                       type="text"
                       value={article.marke}
@@ -252,7 +252,7 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">Gewicht</label>
+                    <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] mb-1">Gewicht</label>
                     <input
                       type="text"
                       value={article.gewicht}
@@ -268,7 +268,7 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
 
           {/* MHD */}
           <div>
-            <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">MHD (Mindesthaltbarkeitsdatum)</label>
+            <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] mb-1">MHD (Mindesthaltbarkeitsdatum)</label>
             <div className="flex items-center gap-3">
               <input
                 type="date"
@@ -277,7 +277,7 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
                 className={`${INPUT_CLASS} w-auto`}
               />
               {mhdStatus && mhdColors && (
-                <div className={`flex items-center gap-2 px-3 py-2 text-[10px] font-bold uppercase tracking-wider ${mhdColors.bg} ${mhdColors.text}`}>
+                <div className={`flex items-center gap-2 px-3 py-2 text-xs font-medium uppercase tracking-[0.05em] ${mhdColors.bg} ${mhdColors.text}`}>
                   <span className={`w-2 h-2 rounded-full ${mhdColors.dot}`} />
                   {daysRemaining !== null && daysRemaining > 0
                     ? `${daysRemaining} Tage · ${formatRestlaufzeit(article.mhd)}`
@@ -291,7 +291,7 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
                 <AlertTriangle size={14} className="mt-0.5 shrink-0" />
                 <span>
                   Kurzes MHD. Nicht verkäuflich? →{' '}
-                  <a href="https://www.tafel.at" target="_blank" rel="noopener noreferrer" className="underline font-black hover:text-red-700">
+                  <a href="https://www.tafel.at" target="_blank" rel="noopener noreferrer" className="underline font-semibold hover:text-red-700">
                     Spende an eine Tafel vorschlagen
                   </a>
                 </span>
@@ -301,7 +301,7 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
 
           {/* Mengen */}
           <div>
-            <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">Menge</label>
+            <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] mb-1">Menge</label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <div>
                 <label className="block text-[10px] text-gray-400 mb-0.5">Kartons</label>
@@ -345,15 +345,15 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
               </div>
             </div>
             {stueck > 0 && (
-              <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500 mt-1.5">
-                = <span className="font-black text-[#1a472a]">{stueck.toLocaleString('de-AT')}</span> Stück gesamt
+              <p className="text-xs font-medium uppercase tracking-[0.05em] text-[#9394a1] mt-1.5">
+                = <span className="font-black text-[#111113]">{stueck.toLocaleString('de-AT')}</span> Stück gesamt
               </p>
             )}
           </div>
 
           {/* Preise */}
           <div>
-            <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">Preise (pro Stück)</label>
+            <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] mb-1">Preise (pro Stück)</label>
             <div className="grid grid-cols-3 gap-3">
               <div>
                 <label className="block text-[10px] text-gray-400 mb-0.5">EK (€) *</label>
@@ -383,25 +383,25 @@ const ArticleRow = React.memo(function ArticleRow({ article, index, onChange, on
                   value={article.vkPreis || ''}
                   onChange={e => onChange(article.id, { vkPreis: parseFloat(e.target.value) || 0 })}
                   placeholder="0,00"
-                  className={`${INPUT_CLASS} font-bold text-[#1a472a]`}
+                  className={`${INPUT_CLASS} font-bold text-[#111113]`}
                 />
               </div>
             </div>
             {/* Margin display */}
             {margin && margin.eur > 0 && (
-              <div className="mt-2 flex items-center gap-4 text-[10px] font-bold uppercase tracking-wider">
+              <div className="mt-2 flex items-center gap-4 text-xs font-medium uppercase tracking-[0.05em]">
                 <span className="text-green-700 bg-green-50 px-2.5 py-1">
                   Marge: {formatCurrency(margin.eur)} ({margin.pct.toFixed(1)}%)
                 </span>
                 {stueck > 0 && (
                   <span className="text-gray-500">
-                    Gesamt: <span className="font-black text-[#1a472a]">{formatCurrency(lineTotal)}</span>
+                    Gesamt: <span className="font-black text-[#111113]">{formatCurrency(lineTotal)}</span>
                   </span>
                 )}
               </div>
             )}
             {margin && margin.eur <= 0 && article.vkPreis > 0 && (
-              <p className="mt-2 text-[10px] font-black uppercase tracking-wider text-red-500">⚠ VK unter EK — kein Gewinn</p>
+              <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-red-500">⚠ VK unter EK — kein Gewinn</p>
             )}
           </div>
         </div>
@@ -438,6 +438,10 @@ export default function QuickAngebot() {
   const [uploadDragging, setUploadDragging] = useState(false);
   const [uploadProcessing, setUploadProcessing] = useState(false);
   const [uploadError, setUploadError] = useState('');
+  // Email capture
+  const [captureEmail, setCaptureEmail] = useState('');
+  const [emailSent, setEmailSent] = useState(false);
+  const [emailSending, setEmailSending] = useState(false);
   // Document chain
   const [generatedDocs, setGeneratedDocs] = useState<Map<string, string>>(new Map());
   const [dealId] = useState(() => generateDealId());
@@ -595,6 +599,26 @@ export default function QuickAngebot() {
     window.location.href = mailto;
   }, [articles, subtotal, sender, recipient]);
 
+  // ─── Email Capture ───
+  const handleEmailCapture = useCallback(async () => {
+    if (!captureEmail || !captureEmail.includes('@')) return;
+    setEmailSending(true);
+    try {
+      const response = await fetch('/api/email-capture', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: captureEmail }),
+      });
+      if (response.ok) {
+        setEmailSent(true);
+      }
+    } catch (err) {
+      console.error('Email capture failed:', err);
+    } finally {
+      setEmailSending(false);
+    }
+  }, [captureEmail]);
+
   // ─── Document Chain Generator ───
   const quickToDocumentData = useCallback((): { deal: Deal; articles: DealArticle[]; verkaeufer: Partner; kaeufer: Partner } => {
     const totalNetto = articles.reduce((sum, art) => sum + art.vkPreis * getArticleStueck(art), 0);
@@ -720,22 +744,16 @@ export default function QuickAngebot() {
   const canGenerate = articles.some(a => a.artikelname && a.vkPreis > 0 && getArticleStueck(a) > 0);
 
   return (
-    <div className="bg-white">
+    <div className="bg-[#ffffff]">
       {/* ═══ Hero — Landing Page Style ═══ */}
-      <section className="py-10 md:py-16 px-5 md:px-8 relative" style={{
-        backgroundImage: 'linear-gradient(to right, #eef2ee 1px, transparent 1px), linear-gradient(to bottom, #eef2ee 1px, transparent 1px)',
-        backgroundSize: '60px 60px'
-      }}>
-        <div className="absolute top-12 right-12 w-72 h-72 bg-[#8cc63f]/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-12 left-12 w-96 h-96 bg-[#1a472a]/5 rounded-full blur-3xl pointer-events-none" />
-
+      <section className="py-10 md:py-16 px-5 md:px-8 relative bg-[#ffffff]">
         <div className="max-w-5xl mx-auto relative z-10 text-center">
           <div className="flex items-center gap-4 justify-center mb-6">
-            <div className="h-[2px] w-8 bg-[#1a472a]"></div>
-            <span className="text-[11px] font-black uppercase tracking-[0.5em] text-[#1a472a]">Sonderposten-Vermittlung aus Salzburg</span>
-            <div className="h-[2px] w-8 bg-[#1a472a]"></div>
+            <div className="h-[2px] w-8 bg-[#111113]/40"></div>
+            <span className="text-xs font-semibold uppercase tracking-[0.1em] text-[#9394a1]">Das Angebots-Tool für Sonderposten</span>
+            <div className="h-[2px] w-8 bg-[#111113]/40"></div>
           </div>
-          <h1 className="font-black text-[clamp(2rem,6vw,4rem)] leading-[1.05] uppercase tracking-[-0.03em] mb-4">
+          <h1 className="heading-display text-[clamp(2rem,6vw,4rem)] leading-[1.05] mb-4">
             <span className="block">Sonderposten-Angebot</span>
             <span className="block text-[#8cc63f]">in 30 Sekunden.</span>
           </h1>
@@ -749,17 +767,17 @@ export default function QuickAngebot() {
       <main className="max-w-5xl mx-auto px-5 md:px-8 pb-20 pt-8">
 
         {/* ── TRUST BAR ── */}
-        <div className="bg-[#1a472a] p-5 mb-8 flex flex-wrap items-center justify-center gap-6 md:gap-10">
+        <div className="bg-[#f7f7f8] border border-[#e4e4e7] rounded-xl p-5 mb-8 flex flex-wrap items-center justify-center gap-6 md:gap-10">
           {[
-            { icon: Clock, value: '48h', label: 'Bis zum Angebot' },
-            { icon: Globe, value: '500+', label: 'Käufer im Netzwerk' },
-            { icon: Shield, value: '0 €', label: 'Keine Kosten' },
-            { icon: Zap, value: '100%', label: 'Diskret & schnell' },
+            { icon: Clock, value: '30s', label: 'Bis zum fertigen PDF' },
+            { icon: Globe, value: 'KI', label: 'Automatische Preise' },
+            { icon: Shield, value: '0 €', label: 'Komplett kostenlos' },
+            { icon: Zap, value: 'PDF', label: 'Sofort versandfertig' },
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-2.5">
-              <item.icon size={16} className="text-[#8cc63f]" />
-              <span className="text-sm font-black text-white">{item.value}</span>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-white/50">{item.label}</span>
+              <item.icon size={16} className="text-[#9394a1]" />
+              <span className="text-sm text-[#111113] font-semibold">{item.value}</span>
+              <span className="text-xs font-medium uppercase tracking-[0.05em] text-[#9394a1]">{item.label}</span>
             </div>
           ))}
         </div>
@@ -775,10 +793,10 @@ export default function QuickAngebot() {
               const file = e.dataTransfer.files[0];
               if (file) handleFileUpload(file);
             }}
-            className={`border-2 border-dashed p-8 text-center transition-all cursor-pointer ${
+            className={`border-2 border-dashed rounded-2xl p-8 text-center transition-all cursor-pointer ${
               uploadDragging
                 ? 'border-[#8cc63f] bg-[#8cc63f]/5'
-                : 'border-gray-300 hover:border-[#8cc63f] hover:bg-gray-50'
+                : 'border-gray-300 hover:border-[#8cc63f] hover:bg-[#ffffff]'
             }`}
             onClick={() => {
               const input = document.createElement('input');
@@ -794,15 +812,15 @@ export default function QuickAngebot() {
             {uploadProcessing ? (
               <div className="flex flex-col items-center gap-3">
                 <Loader2 size={32} className="text-[#8cc63f] animate-spin" />
-                <p className="text-[11px] font-black uppercase tracking-[0.15em] text-[#1a472a]">Dokument wird analysiert...</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[#111113]">Dokument wird analysiert...</p>
                 <p className="text-[10px] font-bold text-gray-400">Claude AI extrahiert Artikeldaten</p>
               </div>
             ) : (
               <div className="flex flex-col items-center gap-3">
                 <Upload size={32} className="text-gray-400" />
-                <p className="text-[11px] font-black uppercase tracking-[0.15em] text-gray-700">Preisliste hochladen</p>
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider hidden md:block">PDF, Excel, CSV oder Bild hierher ziehen</p>
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider md:hidden">Tippen um Datei auszuwählen</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-gray-700">Preisliste hochladen</p>
+                <p className="text-xs font-medium text-[#9394a1] uppercase tracking-[0.05em] hidden md:block">PDF, Excel, CSV oder Bild hierher ziehen</p>
+                <p className="text-xs font-medium text-[#9394a1] uppercase tracking-[0.05em] md:hidden">Tippen um Datei auszuwählen</p>
                 <p className="text-[10px] text-gray-400 hidden md:block">oder klicken zum Auswählen</p>
               </div>
             )}
@@ -814,9 +832,9 @@ export default function QuickAngebot() {
             </div>
           )}
           <div className="flex items-center gap-4 my-6">
-            <div className="flex-1 h-px bg-gray-200" />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">oder manuell eingeben</span>
-            <div className="flex-1 h-px bg-gray-200" />
+            <div className="flex-1 h-px bg-[#111113]/10" />
+            <span className="text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1]">oder manuell eingeben</span>
+            <div className="flex-1 h-px bg-[#111113]/10" />
           </div>
         </div>
 
@@ -836,7 +854,7 @@ export default function QuickAngebot() {
 
         <button
           onClick={handleAddArticle}
-          className="w-full py-3.5 border-2 border-dashed border-gray-300 text-[11px] font-black uppercase tracking-[0.1em] text-gray-500 hover:border-[#8cc63f] hover:text-[#1a472a] transition-all flex items-center justify-center gap-2 mb-8"
+          className="w-full py-3.5 border-2 border-dashed border-gray-300 rounded-lg font-semibold text-sm text-gray-500 hover:border-[#8cc63f] hover:text-[#111113] transition-all flex items-center justify-center gap-2 mb-8"
         >
           <Plus size={16} /> Weiteres Produkt hinzufügen
         </button>
@@ -845,17 +863,17 @@ export default function QuickAngebot() {
         <div className="mb-4">
           <button
             onClick={() => setShowSender(!showSender)}
-            className="w-full bg-white border border-gray-200 px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors"
+            className="w-full bg-[#ffffff] border border-[#e4e4e7] px-5 py-3.5 flex items-center justify-between hover:bg-transparent transition-colors"
           >
             <div className="flex items-center gap-3">
-              <Building2 size={18} className="text-[#1a472a]" />
-              <span className="text-[11px] font-black uppercase tracking-[0.15em] text-gray-900">Absender (Deine Firma)</span>
-              {sender.firma && <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{sender.firma}</span>}
+              <Building2 size={18} className="text-[#111113]" />
+              <span className="text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1]">Absender (Deine Firma)</span>
+              {sender.firma && <span className="text-xs font-medium text-[#9394a1] uppercase tracking-[0.05em]">{sender.firma}</span>}
             </div>
             {showSender ? <ChevronUp size={18} className="text-gray-400" /> : <ChevronDown size={18} className="text-gray-400" />}
           </button>
           {showSender && (
-            <div className="bg-white border border-t-0 border-gray-200 p-5 space-y-3">
+            <div className="bg-[#ffffff] border border-t-0 border-[#e4e4e7] p-5 space-y-3">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Input label="Firma *" value={sender.firma} onChange={v => setSender(s => ({ ...s, firma: v }))} placeholder="Deine Firma GmbH" />
                 <Input label="Kontaktperson" value={sender.kontaktperson} onChange={v => setSender(s => ({ ...s, kontaktperson: v }))} placeholder="Max Mustermann" />
@@ -878,30 +896,30 @@ export default function QuickAngebot() {
         <div className="mb-4">
           <button
             onClick={() => setShowRecipient(!showRecipient)}
-            className="w-full bg-white border border-gray-200 px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors"
+            className="w-full bg-[#ffffff] border border-[#e4e4e7] px-5 py-3.5 flex items-center justify-between hover:bg-transparent transition-colors"
           >
             <div className="flex items-center gap-3">
-              <User size={18} className="text-[#1a472a]" />
-              <span className="text-[11px] font-black uppercase tracking-[0.15em] text-gray-900">Empfänger</span>
-              {recipient.firma && <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{recipient.firma}</span>}
+              <User size={18} className="text-[#111113]" />
+              <span className="text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1]">Empfänger</span>
+              {recipient.firma && <span className="text-xs font-medium text-[#9394a1] uppercase tracking-[0.05em]">{recipient.firma}</span>}
             </div>
             {showRecipient ? <ChevronUp size={18} className="text-gray-400" /> : <ChevronDown size={18} className="text-gray-400" />}
           </button>
           {showRecipient && (
-            <div className="bg-white border border-t-0 border-gray-200 p-5 space-y-3">
+            <div className="bg-[#ffffff] border border-t-0 border-[#e4e4e7] p-5 space-y-3">
               {/* Quick select from history */}
               {(() => {
                 const savedRecipients = loadJson<QuickRecipient[]>(LS_RECIPIENTS, []);
                 if (savedRecipients.length === 0) return null;
                 return (
                   <div className="mb-2">
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-gray-400 mb-1">Letzte Empfänger:</label>
+                    <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] mb-1">Letzte Empfänger:</label>
                     <div className="flex flex-wrap gap-2">
                       {savedRecipients.slice(0, 5).map((r, i) => (
                         <button
                           key={i}
                           onClick={() => setRecipient(r)}
-                          className="text-[10px] font-bold uppercase tracking-wider bg-gray-100 hover:bg-[#8cc63f]/20 hover:text-[#1a472a] px-2.5 py-1 transition-colors"
+                          className="text-xs font-medium uppercase tracking-[0.05em] bg-transparent hover:bg-[#8cc63f]/20 hover:text-[#111113] px-2.5 py-1 transition-colors rounded-lg"
                         >
                           {r.firma || r.email}
                         </button>
@@ -924,20 +942,20 @@ export default function QuickAngebot() {
         <div className="mb-8">
           <button
             onClick={() => setShowKonditionen(!showKonditionen)}
-            className="w-full bg-white border border-gray-200 px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors"
+            className="w-full bg-[#ffffff] border border-[#e4e4e7] px-5 py-3.5 flex items-center justify-between hover:bg-transparent transition-colors"
           >
             <div className="flex items-center gap-3">
-              <FileText size={18} className="text-[#1a472a]" />
-              <span className="text-[11px] font-black uppercase tracking-[0.15em] text-gray-900">Konditionen</span>
-              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{konditionen.zahlungsbedingung} · {konditionen.lieferbedingung}</span>
+              <FileText size={18} className="text-[#111113]" />
+              <span className="text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1]">Konditionen</span>
+              <span className="text-xs font-medium text-[#9394a1] uppercase tracking-[0.05em]">{konditionen.zahlungsbedingung} · {konditionen.lieferbedingung}</span>
             </div>
             {showKonditionen ? <ChevronUp size={18} className="text-gray-400" /> : <ChevronDown size={18} className="text-gray-400" />}
           </button>
           {showKonditionen && (
-            <div className="bg-white border border-t-0 border-gray-200 p-5">
+            <div className="bg-[#ffffff] border border-t-0 border-[#e4e4e7] p-5">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">Zahlungsbedingung</label>
+                  <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] mb-1">Zahlungsbedingung</label>
                   <select
                     value={konditionen.zahlungsbedingung}
                     onChange={e => setKonditionen(k => ({ ...k, zahlungsbedingung: e.target.value }))}
@@ -950,7 +968,7 @@ export default function QuickAngebot() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">Lieferbedingung</label>
+                  <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] mb-1">Lieferbedingung</label>
                   <select
                     value={konditionen.lieferbedingung}
                     onChange={e => setKonditionen(k => ({ ...k, lieferbedingung: e.target.value }))}
@@ -964,7 +982,7 @@ export default function QuickAngebot() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">Gültigkeit (Tage)</label>
+                  <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] mb-1">Gültigkeit (Tage)</label>
                   <input
                     type="number" min="1" max="90"
                     value={konditionen.gueltigkeitsTage}
@@ -979,13 +997,13 @@ export default function QuickAngebot() {
 
         {/* ── SUMMARY BAR ── */}
         {subtotal > 0 && (
-          <div className="bg-white border border-gray-200 px-5 py-4 mb-6 flex items-center justify-between">
+          <div className="bg-[#ffffff] border border-[#e4e4e7] px-5 py-4 mb-6 flex items-center justify-between">
             <div className="flex items-center gap-6">
-              <span className="text-[10px] font-black uppercase tracking-wider text-gray-500">{articles.length} Artikel · {totalStueck.toLocaleString('de-AT')} Stk</span>
+              <span className="text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1]">{articles.length} Artikel · {totalStueck.toLocaleString('de-AT')} Stk</span>
             </div>
             <div className="text-right">
-              <div className="text-[10px] font-black uppercase tracking-wider text-gray-400">Netto Gesamtwert</div>
-              <div className="text-2xl font-black text-[#1a472a]">{formatCurrency(subtotal)}</div>
+              <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1]">Netto Gesamtwert</div>
+              <div className="text-2xl font-black text-[#111113]">{formatCurrency(subtotal)}</div>
             </div>
           </div>
         )}
@@ -995,9 +1013,9 @@ export default function QuickAngebot() {
           <button
             onClick={handleGenerate}
             disabled={!canGenerate || generating}
-            className={`w-full py-5 font-black uppercase tracking-[0.15em] text-[13px] flex items-center justify-center gap-3 transition-all duration-300 shadow-lg hover:shadow-xl ${
+            className={`w-full py-5 rounded-lg font-semibold text-sm flex items-center justify-center gap-3 transition-all duration-300 shadow-lg hover:shadow-xl ${
               canGenerate
-                ? 'bg-[#8cc63f] hover:bg-[#7ab635] text-[#1a472a] border-2 border-[#8cc63f] hover:border-[#7ab635] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a472a] focus-visible:ring-offset-2'
+                ? 'bg-[#8cc63f] hover:bg-[#7ab635] text-[#111113] border-2 border-[#8cc63f] hover:border-[#7ab635] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111113] focus-visible:ring-offset-2'
                 : 'bg-gray-200 text-gray-400 border-2 border-gray-200 cursor-not-allowed shadow-none focus-visible:outline-none'
             }`}
           >
@@ -1011,11 +1029,11 @@ export default function QuickAngebot() {
           /* ── PDF PREVIEW + ACTIONS ── */
           <div className="space-y-4">
             {/* PDF Preview */}
-            <div className="bg-white border border-gray-200 overflow-hidden">
-              <div className="bg-[#1a472a] text-white px-5 py-3 flex items-center justify-between">
+            <div className="bg-[#ffffff] border border-[#e4e4e7] overflow-hidden">
+              <div className="bg-[#111113] text-white px-5 py-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Eye size={16} />
-                  <span className="text-[11px] font-black uppercase tracking-[0.15em]">PDF-Vorschau</span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.1em]">PDF-Vorschau</span>
                 </div>
                 <button
                   onClick={() => setPdfDataUri(null)}
@@ -1035,56 +1053,70 @@ export default function QuickAngebot() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <button
                 onClick={handleWhatsApp}
-                className="py-3.5 px-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-black uppercase tracking-[0.1em] text-[11px] flex items-center justify-center gap-2 transition-colors"
+                className="py-3.5 px-4 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-white font-semibold text-sm flex items-center justify-center gap-2 transition-colors"
               >
                 <MessageCircle size={16} /> WhatsApp
               </button>
               <button
                 onClick={handleEmail}
-                className="py-3.5 px-4 bg-[#1a472a] hover:bg-[#8cc63f] text-white hover:text-[#1a472a] font-black uppercase tracking-[0.1em] text-[11px] flex items-center justify-center gap-2 transition-all"
+                className="py-3.5 px-4 rounded-lg bg-[#111113] hover:bg-[#8cc63f] text-white hover:text-[#111113] font-semibold text-sm flex items-center justify-center gap-2 transition-all"
               >
                 <Mail size={16} /> Per E-Mail
               </button>
               <button
                 onClick={handleDownload}
-                className="py-3.5 px-4 bg-white border-2 border-[#1a472a] hover:bg-[#1a472a] text-[#1a472a] hover:text-white font-black uppercase tracking-[0.1em] text-[11px] flex items-center justify-center gap-2 transition-all"
+                className="py-3.5 px-4 rounded-lg bg-[#ffffff] border-2 border-[#111113] hover:bg-[#111113] text-[#111113] hover:text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all"
               >
                 <Download size={16} /> PDF Download
               </button>
             </div>
 
             {/* Email Capture */}
-            <div className="bg-[#f7f9f7] border border-gray-200 p-5">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                <div className="flex-1">
-                  <p className="text-[11px] font-black uppercase tracking-[0.1em] text-[#1a472a] mb-0.5">Angebot per E-Mail erhalten?</p>
-                  <p className="text-[10px] text-gray-500">Wir senden dir eine Kopie — und informieren dich über neue Käufer-Anfragen.</p>
+            <div className="bg-transparent border border-[#e4e4e7] p-5">
+              {emailSent ? (
+                <div className="flex items-center gap-3 text-[#8cc63f]">
+                  <CheckCircle size={18} />
+                  <span className="text-sm font-semibold">Gespeichert! Wir melden uns bei dir.</span>
                 </div>
-                <div className="flex gap-2 w-full sm:w-auto">
-                  <input
-                    type="email"
-                    placeholder="deine@email.at"
-                    className="flex-1 sm:w-48 px-3 py-2.5 border border-gray-200 text-sm focus:ring-2 focus:ring-[#8cc63f] focus:border-transparent outline-none bg-white"
-                  />
-                  <button className="px-4 py-2.5 bg-[#8cc63f] text-[#1a472a] text-[10px] font-black uppercase tracking-wider hover:bg-[#1a472a] hover:text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f]">
-                    Senden
-                  </button>
+              ) : (
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                  <div className="flex-1">
+                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[#111113] mb-0.5">Angebot per E-Mail erhalten?</p>
+                    <p className="text-[10px] text-gray-500">Wir senden dir eine Kopie — und informieren dich über neue Features.</p>
+                  </div>
+                  <div className="flex gap-2 w-full sm:w-auto">
+                    <input
+                      type="email"
+                      value={captureEmail}
+                      onChange={e => setCaptureEmail(e.target.value)}
+                      onKeyDown={e => e.key === 'Enter' && handleEmailCapture()}
+                      placeholder="deine@email.at"
+                      className="flex-1 sm:w-48 px-3.5 py-2.5 border border-[#e4e4e7] rounded-lg text-sm focus:ring-2 focus:ring-[#111113]/10 focus:border-[#111113] outline-none bg-white transition-colors"
+                    />
+                    <button
+                      onClick={handleEmailCapture}
+                      disabled={emailSending || !captureEmail.includes('@')}
+                      className="px-4 py-2.5 rounded-lg bg-[#8cc63f] text-[#111113] font-semibold text-sm hover:bg-[#111113] hover:text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cc63f] disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {emailSending ? <Loader2 size={14} className="animate-spin" /> : 'Senden'}
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* New Angebot */}
             <button
               onClick={() => setPdfDataUri(null)}
-              className="w-full py-3 text-[11px] font-black uppercase tracking-[0.1em] text-gray-400 hover:text-[#1a472a] transition-colors"
+              className="w-full py-3 text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] hover:text-[#111113] transition-colors"
             >
               ← Zurück zum Formular / Neues Angebot
             </button>
 
             {/* ── DOKUMENTENKETTE ── */}
-            <div className="bg-white border border-gray-200 mt-6">
-              <div className="bg-gray-50 px-5 py-3 border-b border-gray-200">
-                <span className="text-[11px] font-black uppercase tracking-[0.15em] text-[#1a472a]">Dokumentenkette</span>
+            <div className="bg-[#ffffff] border border-[#e4e4e7] mt-6">
+              <div className="bg-transparent px-5 py-3 border-b border-[#e4e4e7]">
+                <span className="text-xs font-semibold uppercase tracking-[0.08em] text-[#111113]">Dokumentenkette</span>
               </div>
               <div className="p-5 space-y-3">
                 {([
@@ -1100,9 +1132,9 @@ export default function QuickAngebot() {
                         {isGenerated ? (
                           <CheckCircle size={16} className="text-[#8cc63f]" />
                         ) : (
-                          <div className="w-4 h-4 border-2 border-gray-300" />
+                          <div className="w-4 h-4 border-2 border-gray-300 rounded-lg" />
                         )}
-                        <span className={`text-[11px] font-black uppercase tracking-[0.1em] ${isGenerated ? 'text-[#1a472a]' : 'text-gray-500'}`}>
+                        <span className={`text-xs font-semibold uppercase tracking-[0.08em] ${isGenerated ? 'text-[#111113]' : 'text-[#9394a1]'}`}>
                           {doc.label}
                         </span>
                       </div>
@@ -1111,7 +1143,7 @@ export default function QuickAngebot() {
                           <>
                             <button
                               onClick={() => handleDownloadChainDoc(doc.type)}
-                              className="text-[10px] font-black uppercase tracking-wider text-[#1a472a] hover:text-[#8cc63f] px-3 py-1.5 border border-gray-200 hover:border-[#8cc63f] transition-all"
+                              className="rounded-lg text-xs font-semibold text-[#111113] hover:text-[#8cc63f] px-3 py-1.5 border border-[#e4e4e7] hover:border-[#8cc63f] transition-all"
                             >
                               PDF
                             </button>
@@ -1120,7 +1152,7 @@ export default function QuickAngebot() {
                                 const text = encodeURIComponent(`Hier ist die ${doc.label} — erstellt mit HELLO SECOND/RUN.`);
                                 window.open(`https://wa.me/?text=${text}`, '_blank');
                               }}
-                              className="text-[10px] font-black uppercase tracking-wider text-[#25D366] hover:bg-[#25D366] hover:text-white px-3 py-1.5 border border-[#25D366]/30 hover:border-[#25D366] transition-all"
+                              className="rounded-lg text-xs font-semibold text-[#25D366] hover:bg-[#25D366] hover:text-white px-3 py-1.5 border border-[#25D366]/30 hover:border-[#25D366] transition-all"
                             >
                               WhatsApp
                             </button>
@@ -1128,7 +1160,7 @@ export default function QuickAngebot() {
                         ) : (
                           <button
                             onClick={() => handleGenerateChainDoc(doc.type)}
-                            className="text-[10px] font-black uppercase tracking-wider bg-[#1a472a] text-white hover:bg-[#8cc63f] hover:text-[#1a472a] px-4 py-1.5 transition-all"
+                            className="rounded-lg text-xs font-semibold bg-[#111113] text-white hover:bg-[#8cc63f] hover:text-[#111113] px-4 py-1.5 transition-all"
                           >
                             Generieren
                           </button>
@@ -1146,19 +1178,19 @@ export default function QuickAngebot() {
 
       {/* ═══ Sticky Bottom Bar ═══ */}
       {subtotal > 0 && !pdfDataUri && (
-        <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#ffffff]/95 backdrop-blur-sm border-t border-[#e4e4e7] shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
           <div className="max-w-5xl mx-auto px-5 md:px-8 py-3 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <span className="text-[10px] font-black uppercase tracking-wider text-gray-500 hidden sm:inline">{articles.length} Artikel · {totalStueck.toLocaleString('de-AT')} Stk</span>
-              <span className="text-lg font-black text-[#1a472a]">{formatCurrency(subtotal)}</span>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">netto</span>
+              <span className="text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] hidden sm:inline">{articles.length} Artikel · {totalStueck.toLocaleString('de-AT')} Stk</span>
+              <span className="text-lg font-black text-[#111113]">{formatCurrency(subtotal)}</span>
+              <span className="text-xs font-medium uppercase tracking-[0.05em] text-[#9394a1]">netto</span>
             </div>
             <button
               onClick={handleGenerate}
               disabled={!canGenerate || generating}
-              className={`px-8 py-3 font-black uppercase tracking-[0.1em] text-[11px] flex items-center gap-2 transition-all ${
+              className={`px-8 py-3 rounded-lg font-semibold text-sm flex items-center gap-2 transition-all ${
                 canGenerate
-                  ? 'bg-[#8cc63f] hover:bg-[#7ab635] text-[#1a472a] shadow-md'
+                  ? 'bg-[#8cc63f] hover:bg-[#7ab635] text-[#111113] shadow-md'
                   : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
             >
@@ -1170,9 +1202,9 @@ export default function QuickAngebot() {
       )}
 
       {/* ═══ 3 Steps + Mehr erfahren ═══ */}
-      <section className="py-16 px-5 md:px-8 bg-[#f7f9f7] border-t border-gray-200">
+      <section className="py-16 px-5 md:px-8 bg-[#f7f7f8] border-t border-[#e4e4e7]">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-center text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 mb-10">So funktioniert's</h2>
+          <h2 className="text-center text-xs font-semibold uppercase tracking-[0.1em] text-[#9394a1] mb-10">So funktioniert's</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { step: '01', title: 'Hochladen', desc: 'Preisliste als PDF oder Excel hochladen — oder EAN manuell eintippen.' },
@@ -1180,14 +1212,14 @@ export default function QuickAngebot() {
               { step: '03', title: 'Versenden', desc: 'PDF-Angebot per WhatsApp oder E-Mail verschicken. Fertig.' },
             ].map(item => (
               <div key={item.step} className="text-center">
-                <div className="w-12 h-12 bg-[#1a472a] text-white flex items-center justify-center mx-auto mb-4 text-[13px] font-black">{item.step}</div>
-                <h3 className="text-[12px] font-black uppercase tracking-[0.15em] text-[#1a472a] mb-2">{item.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+                <div className="w-12 h-12 rounded-lg bg-[#111113] text-white flex items-center justify-center mx-auto mb-4 text-[13px] font-semibold">{item.step}</div>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.08em] text-[#111113] mb-2">{item.title}</h3>
+                <p className="text-sm text-[#9394a1] leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
           <div className="text-center mt-10">
-            <Link to="/about" className="inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-[#1a472a] hover:text-[#8cc63f] transition-colors group">
+            <Link to="/about" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#111113] hover:text-[#8cc63f] transition-colors group">
               Mehr über HELLO SECOND/RUN erfahren
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -1206,7 +1238,7 @@ function Input({
 }) {
   return (
     <div>
-      <label className="block text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1">{label}</label>
+      <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#9394a1] mb-1">{label}</label>
       <input
         type={type}
         value={value}

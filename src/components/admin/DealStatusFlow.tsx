@@ -28,9 +28,9 @@ export default function DealStatusFlow({ currentStatus, onStatusChange }: Props)
           let textColor = 'text-gray-400';
           if (isCompleted) {
             bgColor = 'bg-[#8cc63f]';
-            textColor = 'text-[#1a472a]';
+            textColor = 'text-[#111113]';
           } else if (isCurrent) {
-            bgColor = 'bg-[#1a472a]';
+            bgColor = 'bg-[#111113]';
             textColor = 'text-white';
           } else if (isFinal) {
             bgColor = isGespendet ? 'bg-pink-100' : 'bg-gray-100';
@@ -53,7 +53,7 @@ export default function DealStatusFlow({ currentStatus, onStatusChange }: Props)
               title={DEAL_STATUS_LABELS[status]}
             >
               <span
-                className={`block text-[8px] font-black uppercase tracking-wider leading-tight ${textColor}`}
+                className={`block text-[8px] font-semibold uppercase tracking-[0.08em] leading-tight ${textColor}`}
               >
                 {DEAL_STATUS_LABELS[status]}
               </span>
@@ -65,7 +65,7 @@ export default function DealStatusFlow({ currentStatus, onStatusChange }: Props)
       {/* Storniert / Gespendet indicators */}
       <div className="flex items-center gap-2">
         {isGespendet && (
-          <span className="px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded bg-pink-500 text-white">
+          <span className="px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.08em] rounded bg-pink-500 text-white">
             ❤️ {DEAL_STATUS_LABELS.gespendet}
           </span>
         )}
@@ -78,7 +78,7 @@ export default function DealStatusFlow({ currentStatus, onStatusChange }: Props)
           type="button"
           disabled={!onStatusChange}
           onClick={() => onStatusChange?.('storniert')}
-          className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded transition-all ${
+          className={`px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.08em] rounded transition-all ${
             isStorniert
               ? 'bg-red-600 text-white'
               : 'bg-red-50 text-red-400 border border-red-200'

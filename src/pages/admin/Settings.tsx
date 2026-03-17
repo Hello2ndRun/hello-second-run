@@ -46,9 +46,9 @@ export default function Settings() {
   };
 
   const inputClass =
-    'w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#1a472a] focus:outline-none transition-all';
+    'w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#111113] focus:outline-none transition-all';
   const labelClass =
-    'block text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-1';
+    'block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-1';
 
   return (
     <div>
@@ -58,7 +58,7 @@ export default function Settings() {
         actions={
           <button
             onClick={handleSave}
-            className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all"
+            className="inline-flex items-center gap-2 bg-[#111113] text-[#ffffff] px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#111113] transition-all"
           >
             <Save size={14} />
             {saved ? 'Gespeichert!' : 'Speichern'}
@@ -74,9 +74,9 @@ export default function Settings() {
 
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Firmendaten */}
-        <div className="bg-white border border-gray-200 p-6">
+        <div className="bg-[#ffffff] border border-gray-200 p-6">
           <div className="flex items-center gap-2 mb-5">
-            <Building size={16} className="text-[#1a472a]" />
+            <Building size={16} className="text-[#111113]" />
             <h3 className="text-sm font-black uppercase tracking-tight">Firmendaten</h3>
           </div>
           <div className="space-y-4">
@@ -86,10 +86,10 @@ export default function Settings() {
               <div className="flex items-center gap-4">
                 {form.logoUrl ? (
                   <div className="relative group">
-                    <img src={form.logoUrl} alt="Logo" className="h-14 object-contain border border-gray-200 p-1 bg-white" />
+                    <img src={form.logoUrl} alt="Logo" className="h-14 object-contain border border-gray-200 p-1 bg-[#ffffff]" />
                     <button
                       onClick={() => update('logoUrl', '')}
-                      className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                     >
                       <X size={10} />
                     </button>
@@ -101,7 +101,7 @@ export default function Settings() {
                 )}
                 <button
                   onClick={() => logoInputRef.current?.click()}
-                  className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-3 py-2 text-[10px] font-bold uppercase tracking-wider hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+                  className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-3 py-2 text-[10px] font-bold uppercase tracking-wider hover:border-[#111113] hover:text-[#111113] transition-all"
                 >
                   <Upload size={12} />
                   Hochladen
@@ -171,7 +171,7 @@ export default function Settings() {
         {/* Kontakt + Bank + Defaults */}
         <div className="space-y-6">
           {/* Kontakt */}
-          <div className="bg-white border border-gray-200 p-6">
+          <div className="bg-[#ffffff] border border-gray-200 p-6">
             <h3 className="text-sm font-black uppercase tracking-tight mb-5">Kontakt</h3>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -207,7 +207,7 @@ export default function Settings() {
           </div>
 
           {/* Bankverbindung */}
-          <div className="bg-white border border-gray-200 p-6">
+          <div className="bg-[#ffffff] border border-gray-200 p-6">
             <h3 className="text-sm font-black uppercase tracking-tight mb-5">Bankverbindung</h3>
             <div className="space-y-4">
               <div>
@@ -241,7 +241,7 @@ export default function Settings() {
           </div>
 
           {/* Standardwerte */}
-          <div className="bg-white border border-gray-200 p-6">
+          <div className="bg-[#ffffff] border border-gray-200 p-6">
             <h3 className="text-sm font-black uppercase tracking-tight mb-5">Standardwerte</h3>
             <div className="space-y-4">
               <div>
@@ -298,17 +298,17 @@ export default function Settings() {
       </div>
 
       {/* EmailJS Konfiguration */}
-      <div className="mt-8 bg-white border border-gray-200 p-6">
+      <div className="mt-8 bg-[#ffffff] border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
-            <Mail size={16} className="text-[#1a472a]" />
+            <Mail size={16} className="text-[#111113]" />
             <h3 className="text-sm font-black uppercase tracking-tight">E-Mail-Versand (EmailJS)</h3>
           </div>
           <a
             href="https://www.emailjs.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-[10px] font-bold text-[#1a472a] hover:text-[#8cc63f] transition-colors uppercase tracking-wider"
+            className="inline-flex items-center gap-1.5 text-[10px] font-bold text-[#111113] hover:text-[#8cc63f] transition-colors uppercase tracking-wider"
           >
             <ExternalLink size={11} />
             EmailJS Dashboard
@@ -329,7 +329,7 @@ export default function Settings() {
               ].map(item => (
                 <span
                   key={item.label}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1 text-[9px] font-black uppercase tracking-wider ${
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 text-[9px] font-semibold uppercase tracking-[0.08em] ${
                     item.ok ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-gray-50 text-gray-400 border border-gray-200'
                   }`}
                 >
@@ -343,7 +343,7 @@ export default function Settings() {
 
         <p className="text-xs text-gray-500 mb-5 leading-relaxed">
           EmailJS ermöglicht den E-Mail-Versand direkt aus dem Browser — ohne Backend.
-          Erstelle ein kostenloses Konto auf <a href="https://www.emailjs.com" target="_blank" rel="noopener noreferrer" className="text-[#1a472a] font-bold underline">emailjs.com</a>,
+          Erstelle ein kostenloses Konto auf <a href="https://www.emailjs.com" target="_blank" rel="noopener noreferrer" className="text-[#111113] font-bold underline">emailjs.com</a>,
           verbinde deinen E-Mail-Service (Gmail, Outlook, SMTP) und erstelle E-Mail-Templates.
           Trage die IDs hier ein.
         </p>
@@ -412,11 +412,11 @@ export default function Settings() {
 
         {/* Setup Anleitung */}
         <details className="mt-6">
-          <summary className="text-[10px] font-black uppercase tracking-widest text-[#1a472a] cursor-pointer hover:text-[#8cc63f] transition-colors">
+          <summary className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] cursor-pointer hover:text-[#8cc63f] transition-colors">
             Setup-Anleitung anzeigen
           </summary>
-          <div className="mt-4 bg-[#f7f9f7] p-4 text-xs text-gray-600 space-y-3 leading-relaxed">
-            <p><strong>1.</strong> Gehe zu <a href="https://www.emailjs.com" target="_blank" rel="noopener noreferrer" className="text-[#1a472a] font-bold underline">emailjs.com</a> und erstelle ein kostenloses Konto.</p>
+          <div className="mt-4 bg-[#ffffff] p-4 text-xs text-gray-600 space-y-3 leading-relaxed">
+            <p><strong>1.</strong> Gehe zu <a href="https://www.emailjs.com" target="_blank" rel="noopener noreferrer" className="text-[#111113] font-bold underline">emailjs.com</a> und erstelle ein kostenloses Konto.</p>
             <p><strong>2.</strong> Unter "Email Services" → "Add New Service" → wähle deinen E-Mail-Provider (z.B. Outlook/Microsoft 365 für info@hello2ndrun.com).</p>
             <p><strong>3.</strong> Unter "Email Templates" erstelle 3 Templates:</p>
             <div className="ml-4 space-y-2">
@@ -431,7 +431,7 @@ export default function Settings() {
       </div>
 
       {/* Danger Zone */}
-      <div className="mt-8 bg-white border border-red-200 p-6">
+      <div className="mt-8 bg-[#ffffff] border border-red-200 p-6">
         <h3 className="text-sm font-black uppercase tracking-tight text-red-600 mb-2">Gefahrenzone</h3>
         <p className="text-xs text-gray-500 mb-4">
           Alle Daten (Partner, Deals, Artikel, Dokumente) auf die Seed-Daten zurücksetzen.

@@ -68,7 +68,7 @@ export default function PublicAngebot() {
   if (!loaded) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <Loader2 size={32} className="animate-spin text-[#1a472a]" />
+        <Loader2 size={32} className="animate-spin text-[#111113]" />
       </div>
     );
   }
@@ -78,7 +78,7 @@ export default function PublicAngebot() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center px-4">
         <div className="text-center max-w-md">
-          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4">
             <FileText size={28} className="text-gray-300" />
           </div>
           <h1 className="text-xl font-black text-gray-900 mb-2">Angebot nicht gefunden</h1>
@@ -94,7 +94,7 @@ export default function PublicAngebot() {
   if (!verkaeufer || !kaeufer) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <Loader2 size={32} className="animate-spin text-[#1a472a]" />
+        <Loader2 size={32} className="animate-spin text-[#111113]" />
       </div>
     );
   }
@@ -104,13 +104,13 @@ export default function PublicAngebot() {
       {/* Header Bar */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">Angebot</p>
-          <h1 className="text-2xl font-black text-[#1a472a]">{deal.angebotNr || deal.id}</h1>
+          <p className="text-[10px] font-black uppercase tracking-[0.1em] text-gray-400 mb-1">Angebot</p>
+          <h1 className="text-2xl font-black text-[#111113]">{deal.angebotNr || deal.id}</h1>
         </div>
         <button
           onClick={handleDownloadPdf}
           disabled={isDownloading}
-          className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all disabled:opacity-50"
+          className="inline-flex items-center gap-2 bg-[#111113] text-white px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#111113] transition-all disabled:opacity-50"
         >
           {isDownloading ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
           PDF herunterladen
@@ -122,7 +122,7 @@ export default function PublicAngebot() {
 
       {/* Footer note */}
       <div className="mt-8 text-center">
-        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-300">
+        <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-gray-300">
           Erstellt via HELLO SECOND/RUN
         </p>
       </div>

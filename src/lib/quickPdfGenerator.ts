@@ -108,14 +108,14 @@ export function generateQuickAngebotPdf(
   if (recipient.email) doc.text(recipient.email, 120, 33);
 
   // Divider
-  doc.setDrawColor(26, 71, 42);
+  doc.setDrawColor(17, 17, 19);
   doc.setLineWidth(0.5);
   doc.line(14, 45, pw - 14, 45);
 
   // ─── Title ───
   doc.setFontSize(20);
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(26, 71, 42);
+  doc.setTextColor(17, 17, 19);
   doc.text('ANGEBOT', 14, 58);
 
   doc.setFontSize(9);
@@ -154,14 +154,14 @@ export function generateQuickAngebotPdf(
     body,
     theme: 'grid',
     headStyles: {
-      fillColor: [26, 71, 42],
+      fillColor: [17, 17, 19],
       textColor: [255, 255, 255],
       fontSize: 7,
       fontStyle: 'bold',
       cellPadding: 3,
     },
     bodyStyles: { fontSize: 8, cellPadding: 2.5 },
-    alternateRowStyles: { fillColor: [247, 249, 247] },
+    alternateRowStyles: { fillColor: [247, 247, 248] },
     columnStyles: {
       0: { cellWidth: 12, halign: 'center' },
       5: { halign: 'center' },
@@ -190,7 +190,7 @@ export function generateQuickAngebotPdf(
   const brutto = Math.round((subtotal + mwst) * 100) / 100;
   doc.setFontSize(12);
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(26, 71, 42);
+  doc.setTextColor(17, 17, 19);
   doc.text('Gesamtbetrag:', tx, finalY + 16);
   doc.text(formatCurrency(brutto), pw - 14, finalY + 16, { align: 'right' });
   doc.setTextColor(0, 0, 0);

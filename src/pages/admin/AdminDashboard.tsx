@@ -94,8 +94,8 @@ export default function AdminDashboard() {
       label: 'Aktive Deals',
       value: stats.activeDeals,
       icon: Handshake,
-      color: 'text-[#1a472a]',
-      bg: 'bg-[#1a472a]/10',
+      color: 'text-[#111113]',
+      bg: 'bg-[#111113]/10',
     },
     {
       label: 'Pipeline-Wert',
@@ -159,20 +159,20 @@ export default function AdminDashboard() {
     <div>
       <PageHeader
         title="Dashboard"
-        subtitle={isBroker && currentBrokerUser ? `Hallo ${currentBrokerUser.name} — Dein Bereich` : 'Willkommen im HELLO SECOND/RUN Vermittler-Bereich'}
+        subtitle={isBroker && currentBrokerUser ? `Hallo ${currentBrokerUser.name} — Dein Bereich` : 'Willkommen im HELLO SECOND/RUN Admin-Bereich'}
       />
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
         {statCards.map(card => (
           <div
             key={card.label}
-            className="bg-white border border-gray-200 p-4 hover:border-[#1a472a]/20 transition-all group"
+            className="bg-[#ffffff] border border-gray-200 p-4 hover:border-[#e4e4e7] transition-all group"
           >
             <div className={`w-9 h-9 ${card.bg} flex items-center justify-center mb-3`}>
               <card.icon size={18} className={card.color} />
             </div>
             <p className="text-2xl font-black">{card.value}</p>
-            <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 mt-1 group-hover:text-[#1a472a] transition-colors">
+            <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-400 mt-1 group-hover:text-[#111113] transition-colors">
               {card.label}
             </p>
           </div>
@@ -197,7 +197,7 @@ export default function AdminDashboard() {
                   <Heart size={22} className="text-red-400" />
                 </div>
                 <div>
-                  <h3 className="font-black text-sm text-[#0a1a0f] uppercase tracking-tight">Social Impact</h3>
+                  <h3 className="font-black text-sm text-[#111113] uppercase tracking-tight">Social Impact</h3>
                   <p className="text-xs text-gray-500 mt-0.5">
                     <span className="font-bold text-red-500">{impact.totalMahlzeiten.toLocaleString('de-AT')} Mahlzeiten</span> gerettet
                     · {impact.totalGewichtKg.toLocaleString('de-AT')} kg gespendet
@@ -213,12 +213,12 @@ export default function AdminDashboard() {
 
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Letzte Deals */}
-        <div className="bg-white border border-gray-200">
+        <div className="bg-[#ffffff] border border-gray-200">
           <div className="flex items-center justify-between p-4 border-b border-gray-100">
             <h2 className="text-sm font-black uppercase tracking-tight">Letzte Deals</h2>
             <Link
               to="/admin/deals"
-              className="text-[10px] font-bold text-[#1a472a] hover:text-[#8cc63f] flex items-center gap-1 uppercase tracking-widest"
+              className="text-[10px] font-bold text-[#111113] hover:text-[#8cc63f] flex items-center gap-1 uppercase tracking-widest"
             >
               Alle <ArrowRight size={10} />
             </Link>
@@ -231,7 +231,7 @@ export default function AdminDashboard() {
                 <div
                   key={deal.id}
                   onClick={() => navigate(`/admin/deals/${deal.id}`)}
-                  className="flex items-center gap-4 p-4 hover:bg-[#f7f9f7] transition-colors cursor-pointer"
+                  className="flex items-center gap-4 p-4 hover:bg-[#ffffff] transition-colors cursor-pointer"
                 >
                   <div className="w-9 h-9 bg-gray-50 flex items-center justify-center flex-shrink-0">
                     <Handshake size={16} className="text-gray-400" />
@@ -247,7 +247,7 @@ export default function AdminDashboard() {
                   </div>
                   <div className="text-right flex-shrink-0">
                     <span
-                      className={`inline-flex items-center border font-black uppercase tracking-widest px-2 py-0.5 text-[9px] ${getStatusBadgeStyle(deal.status)}`}
+                      className={`inline-flex items-center border font-semibold uppercase tracking-[0.08em] px-2 py-0.5 text-[9px] ${getStatusBadgeStyle(deal.status)}`}
                     >
                       {DEAL_STATUS_LABELS[deal.status]}
                     </span>
@@ -259,12 +259,12 @@ export default function AdminDashboard() {
         </div>
 
         {/* Aktive Angebote */}
-        <div className="bg-white border border-gray-200">
+        <div className="bg-[#ffffff] border border-gray-200">
           <div className="flex items-center justify-between p-4 border-b border-gray-100">
             <h2 className="text-sm font-black uppercase tracking-tight">Aktive Angebote</h2>
             <Link
               to="/admin/deals"
-              className="text-[10px] font-bold text-[#1a472a] hover:text-[#8cc63f] flex items-center gap-1 uppercase tracking-widest"
+              className="text-[10px] font-bold text-[#111113] hover:text-[#8cc63f] flex items-center gap-1 uppercase tracking-widest"
             >
               Alle <ArrowRight size={10} />
             </Link>
@@ -277,7 +277,7 @@ export default function AdminDashboard() {
                 <div
                   key={deal.id}
                   onClick={() => navigate(`/admin/deals/${deal.id}`)}
-                  className="flex items-center gap-4 p-4 hover:bg-[#f7f9f7] transition-colors cursor-pointer"
+                  className="flex items-center gap-4 p-4 hover:bg-[#ffffff] transition-colors cursor-pointer"
                 >
                   <div className="w-9 h-9 bg-amber-50 flex items-center justify-center flex-shrink-0">
                     <FileText size={16} className="text-amber-500" />
@@ -293,7 +293,7 @@ export default function AdminDashboard() {
                   </div>
                   <div className="text-right flex-shrink-0 space-y-1">
                     <span
-                      className={`inline-flex items-center border font-black uppercase tracking-widest px-2 py-0.5 text-[9px] ${getStatusBadgeStyle(deal.status)}`}
+                      className={`inline-flex items-center border font-semibold uppercase tracking-[0.08em] px-2 py-0.5 text-[9px] ${getStatusBadgeStyle(deal.status)}`}
                     >
                       {DEAL_STATUS_LABELS[deal.status]}
                     </span>

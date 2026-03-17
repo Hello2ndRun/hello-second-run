@@ -55,13 +55,13 @@ export default function EanLookup({ onProductFound }: Props) {
             onChange={(e) => setEan(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="EAN eingeben (z.B. 8076800195057)"
-            className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 text-sm focus:border-[#1a472a] focus:outline-none transition-all"
+            className="w-full pl-9 pr-4 py-2.5 bg-[#ffffff] border border-gray-200 text-sm focus:border-[#111113] focus:outline-none transition-all"
           />
         </div>
         <button
           onClick={handleSearch}
           disabled={loading || !ean.trim()}
-          className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-5 py-2.5 font-black uppercase tracking-[0.1em] text-[11px] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all disabled:opacity-30"
+          className="inline-flex items-center gap-2 bg-[#111113] text-[#ffffff] px-5 py-2.5 font-black uppercase tracking-[0.1em] text-[11px] hover:bg-[#8cc63f] hover:text-[#111113] transition-all disabled:opacity-30"
         >
           {loading ? <Loader2 size={14} className="animate-spin" /> : <Search size={14} />}
           Suchen
@@ -76,7 +76,7 @@ export default function EanLookup({ onProductFound }: Props) {
       )}
 
       {foundProduct && (
-        <div className="flex items-start gap-4 p-4 bg-white border border-gray-200">
+        <div className="flex items-start gap-4 p-4 bg-[#ffffff] border border-gray-200">
           {foundProduct.imageUrl ? (
             <img
               src={foundProduct.imageUrl}

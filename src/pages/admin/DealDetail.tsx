@@ -389,14 +389,14 @@ export default function DealDetail() {
         {/* LEFT COLUMN (2/3) */}
         <div className="lg:col-span-2 space-y-6">
           {/* Status Flow */}
-          <div className="bg-white border border-gray-200 p-4">
+          <div className="bg-[#ffffff] border border-gray-200 p-4">
             <DealStatusFlow currentStatus={deal.status} />
           </div>
 
           {/* Articles Table */}
-          <div className="bg-white border border-gray-200">
+          <div className="bg-[#ffffff] border border-gray-200">
             <div className="px-4 py-3 border-b border-gray-100">
-              <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a]">Deal-Artikel</h3>
+              <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113]">Deal-Artikel</h3>
             </div>
             <DataTable
               data={articles}
@@ -407,14 +407,14 @@ export default function DealDetail() {
 
           {/* Visual Angebot Preview */}
           {['angebot_erstellt', 'angebot_gesendet'].includes(deal.status) && verkaeufer && kaeufer && (
-            <div className="bg-white border border-gray-200">
+            <div className="bg-[#ffffff] border border-gray-200">
               <button
                 onClick={() => setShowPreview(!showPreview)}
                 className="w-full px-4 py-3 flex items-center justify-between border-b border-gray-100 hover:bg-gray-50 transition-all"
               >
                 <div className="flex items-center gap-2">
-                  {showPreview ? <EyeOff size={14} className="text-[#1a472a]" /> : <Eye size={14} className="text-[#1a472a]" />}
-                  <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a]">Angebots-Vorschau</h3>
+                  {showPreview ? <EyeOff size={14} className="text-[#111113]" /> : <Eye size={14} className="text-[#111113]" />}
+                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113]">Angebots-Vorschau</h3>
                 </div>
                 <span className="text-xs text-gray-400">{showPreview ? 'Ausblenden' : 'Anzeigen'}</span>
               </button>
@@ -427,7 +427,7 @@ export default function DealDetail() {
           )}
 
           {/* Summen */}
-          <div className="bg-white border border-gray-200 p-4">
+          <div className="bg-[#ffffff] border border-gray-200 p-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-1">Netto</p>
@@ -439,7 +439,7 @@ export default function DealDetail() {
               </div>
               <div>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-1">Brutto</p>
-                <p className="text-lg font-black font-mono text-[#1a472a]">{formatCurrency(deal.totalBrutto)}</p>
+                <p className="text-lg font-black font-mono text-[#111113]">{formatCurrency(deal.totalBrutto)}</p>
               </div>
               <div>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-1">Provision</p>
@@ -449,14 +449,14 @@ export default function DealDetail() {
           </div>
 
           {/* Action Buttons */}
-          <div className="bg-white border border-gray-200 p-4">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-3">Aktionen</h3>
+          <div className="bg-[#ffffff] border border-gray-200 p-4">
+            <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-3">Aktionen</h3>
             <div className="flex flex-wrap gap-3">
               {statusAction && (
                 <button
                   onClick={async () => await handleStatusChange(statusAction.next)}
                   disabled={isGenerating}
-                  className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all disabled:opacity-50 disabled:cursor-wait"
+                  className="inline-flex items-center gap-2 bg-[#111113] text-[#ffffff] px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-[#8cc63f] hover:text-[#111113] transition-all disabled:opacity-50 disabled:cursor-wait"
                 >
                   {isGenerating ? <Loader2 size={14} className="animate-spin" /> : <CreditCard size={14} />}
                   {isGenerating ? 'Generiere...' : statusAction.label}
@@ -467,7 +467,7 @@ export default function DealDetail() {
               {canShare && (
                 <button
                   onClick={handleShareLink}
-                  className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+                  className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#111113] hover:text-[#111113] transition-all"
                 >
                   {linkCopied ? <Check size={14} className="text-emerald-500" /> : <Link2 size={14} />}
                   {linkCopied ? 'Link kopiert!' : 'Angebot teilen'}
@@ -479,7 +479,7 @@ export default function DealDetail() {
                 <button
                   onClick={handleEmailSend}
                   disabled={emailSending}
-                  className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all disabled:opacity-50 disabled:cursor-wait"
+                  className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#111113] hover:text-[#111113] transition-all disabled:opacity-50 disabled:cursor-wait"
                 >
                   {emailSending ? <Loader2 size={14} className="animate-spin" /> : <Mail size={14} />}
                   {emailSending ? 'Sende...' : isEmailConfigured() ? 'Per E-Mail senden' : 'Per E-Mail (mailto)'}
@@ -489,7 +489,7 @@ export default function DealDetail() {
               {/* Duplicate Deal */}
               <button
                 onClick={handleDuplicate}
-                className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+                className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:border-[#111113] hover:text-[#111113] transition-all"
               >
                 <Copy size={14} />
                 Duplizieren
@@ -529,7 +529,7 @@ export default function DealDetail() {
               </div>
               <button
                 onClick={handleOpenDonation}
-                className="flex-shrink-0 ml-4 px-4 py-2 bg-red-500 text-white text-[10px] font-black uppercase tracking-wider hover:bg-red-600 transition-all"
+                className="flex-shrink-0 ml-4 px-4 py-2 bg-red-500 text-white text-[10px] font-semibold uppercase tracking-[0.08em] hover:bg-red-600 transition-all"
               >
                 Jetzt spenden ❤️
               </button>
@@ -543,7 +543,7 @@ export default function DealDetail() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <Mail size={14} className="text-blue-600" />
-                    <h3 className="text-[10px] font-black uppercase tracking-widest text-blue-700">E-Mail-Benachrichtigung</h3>
+                    <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-blue-700">E-Mail-Benachrichtigung</h3>
                   </div>
                   <p className="text-xs text-blue-600 mb-1">
                     <span className="font-bold">{emailPrompt.recipient.firmenname}</span> ({emailPrompt.recipient.email}) benachrichtigen?
@@ -578,14 +578,14 @@ export default function DealDetail() {
                       }
                       setEmailPrompt(null);
                     }}
-                    className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 text-[10px] font-black uppercase tracking-wider hover:bg-blue-700 transition-all disabled:opacity-50"
+                    className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.08em] hover:bg-blue-700 transition-all disabled:opacity-50"
                   >
                     {emailSending ? <Loader2 size={12} className="animate-spin" /> : <Mail size={12} />}
                     {emailSending ? 'Sende...' : isEmailConfigured() ? 'Jetzt senden' : 'E-Mail öffnen'}
                   </button>
                   <button
                     onClick={() => setEmailPrompt(null)}
-                    className="inline-flex items-center gap-2 border border-blue-200 text-blue-600 px-4 py-2 text-[10px] font-black uppercase tracking-wider hover:bg-blue-100 transition-all"
+                    className="inline-flex items-center gap-2 border border-blue-200 text-blue-600 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.08em] hover:bg-blue-100 transition-all"
                   >
                     Überspringen
                   </button>
@@ -595,18 +595,18 @@ export default function DealDetail() {
           )}
 
           {/* Notizen */}
-          <div className="bg-white border border-gray-200 p-4">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a] mb-3">Notizen</h3>
+          <div className="bg-[#ffffff] border border-gray-200 p-4">
+            <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113] mb-3">Notizen</h3>
             <textarea
               value={notizen}
               onChange={e => setNotizen(e.target.value)}
               rows={4}
-              className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#1a472a] focus:outline-none resize-none"
+              className="w-full bg-gray-50 border border-gray-200 py-2.5 px-3 text-sm focus:border-[#111113] focus:outline-none resize-none"
               placeholder="Interne Notizen zum Deal..."
             />
             <button
               onClick={handleSaveNotizen}
-              className="mt-2 inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-4 py-2 text-[10px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+              className="mt-2 inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-4 py-2 text-[10px] font-black uppercase tracking-[0.1em] hover:border-[#111113] hover:text-[#111113] transition-all"
             >
               Notizen speichern
             </button>
@@ -616,10 +616,10 @@ export default function DealDetail() {
         {/* RIGHT COLUMN (1/3) */}
         <div className="space-y-6">
           {/* Verkäufer Info */}
-          <div className="bg-white border border-gray-200 p-4">
+          <div className="bg-[#ffffff] border border-gray-200 p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Building size={14} className="text-[#1a472a]" />
-              <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a]">Verkäufer</h3>
+              <Building size={14} className="text-[#111113]" />
+              <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113]">Verkäufer</h3>
             </div>
             {verkaeufer ? (
               <div className="space-y-1.5 text-sm">
@@ -638,10 +638,10 @@ export default function DealDetail() {
           </div>
 
           {/* Käufer Info */}
-          <div className="bg-white border border-gray-200 p-4">
+          <div className="bg-[#ffffff] border border-gray-200 p-4">
             <div className="flex items-center gap-2 mb-3">
-              <User size={14} className="text-[#1a472a]" />
-              <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a]">Käufer</h3>
+              <User size={14} className="text-[#111113]" />
+              <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113]">Käufer</h3>
             </div>
             {kaeufer ? (
               <div className="space-y-1.5 text-sm">
@@ -660,10 +660,10 @@ export default function DealDetail() {
           </div>
 
           {/* Provisions Card */}
-          <div className="bg-white border border-gray-200 p-4">
+          <div className="bg-[#ffffff] border border-gray-200 p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Percent size={14} className="text-[#1a472a]" />
-              <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a]">Provision</h3>
+              <Percent size={14} className="text-[#111113]" />
+              <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113]">Provision</h3>
             </div>
             {commission && (
               <div className="space-y-2 text-sm">
@@ -688,10 +688,10 @@ export default function DealDetail() {
           </div>
 
           {/* Dokumente Card */}
-          <div className="bg-white border border-gray-200 p-4">
+          <div className="bg-[#ffffff] border border-gray-200 p-4">
             <div className="flex items-center gap-2 mb-3">
-              <FileText size={14} className="text-[#1a472a]" />
-              <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a]">Dokumente</h3>
+              <FileText size={14} className="text-[#111113]" />
+              <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113]">Dokumente</h3>
             </div>
             {documents.length === 0 ? (
               <p className="text-gray-400 text-xs">Noch keine Dokumente erstellt.</p>
@@ -718,7 +718,7 @@ export default function DealDetail() {
                           URL.revokeObjectURL(url);
                         } catch { /* fallback */ }
                       }}
-                      className="p-1.5 text-[#1a472a] hover:bg-[#f7f9f7] transition-all"
+                      className="p-1.5 text-[#111113] hover:bg-[#ffffff] transition-all"
                     >
                       <Download size={14} />
                     </button>
@@ -729,10 +729,10 @@ export default function DealDetail() {
           </div>
 
           {/* Deal-Metadaten */}
-          <div className="bg-white border border-gray-200 p-4">
+          <div className="bg-[#ffffff] border border-gray-200 p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Calendar size={14} className="text-[#1a472a]" />
-              <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1a472a]">Deal-Metadaten</h3>
+              <Calendar size={14} className="text-[#111113]" />
+              <h3 className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#111113]">Deal-Metadaten</h3>
             </div>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
@@ -765,13 +765,13 @@ export default function DealDetail() {
       {/* ═══ Spenden-Modal ═══ */}
       {showDonationModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowDonationModal(false)}>
-          <div className="bg-white max-w-md w-full p-6" onClick={e => e.stopPropagation()}>
+          <div className="bg-[#ffffff] max-w-md w-full p-6" onClick={e => e.stopPropagation()}>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center">
                 <Heart size={20} className="text-red-400" />
               </div>
               <div>
-                <h2 className="font-black text-lg text-[#0a1a0f]">Spenden statt Entsorgen</h2>
+                <h2 className="font-black text-lg text-[#111113]">Spenden statt Entsorgen</h2>
                 <p className="text-xs text-gray-400">Ware geht an eine gemeinnützige Organisation</p>
               </div>
             </div>
@@ -787,7 +787,7 @@ export default function DealDetail() {
                   <select
                     value={selectedDonationPartner}
                     onChange={e => setSelectedDonationPartner(e.target.value)}
-                    className="w-full border border-gray-200 p-2.5 text-sm mt-1 focus:border-[#1a472a] focus:outline-none bg-white"
+                    className="w-full border border-gray-200 p-2.5 text-sm mt-1 focus:border-[#111113] focus:outline-none bg-[#ffffff]"
                   >
                     {donationPartners.map(p => (
                       <option key={p.id} value={p.id}>
@@ -807,12 +807,12 @@ export default function DealDetail() {
                   onChange={e => setDonationNotizen(e.target.value)}
                   rows={2}
                   placeholder="z.B. Abholung Dienstag, Kühlware beachten..."
-                  className="w-full border border-gray-200 p-2.5 text-sm mt-1 focus:border-[#1a472a] focus:outline-none resize-none"
+                  className="w-full border border-gray-200 p-2.5 text-sm mt-1 focus:border-[#111113] focus:outline-none resize-none"
                 />
               </div>
 
               <div className="bg-gray-50 p-3 text-xs text-gray-500">
-                <p className="font-bold text-[#0a1a0f] mb-1">Was passiert:</p>
+                <p className="font-bold text-[#111113] mb-1">Was passiert:</p>
                 <ul className="space-y-1 list-disc list-inside">
                   <li>Deal-Status wird auf "Gespendet ❤️" gesetzt</li>
                   <li>Spende wird erfasst (Gewicht, Wert, Mahlzeiten)</li>
@@ -823,13 +823,13 @@ export default function DealDetail() {
             </div>
 
             <div className="flex items-center justify-end gap-3 mt-5 pt-4 border-t border-gray-100">
-              <button onClick={() => setShowDonationModal(false)} className="px-4 py-2 text-[10px] font-black uppercase tracking-wider text-gray-400 hover:text-gray-600">
+              <button onClick={() => setShowDonationModal(false)} className="px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-gray-400 hover:text-gray-600">
                 Abbrechen
               </button>
               <button
                 onClick={handleDonate}
                 disabled={!selectedDonationPartner || donationPartners.length === 0}
-                className="px-5 py-2.5 bg-red-500 text-white text-[10px] font-black uppercase tracking-wider hover:bg-red-600 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                className="px-5 py-2.5 bg-red-500 text-white text-[10px] font-semibold uppercase tracking-[0.08em] hover:bg-red-600 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <Heart size={13} className="inline mr-2" />
                 Spende bestätigen ❤️

@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════
-// HELLO SECOND/RUN — Vermittler-Plattform Type Definitions
+// HELLO SECOND/RUN — Das Angebots-Tool für Sonderposten
 // ════════════════════════════════════════════════════════════
 
 // === ARTICLE CATEGORY ===

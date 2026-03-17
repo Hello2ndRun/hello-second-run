@@ -26,7 +26,7 @@ export default function ServerStatus() {
     <div className="w-full bg-amber-100 border-b border-amber-300 px-4 py-3 relative">
       <div className="max-w-7xl mx-auto flex items-start gap-3">
         <div className="flex-1 min-w-0">
-          <p className="font-black uppercase tracking-wider text-[11px] text-amber-900">
+          <p className="font-semibold uppercase tracking-[0.08em] text-[11px] text-amber-900">
             ⚡ Server offline — KI-Features (UVP-Suche, PDF-Extraktion, Chatbot) sind nicht verfügbar.
           </p>
           <p className="text-[10px] text-amber-700 mt-0.5 font-mono">
@@ -36,7 +36,7 @@ export default function ServerStatus() {
 
         <button
           onClick={() => { setDismissed(false); checkHealth(); }}
-          className="font-black uppercase tracking-wider text-[11px] text-amber-800 hover:text-amber-950 border border-amber-400 rounded px-2 py-0.5 hover:bg-amber-200 transition-colors shrink-0"
+          className="font-semibold uppercase tracking-[0.08em] text-[11px] text-amber-800 hover:text-amber-950 border border-amber-400 rounded px-2 py-0.5 hover:bg-amber-200 transition-colors shrink-0"
         >
           Erneut prüfen
         </button>

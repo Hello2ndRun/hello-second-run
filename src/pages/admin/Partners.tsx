@@ -116,7 +116,7 @@ export default function Partners() {
       width: '120px',
       render: (p) => (
         <span
-          className={`inline-flex items-center px-2 py-0.5 text-[9px] font-black uppercase tracking-widest border ${
+          className={`inline-flex items-center px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.08em] border ${
             ROLE_STYLES[p.rolle]
           }`}
         >
@@ -144,7 +144,7 @@ export default function Partners() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => csvInputRef.current?.click()}
-              className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-4 py-2.5 text-[10px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+              className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-4 py-2.5 text-[10px] font-black uppercase tracking-[0.1em] hover:border-[#111113] hover:text-[#111113] transition-all"
             >
               <Upload size={13} />
               Import
@@ -152,14 +152,14 @@ export default function Partners() {
             <input ref={csvInputRef} type="file" accept=".csv,.txt" onChange={handleCsvImport} className="hidden" />
             <button
               onClick={() => exportPartnersAsCsv(filtered)}
-              className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-4 py-2.5 text-[10px] font-black uppercase tracking-[0.1em] hover:border-[#1a472a] hover:text-[#1a472a] transition-all"
+              className="inline-flex items-center gap-2 border border-gray-200 text-gray-500 px-4 py-2.5 text-[10px] font-black uppercase tracking-[0.1em] hover:border-[#111113] hover:text-[#111113] transition-all"
             >
               <Download size={13} />
               CSV
             </button>
             <Link
               to="/admin/partners/new"
-              className="inline-flex items-center gap-2 bg-[#1a472a] text-white px-5 py-2.5 font-black uppercase tracking-[0.1em] text-[11px] hover:bg-[#8cc63f] hover:text-[#1a472a] transition-all"
+              className="inline-flex items-center gap-2 bg-[#111113] text-[#ffffff] px-5 py-2.5 font-black uppercase tracking-[0.1em] text-[11px] hover:bg-[#8cc63f] hover:text-[#111113] transition-all"
             >
               <Plus size={14} />
               Neuer Partner
@@ -174,10 +174,10 @@ export default function Partners() {
           <button
             key={opt.value}
             onClick={() => setRoleFilter(opt.value)}
-            className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all ${
+            className={`px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] transition-all ${
               roleFilter === opt.value
-                ? 'bg-[#1a472a] text-white'
-                : 'bg-white border border-gray-200 text-gray-500 hover:border-[#1a472a] hover:text-[#1a472a]'
+                ? 'bg-[#111113] text-[#ffffff]'
+                : 'bg-[#ffffff] border border-gray-200 text-gray-500 hover:border-[#111113] hover:text-[#111113]'
             }`}
           >
             {opt.label}

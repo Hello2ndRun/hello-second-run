@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════
-// Demo Store — Persistent reactive store for Vermittler-Plattform
+// Demo Store — Persistent reactive store for HELLO SECOND/RUN
 // Uses localStorage for persistence, falls back to seed data
 // ════════════════════════════════════════════════════════════
 

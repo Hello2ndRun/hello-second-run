@@ -145,7 +145,7 @@ export default function GlobalSearch() {
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setOpen(false)} />
 
       {/* Search Panel */}
-      <div className="relative w-full max-w-xl mx-4 bg-white shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-xl mx-4 bg-white shadow-2xl overflow-hidden rounded-xl border border-[#e4e4e7]">
         {/* Input */}
         <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100">
           <Search size={18} className="text-gray-300 flex-shrink-0" />
@@ -181,10 +181,10 @@ export default function GlobalSearch() {
                       onClick={() => handleSelect(result)}
                       onMouseEnter={() => setSelectedIndex(i)}
                       className={`w-full flex items-center gap-3 px-5 py-3 text-left transition-all ${
-                        i === selectedIndex ? 'bg-[#f7f9f7]' : 'hover:bg-gray-50'
+                        i === selectedIndex ? 'bg-[#f7f7f8]' : 'hover:bg-[#f7f7f8]'
                       }`}
                     >
-                      <div className={`w-8 h-8 flex items-center justify-center flex-shrink-0 ${
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
                         result.type === 'deal' ? 'bg-blue-50 text-blue-600' :
                         result.type === 'partner' ? 'bg-emerald-50 text-emerald-600' :
                         'bg-purple-50 text-purple-600'
@@ -195,10 +195,10 @@ export default function GlobalSearch() {
                         <p className="text-sm font-bold truncate">{result.title}</p>
                         <p className="text-[11px] text-gray-400 truncate">{result.subtitle}</p>
                       </div>
-                      <span className="text-[9px] font-bold uppercase tracking-widest text-gray-300 flex-shrink-0">
+                      <span className="text-[10px] font-medium text-[#9394a1] flex-shrink-0">
                         {TYPE_LABELS[result.type]}
                       </span>
-                      {i === selectedIndex && <ArrowRight size={12} className="text-[#1a472a] flex-shrink-0" />}
+                      {i === selectedIndex && <ArrowRight size={12} className="text-[#111113] flex-shrink-0" />}
                     </button>
                   );
                 })}

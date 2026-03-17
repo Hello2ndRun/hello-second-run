@@ -35,7 +35,7 @@ const NAV_GROUPS: NavGroup[] = [
     ],
   },
   {
-    label: 'Vermittlung',
+    label: 'Angebote',
     items: [
       { to: '/admin/deals', icon: Handshake, label: 'Deals' },
       { to: '/admin/deals/new', icon: PlusCircle, label: 'Neuer Deal' },
@@ -43,7 +43,7 @@ const NAV_GROUPS: NavGroup[] = [
     ],
   },
   {
-    label: 'Netzwerk',
+    label: 'Kontakte',
     items: [
       { to: '/admin/partners', icon: Users, label: 'Partner' },
     ],
@@ -75,30 +75,30 @@ export default function AdminSidebar({ open, onToggle, onMobileClose, isMobile }
   };
 
   return (
-    <aside className={`fixed top-0 left-0 h-screen bg-[#1a472a] text-white z-40 transition-all duration-300 flex flex-col ${isMobile ? 'w-72' : open ? 'w-64' : 'w-16'}`}>
+    <aside className={`fixed top-0 left-0 h-screen bg-[#111113] text-[#ffffff] z-40 transition-all duration-300 flex flex-col ${isMobile ? 'w-72' : open ? 'w-64' : 'w-16'}`}>
       {/* Logo */}
-      <div className="h-16 flex items-center px-4 border-b border-white/10">
+      <div className="h-16 flex items-center px-4 border-b border-[#ffffff]/10">
         {open ? (
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-[#8cc63f] rounded-sm flex items-center justify-center">
-                <span className="text-[#1a472a] font-black text-xs">H</span>
+                <span className="text-[#111113] font-black text-xs">H</span>
               </div>
               <div className="leading-none">
-                <span className="text-[11px] font-black uppercase tracking-[0.15em]">HELLO</span>
+                <span className="text-[11px] font-bold uppercase tracking-[0.15em]">HELLO</span>
                 <br />
-                <span className="text-[11px] font-black uppercase tracking-[0.15em] text-[#8cc63f]">SECOND/RUN</span>
+                <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#8cc63f]">SECOND/RUN</span>
               </div>
             </div>
             {isMobile && onMobileClose && (
-              <button onClick={onMobileClose} className="p-1.5 text-white/50 hover:text-white transition-colors">
+              <button onClick={onMobileClose} className="p-1.5 text-[#ffffff]/50 hover:text-[#ffffff] transition-colors">
                 <X size={18} />
               </button>
             )}
           </div>
         ) : (
           <div className="w-8 h-8 bg-[#8cc63f] rounded-sm flex items-center justify-center mx-auto">
-            <span className="text-[#1a472a] font-black text-xs">H</span>
+            <span className="text-[#111113] font-black text-xs">H</span>
           </div>
         )}
       </div>
@@ -111,7 +111,7 @@ export default function AdminSidebar({ open, onToggle, onMobileClose, isMobile }
           return (
           <div key={group.label} className="mb-4">
             {open && (
-              <p className="px-4 mb-2 text-[9px] font-black uppercase tracking-[0.2em] text-white/30">
+              <p className="px-4 mb-2 text-[10px] font-medium uppercase tracking-[0.1em] text-white/25">
                 {group.label}
               </p>
             )}
@@ -120,10 +120,10 @@ export default function AdminSidebar({ open, onToggle, onMobileClose, isMobile }
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-2.5 text-[12px] font-bold transition-all ${
+                  `flex items-center gap-3 px-4 py-2.5 text-[12px] font-medium transition-all ${
                     isActive
-                      ? 'bg-[#8cc63f]/20 text-[#8cc63f] border-r-2 border-[#8cc63f]'
-                      : 'text-white/60 hover:text-white hover:bg-white/5'
+                      ? 'bg-[#8cc63f]/15 text-[#8cc63f] border-r-2 border-[#8cc63f]'
+                      : 'text-[#ffffff]/50 hover:text-[#ffffff] hover:bg-[#ffffff]/5'
                   } ${!open ? 'justify-center' : ''}`
                 }
                 title={!open ? item.label : undefined}
@@ -138,29 +138,29 @@ export default function AdminSidebar({ open, onToggle, onMobileClose, isMobile }
       </nav>
 
       {/* Activity Feed */}
-      <div className="border-t border-white/10 px-1 py-2">
+      <div className="border-t border-[#ffffff]/10 px-1 py-2">
         <ActivityFeed collapsed={!open} />
       </div>
 
       {/* User + Toggle */}
-      <div className="border-t border-white/10 p-3">
+      <div className="border-t border-[#ffffff]/10 p-3">
         {open && user && (
           <div className="flex items-center gap-2 mb-3 px-1">
-            <div className="w-8 h-8 bg-[#8cc63f]/20 rounded-full flex items-center justify-center flex-shrink-0">
-              <span className="text-[#8cc63f] font-black text-[10px]">
+            <div className="w-8 h-8 bg-[#8cc63f]/15 rounded-lg flex items-center justify-center flex-shrink-0">
+              <span className="text-[#8cc63f] font-bold text-[10px]">
                 {user.displayName?.charAt(0) || 'A'}
               </span>
             </div>
             <div className="min-w-0">
-              <p className="text-[11px] font-bold truncate">{user.displayName}</p>
-              {isDemo && <p className="text-[9px] text-[#8cc63f] font-bold uppercase tracking-widest">Demo Broker</p>}
+              <p className="text-[11px] font-medium truncate">{user.displayName}</p>
+              {isDemo && <p className="text-[9px] text-[#8cc63f] font-medium uppercase tracking-widest">Demo Broker</p>}
             </div>
           </div>
         )}
         <div className="flex items-center gap-2">
           <button
             onClick={handleLogout}
-            className={`flex items-center gap-2 text-white/40 hover:text-white transition-colors py-2 px-2 rounded text-[11px] font-bold ${!open ? 'mx-auto' : ''}`}
+            className={`flex items-center gap-2 text-[#ffffff]/40 hover:text-[#ffffff] transition-colors py-2 px-2 rounded text-[11px] font-medium ${!open ? 'mx-auto' : ''}`}
             title="Abmelden"
           >
             <LogOut size={16} />
@@ -168,7 +168,7 @@ export default function AdminSidebar({ open, onToggle, onMobileClose, isMobile }
           </button>
           <button
             onClick={onToggle}
-            className="ml-auto p-2 text-white/40 hover:text-white transition-colors"
+            className="ml-auto p-2 text-[#ffffff]/40 hover:text-[#ffffff] transition-colors"
             title={open ? 'Minimieren' : 'Erweitern'}
           >
             {open ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}

@@ -13,7 +13,7 @@ export default function Chatbot() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const systemContext =
-    'Du bist der KI-Assistent von HELLO SECOND/RUN, einer Sonderposten-Vermittlungsplattform aus Salzburg, Österreich. Du hilfst Nutzern bei Fragen zu: Sonderposten-Handel, MHD-Ware, Preisfindung (EK/UVP/VK), Angebotserstellung, PDF-Dokumenten (Angebot, AB, BE, Lieferschein, Rechnung). Antworte immer auf Deutsch, kurz und hilfreich.';
+    'Du bist der KI-Assistent von HELLO SECOND/RUN, einem Angebots-Tool für Sonderposten-Händler aus Salzburg, Österreich. Du hilfst Nutzern bei Fragen zu: Sonderposten-Handel, MHD-Ware, Preisfindung (EK/UVP/VK), Angebotserstellung, PDF-Dokumenten (Angebot, AB, BE, Lieferschein, Rechnung). Antworte immer auf Deutsch, kurz und hilfreich.';
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -110,7 +110,7 @@ export default function Chatbot() {
         className={`fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all z-50 ${
           isOpen
             ? 'bg-gray-800 text-white hover:bg-gray-700'
-            : 'bg-[#1a472a] text-white hover:bg-[#8cc63f] hover:text-[#1a472a] border-2 border-[#1a472a] hover:border-[#8cc63f]'
+            : 'bg-[#111113] text-white hover:bg-[#8cc63f] hover:text-[#111113] border-2 border-[#111113] hover:border-[#8cc63f]'
         }`}
       >
         {isOpen ? <X size={20} /> : <MessageCircle size={20} />}
@@ -118,15 +118,15 @@ export default function Chatbot() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-[380px] max-w-[calc(100vw-48px)] h-[520px] bg-white shadow-2xl border border-gray-200 flex flex-col z-50 overflow-hidden animate-slide-in-right">
+        <div className="fixed bottom-24 right-6 w-[380px] max-w-[calc(100vw-48px)] h-[520px] bg-[#ffffff] shadow-2xl border border-gray-200 flex flex-col z-50 overflow-hidden animate-slide-in-right">
           {/* Header */}
-          <div className="bg-[#1a472a] text-white p-4 flex justify-between items-center flex-shrink-0">
+          <div className="bg-[#111113] text-white p-4 flex justify-between items-center flex-shrink-0">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-[#8cc63f]/20 rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-[#8cc63f]/20 rounded-lg flex items-center justify-center">
                 <Sparkles size={14} className="text-[#8cc63f]" />
               </div>
               <div>
-                <h3 className="font-black uppercase tracking-widest text-xs">KI-Assistent</h3>
+                <h3 className="font-semibold uppercase tracking-[0.08em] text-xs">KI-Assistent</h3>
                 <p className="text-[10px] text-[#8cc63f] uppercase tracking-widest">Powered by Claude</p>
               </div>
             </div>
@@ -141,7 +141,7 @@ export default function Chatbot() {
           <div className="flex-grow p-4 overflow-y-auto bg-gray-50 flex flex-col gap-3">
             {messages.length === 0 && (
               <div className="text-center my-auto px-4">
-                <div className="w-12 h-12 bg-[#8cc63f]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-12 h-12 bg-[#8cc63f]/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <Sparkles size={20} className="text-[#8cc63f]" />
                 </div>
                 <p className="text-sm font-bold text-gray-700 mb-1">Wie kann ich helfen?</p>
@@ -151,7 +151,7 @@ export default function Chatbot() {
                     <button
                       key={i}
                       onClick={() => { setInput(action); inputRef.current?.focus(); }}
-                      className="block w-full text-left text-xs bg-white border border-gray-200 px-3 py-2.5 hover:border-[#8cc63f] hover:bg-[#8cc63f]/5 transition-all"
+                      className="block w-full text-left text-xs bg-[#ffffff] border border-gray-200 px-3 py-2.5 hover:border-[#8cc63f] hover:bg-[#8cc63f]/5 transition-all"
                     >
                       {action}
                     </button>
@@ -165,8 +165,8 @@ export default function Chatbot() {
                 key={idx}
                 className={`max-w-[85%] ${
                   msg.role === 'user'
-                    ? 'self-end bg-[#1a472a] text-white'
-                    : 'self-start bg-white border border-gray-200 text-gray-800'
+                    ? 'self-end bg-[#111113] text-white'
+                    : 'self-start bg-[#ffffff] border border-gray-200 text-gray-800'
                 } p-3 text-sm`}
               >
                 {msg.role === 'model' ? (
@@ -180,7 +180,7 @@ export default function Chatbot() {
             ))}
 
             {isThinking && (
-              <div className="self-start bg-white border border-gray-200 text-gray-500 p-3 text-sm flex items-center gap-2">
+              <div className="self-start bg-[#ffffff] border border-gray-200 text-gray-500 p-3 text-sm flex items-center gap-2">
                 <div className="flex gap-1">
                   <div className="w-1.5 h-1.5 bg-[#8cc63f] rounded-full animate-bounce"></div>
                   <div className="w-1.5 h-1.5 bg-[#8cc63f] rounded-full animate-bounce" style={{ animationDelay: '0.15s' }}></div>
@@ -193,20 +193,20 @@ export default function Chatbot() {
           </div>
 
           {/* Input */}
-          <form onSubmit={handleSend} className="p-3 bg-white border-t border-gray-200 flex gap-2 flex-shrink-0">
+          <form onSubmit={handleSend} className="p-3 bg-[#ffffff] border-t border-gray-200 flex gap-2 flex-shrink-0">
             <input
               ref={inputRef}
               type="text"
               value={input}
               onChange={e => setInput(e.target.value)}
               placeholder="Frag mich etwas..."
-              className="flex-grow bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:border-[#1a472a] transition-colors"
+              className="flex-grow bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:border-[#111113] transition-colors"
               disabled={isThinking}
             />
             <button
               type="submit"
               disabled={isThinking || !input.trim()}
-              className="bg-[#1a472a] text-white p-2.5 hover:bg-[#8cc63f] hover:text-[#1a472a] transition-colors disabled:opacity-30"
+              className="bg-[#111113] text-white p-2.5 hover:bg-[#8cc63f] hover:text-[#111113] transition-colors disabled:opacity-30"
             >
               <Send size={16} />
             </button>
